@@ -1,0 +1,54 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "remote-desktop/v*"
+  workflow_dispatch:
+
+env:
+  PROJECT_PATH: src/RemoteDesktop/RemoteDesktop.csproj
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v1.3.1
+        with:
+          vs-version: '17.0'
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.2.0
+
+      - name: Restore NuGet packages
+        run: nuget restore ${{ env.PROJECT_PATH }}
+
+      - name: Build solution
+        run: |
+          msbuild ${{ env.PROJECT_PATH }} /p:Configuration=Release `
+          /p:Platform="Any CPU" `
+          /p:OutputPath=bin\Release `
+          /p:DebugType=None `
+          /p:DebugSymbols=false `
+          /p:Optimize=true `
+          /t:Clean,Rebuild
+            
+      - name: Zip Release
+        shell: pwsh
+        run: Compress-Archive -Path src/RemoteDesktop/bin/Release/* -DestinationPath release.zip
+          
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            release.zip
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
