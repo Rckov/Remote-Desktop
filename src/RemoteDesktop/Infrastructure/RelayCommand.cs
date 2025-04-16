@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace RemoteDesktop.Infrastructure;
+
 internal class RelayCommand : ICommand
 {
     private readonly Predicate<object> _canExecute;
@@ -41,5 +38,4 @@ internal class RelayCommand : ICommand
     {
         _execute(parameter);
     }
-
 }

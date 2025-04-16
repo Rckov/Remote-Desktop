@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-   <SolidColorBrush x:Key="Background" Color="#FFFFFF" />
-   <SolidColorBrush x:Key="ContentBackground" Color="#FAFAFA" />
+   <SolidColorBrush x:Key="Background" Color="#F2F2F2" />
+   <SolidColorBrush x:Key="ContentBackground" Color="#FFFFFF" />
    <SolidColorBrush x:Key="TextForeground" Color="#242424" />
    <SolidColorBrush x:Key="TextForeground2" Color="#606060" />
    <SolidColorBrush x:Key="TextInactiveForeground" Color="#808080" />
@@ -11,5 +11,5 @@
    <SolidColorBrush x:Key="ButtonPressedBackground" Color="#D8D8D8" />
    <SolidColorBrush x:Key="PrimaryBrush" Color="#326CF3" />
 
-   <DropShadowEffect x:Key="DropShadowEffect1" Opacity="0.1" ShadowDepth="0.2" />
+   <DropShadowEffect x:Key="DropShadowEffect1" ShadowDepth="2" Opacity="0.04" />
 </ResourceDictionary>
