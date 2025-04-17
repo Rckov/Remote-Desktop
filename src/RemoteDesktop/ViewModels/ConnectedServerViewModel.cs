@@ -11,9 +11,18 @@ internal class ConnectedServerViewModel : ObservableObject
     }
 
     public Server Server { get; }
+    public bool IsConnected { get; internal set; }
 
     public ConnectedServerViewModel(Server server)
     {
         Server = server;
+    }
+
+    public void Connect()
+    {
+    }
+
+    public void Disconnect()
+    {
     }
 }
