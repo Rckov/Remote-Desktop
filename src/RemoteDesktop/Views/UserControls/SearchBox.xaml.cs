@@ -3,11 +3,11 @@
 namespace RemoteDesktop.Views.UserControls
 {
     /// <summary>
-    /// Логика взаимодействия для EmptyBox.xaml
+    /// Логика взаимодействия для SearchBox.xaml
     /// </summary>
-    public partial class EmptyBox : UserControl
+    public partial class SearchBox : UserControl
     {
-        public EmptyBox()
+        public SearchBox()
         {
             InitializeComponent();
         }

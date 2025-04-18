@@ -27,19 +27,16 @@
             <ct:WindowBar.LeftContent>
                <Menu Background="Transparent">
                   <MenuItem Header="Connect" Icon="&#xE8AF;" />
-
                   <Separator Style="{StaticResource SeparatorStyle}" />
-
-                  <MenuItem Header="Manage Servers" Icon="&#xE703;">
-                     <MenuItem Header="Add server" Icon="&#xE836;" />
-                     <MenuItem Header="Edit server" Icon="&#xE70F;" />
-                     <MenuItem Header="Delete server" Icon="&#xE74D;" />
+                  <MenuItem Header="Servers" Icon="&#xE703;">
+                     <MenuItem Header="Add New Server" Icon="&#xE836;" />
+                     <MenuItem Header="Edit Server" Icon="&#xE70F;" />
+                     <MenuItem Header="Delete Server" Icon="&#xE74D;" />
                   </MenuItem>
-
-                  <MenuItem Header="Manage Groups" Icon="&#xED25;">
-                     <MenuItem Header="Add group" Icon="&#xE8F4;" />
-                     <MenuItem Header="Edit group" Icon="&#xE70F;" />
-                     <MenuItem Header="Delete group" Icon="&#xE74D;" />
+                  <MenuItem Header="Groups" Icon="&#xED25;">
+                     <MenuItem Header="Add New Group" Icon="&#xE8F4;" />
+                     <MenuItem Header="Edit Group" Icon="&#xE70F;" />
+                     <MenuItem Header="Delete Group" Icon="&#xE74D;" />
                   </MenuItem>
                </Menu>
             </ct:WindowBar.LeftContent>
@@ -68,7 +65,7 @@
                               <RowDefinition />
                            </Grid.RowDefinitions>
 
-                           <TextBox Grid.Row="0" Margin="4" Padding="5" BorderBrush="{DynamicResource BorderBrush}" />
+                           <ct:SearchBox Margin="4" />
 
                            <TreeView Name="TreeView" Grid.Row="1" Margin="3.5,0,3.5,4" ItemsSource="{Binding ServersGroups}" Background="Transparent" BorderThickness="0">
                               <TreeView.Resources>

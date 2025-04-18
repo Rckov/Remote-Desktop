@@ -90,8 +90,8 @@
                      <ContentPresenter x:Name="Header" ContentSource="Header" Grid.Column="1" Margin="5" VerticalAlignment="Center" RecognizesAccessKey="True" />
 
                      <Popup x:Name="PART_Popup" IsOpen="{TemplateBinding IsSubmenuOpen}" Placement="Bottom" HorizontalOffset="-6" VerticalOffset="1" PopupAnimation="Fade">
-                        <Border BorderThickness="1" Width="128" BorderBrush="{DynamicResource BorderBrush}" Background="{DynamicResource ContentBackground}">
-                           <ItemsPresenter x:Name="ItemsPresenter" Margin="0" KeyboardNavigation.TabNavigation="Cycle" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                        <Border BorderThickness="1" Width="140" BorderBrush="{DynamicResource BorderBrush}" Background="{DynamicResource ContentBackground}">
+                           <ItemsPresenter x:Name="ItemsPresenter" Margin="0" />
                         </Border>
                      </Popup>
                   </Grid>
