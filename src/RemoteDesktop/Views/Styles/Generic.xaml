@@ -150,8 +150,8 @@
                   </VisualStateManager.VisualStateGroups>
 
                   <!-- Change themed color -->
-                  <Path x:Name="Expanded" Fill="#666" Data="M 0,4 L 4,0 L 8,4 Z" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                  <Path x:Name="Collapsed" Fill="#666" Data="M 0,0 L 8,0 L 4,4 Z" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                  <Path x:Name="Expanded" Fill="#666" Data="M 0,4 L 4,0 L 8,4 Z" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                  <Path x:Name="Collapsed" Fill="#666" Data="M 0,0 L 8,0 L 4,4 Z" VerticalAlignment="Center" HorizontalAlignment="Center" />
                </Grid>
             </ControlTemplate>
          </Setter.Value>
@@ -159,8 +159,8 @@
    </Style>
 
    <Style TargetType="{x:Type TreeView}">
-      <Setter Property="Background" Value="Transparent"/>
-      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
       <Setter Property="Template">
          <Setter.Value>
             <ControlTemplate TargetType="{x:Type TreeView}">
@@ -181,10 +181,10 @@
    </Style>
 
    <Style TargetType="{x:Type TreeViewItem}">
-      <Setter Property="Background" Value="Transparent"/>
-      <Setter Property="HorizontalContentAlignment" Value="Left"/>
-      <Setter Property="VerticalContentAlignment" Value="Center"/>
-      <Setter Property="Padding" Value="4"/>
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="HorizontalContentAlignment" Value="Left" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="Padding" Value="4" />
       <Setter Property="Template">
          <Setter.Value>
             <ControlTemplate TargetType="{x:Type TreeViewItem}">
@@ -220,7 +220,7 @@
    <!--#endregion-->
 
    <!--#region TabControl styles (Uniform) -->
-   
+
    <Style x:Key="TabControlUniformStyle" TargetType="{x:Type TabControl}">
       <Setter Property="Background" Value="Transparent" />
       <Setter Property="BorderThickness" Value="0" />
@@ -353,5 +353,4 @@
    </Style>
 
    <!--#endregion-->
-
 </ResourceDictionary>
