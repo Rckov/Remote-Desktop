@@ -5,6 +5,7 @@
    <SolidColorBrush x:Key="ContentBackground" Color="#FFFFFF" />
    <SolidColorBrush x:Key="TextForeground" Color="#242424" />
    <SolidColorBrush x:Key="TextForeground2" Color="#606060" />
+   <SolidColorBrush x:Key="GripForeground" Color="#E8E8E8" />
    <SolidColorBrush x:Key="TextInactiveForeground" Color="#808080" />
    <SolidColorBrush x:Key="BorderBrush" Color="#E8E8E8" />
    <SolidColorBrush x:Key="ButtonHoverBackground" Color="#F0F0F0" />

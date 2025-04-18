@@ -26,11 +26,20 @@
          <ct:WindowBar Background="{DynamicResource ContentBackground}" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BorderBrush}">
             <ct:WindowBar.LeftContent>
                <Menu Background="Transparent">
-                  <MenuItem Header="Connect" Icon="&#xE703;" />
+                  <MenuItem Header="Connect" Icon="&#xE8AF;" />
 
-                  <MenuItem Header="Manage Servers" Icon="&#xED25;">
+                  <Separator Style="{StaticResource SeparatorStyle}" />
+
+                  <MenuItem Header="Manage Servers" Icon="&#xE703;">
                      <MenuItem Header="Add server" Icon="&#xE836;" />
+                     <MenuItem Header="Edit server" Icon="&#xE70F;" />
+                     <MenuItem Header="Delete server" Icon="&#xE74D;" />
+                  </MenuItem>
+
+                  <MenuItem Header="Manage Groups" Icon="&#xED25;">
                      <MenuItem Header="Add group" Icon="&#xE8F4;" />
+                     <MenuItem Header="Edit group" Icon="&#xE70F;" />
+                     <MenuItem Header="Delete group" Icon="&#xE74D;" />
                   </MenuItem>
                </Menu>
             </ct:WindowBar.LeftContent>
@@ -61,7 +70,7 @@
 
                            <TextBox Grid.Row="0" Margin="4" Padding="5" BorderBrush="{DynamicResource BorderBrush}" />
 
-                           <TreeView Name="TreeView" Grid.Row="1" Margin="3.5,0" ItemsSource="{Binding ServersGroups}" Background="Transparent" BorderThickness="0">
+                           <TreeView Name="TreeView" Grid.Row="1" Margin="3.5,0,3.5,4" ItemsSource="{Binding ServersGroups}" Background="Transparent" BorderThickness="0">
                               <TreeView.Resources>
                                  <HierarchicalDataTemplate DataType="{x:Type md:ServerGroup}" ItemsSource="{Binding Servers}">
                                     <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextForeground}" />
@@ -76,13 +85,7 @@
                               </TreeView.Resources>
                            </TreeView>
 
-                           <StackPanel Grid.Row="1"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Center"
-                                    Visibility="{Binding ElementName=TreeView, Path=HasItems, Converter={StaticResource BooleanToVisibilityConverter}}">
-                              <Image Source="/Resources/Img/EmptyBox.png" Width="50" Height="50" />
-                              <TextBlock Text="No items" Foreground="#80000000" />
-                           </StackPanel>
+                           <ct:EmptyBox Grid.Row="1" Visibility="{Binding ElementName=TreeView, Path=HasItems, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
                      </TabItem>
 
