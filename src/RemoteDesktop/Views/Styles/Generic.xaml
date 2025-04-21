@@ -79,7 +79,7 @@
       <Setter Property="Template">
          <Setter.Value>
             <ControlTemplate TargetType="{x:Type MenuItem}">
-               <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+               <Border x:Name="Border" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
                   <Grid>
                      <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -89,7 +89,7 @@
                      <TextBlock x:Name="Icon" Text="{TemplateBinding Icon}" Margin="5" VerticalAlignment="Center" FontFamily="{StaticResource FontIcon}" />
                      <ContentPresenter x:Name="Header" ContentSource="Header" Grid.Column="1" Margin="5" VerticalAlignment="Center" RecognizesAccessKey="True" />
 
-                     <Popup x:Name="PART_Popup" IsOpen="{TemplateBinding IsSubmenuOpen}" Placement="Bottom" HorizontalOffset="-6" VerticalOffset="1" PopupAnimation="Fade">
+                     <Popup x:Name="PART_Popup" IsOpen="{TemplateBinding IsSubmenuOpen}" Placement="Right" HorizontalOffset="6" VerticalOffset="-3" PopupAnimation="Fade">
                         <Border BorderThickness="1" Width="140" BorderBrush="{DynamicResource BorderBrush}" Background="{DynamicResource ContentBackground}">
                            <ItemsPresenter x:Name="ItemsPresenter" Margin="0" />
                         </Border>
@@ -110,6 +110,11 @@
                   <Trigger Property="IsEnabled" Value="False">
                      <Setter TargetName="Icon" Property="Opacity" Value="0.5" />
                      <Setter Property="Foreground" Value="Gray" />
+                  </Trigger>
+                  <Trigger Property="Role" Value="TopLevelHeader">
+                     <Setter TargetName="PART_Popup" Property="Placement" Value="Bottom" />
+                     <Setter TargetName="PART_Popup" Property="HorizontalOffset" Value="-6" />
+                     <Setter TargetName="PART_Popup" Property="VerticalOffset" Value="1" />
                   </Trigger>
                </ControlTemplate.Triggers>
             </ControlTemplate>

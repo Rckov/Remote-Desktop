@@ -118,7 +118,7 @@ internal static class TextBoxHelper
             if (textBoxControl.Template.FindName("PART_ContentHost", textBoxControl) is FrameworkElement part)
             {
                 var partPosition = part.TransformToAncestor(textBoxControl).Transform(new Point(0, 0));
-                renderingOffset.X += partPosition.X;
+                renderingOffset.X += partPosition.X + 2;
                 renderingOffset.Y += partPosition.Y;
 
                 text.MaxTextWidth = Math.Max(part.ActualWidth - renderingOffset.X, 10);

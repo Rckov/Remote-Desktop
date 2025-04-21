@@ -2,6 +2,7 @@
 using RemoteDesktop.Models;
 using RemoteDesktop.Models.Base;
 
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -18,6 +19,8 @@ internal class MainViewModel : ObservableObject
             ServerConnect(item.Server);
         }
     }
+
+    public ConnectedServerViewModel ActiveConnect { get; set; }
 
     public ObservableCollection<ServerGroup> ServersGroups { get; set; } = [];
     public ObservableCollection<ConnectedServerViewModel> ConnectedServers { get; set; } = [];

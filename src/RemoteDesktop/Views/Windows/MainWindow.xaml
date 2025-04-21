@@ -28,15 +28,19 @@
                <Menu Background="Transparent">
                   <MenuItem Header="Connect" Icon="&#xE8AF;" />
                   <Separator Style="{StaticResource SeparatorStyle}" />
-                  <MenuItem Header="Servers" Icon="&#xE703;">
-                     <MenuItem Header="Add New Server" Icon="&#xE836;" />
-                     <MenuItem Header="Edit Server" Icon="&#xE70F;" />
-                     <MenuItem Header="Delete Server" Icon="&#xE74D;" />
-                  </MenuItem>
-                  <MenuItem Header="Groups" Icon="&#xED25;">
-                     <MenuItem Header="Add New Group" Icon="&#xE8F4;" />
-                     <MenuItem Header="Edit Group" Icon="&#xE70F;" />
-                     <MenuItem Header="Delete Group" Icon="&#xE74D;" />
+
+                  <MenuItem Header="Manage" Icon="&#xED25;">
+                     <MenuItem Header="Manage Servers" Icon="&#xE703;">
+                        <MenuItem Header="Add New Server" Icon="&#xE836;" />
+                        <MenuItem Header="Edit Server" Icon="&#xE70F;" />
+                        <MenuItem Header="Delete Server" Icon="&#xE74D;" />
+                     </MenuItem>
+
+                     <MenuItem Header="Manage Groups" Icon="&#xED25;">
+                        <MenuItem Header="Add New Group" Icon="&#xE8F4;" />
+                        <MenuItem Header="Edit Group" Icon="&#xE70F;" />
+                        <MenuItem Header="Delete Group" Icon="&#xE74D;" />
+                     </MenuItem>
                   </MenuItem>
                </Menu>
             </ct:WindowBar.LeftContent>
@@ -91,7 +95,7 @@
                </Border>
 
                <Border Grid.Column="2" Style="{StaticResource ContentPanel}" Padding="0">
-                  <ad:DockingManager Grid.Column="2" Margin="3" DocumentsSource="{Binding ConnectedServers}" IsVirtualizingDocument="True" DocumentClosed="Server_Diconnect">
+                  <ad:DockingManager Grid.Column="2" Margin="3" DocumentsSource="{Binding ConnectedServers}" ActiveContent="{Binding ActiveConnect}" IsVirtualizingDocument="True" DocumentClosed="Server_Diconnect">
                      <ad:DockingManager.Resources>
                         <DataTemplate DataType="{x:Type vm:ConnectedServerViewModel}">
                            <ct:RdpClient />
