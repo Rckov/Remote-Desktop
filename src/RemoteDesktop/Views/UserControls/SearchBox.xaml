@@ -26,9 +26,9 @@
                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBox bh:TextBoxHelper.Placeholder="Search..." Grid.Column="0" BorderThickness="0" Padding="4,2" />
+            <TextBox bh:TextBoxHelper.Placeholder="Search..." Grid.Column="0" BorderThickness="0" Padding="4,2" Background="Transparent" Foreground="{DynamicResource TextForeground}" />
 
-            <TextBlock Grid.Column="1" Foreground="{DynamicResource TextInactiveForeground}" FontFamily="{StaticResource FontIcon}" Text="&#xE721;" FontSize="14" VerticalAlignment="Center" />
+            <TextBlock Grid.Column="1" Foreground="{DynamicResource TextInactiveForeground}" Margin="0,0,2,0" FontFamily="{StaticResource FontIcon}" Text="&#xE721;" FontSize="14" VerticalAlignment="Center" />
          </Grid>
       </Border>
    </Grid>
