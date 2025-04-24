@@ -8,7 +8,7 @@
             <ResourceDictionary Source="/Views/Styles/Generic.xaml" />
             <ResourceDictionary Source="/Views/Styles/AvalonDock.xaml" />
 
-            <ResourceDictionary Source="/Resources/Themes/DarkBrushes.xaml" />
+            <ResourceDictionary Source="/Resources/Themes/LightBrushes.xaml" />
          </ResourceDictionary.MergedDictionaries>
       </ResourceDictionary>
    </Application.Resources>

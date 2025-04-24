@@ -2,7 +2,6 @@
 using RemoteDesktop.Models;
 using RemoteDesktop.Models.Base;
 
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -12,18 +11,25 @@ internal class MainViewModel : ObservableObject
 {
     public MainViewModel()
     {
-        ServersGroups = TestGenerated.GenerateServerGroups(10);
-
-        foreach (var item in TestGenerated.GenerateServers(ServersGroups, 5))
-        {
-            ServerConnect(item.Server);
-        }
+        ServersGroups = [.. TestGenerated.GenerateServerGroups(10).Select(g => new TreeItemViewModel(g))];
     }
 
     public ConnectedServerViewModel ActiveConnect { get; set; }
 
-    public ObservableCollection<ServerGroup> ServersGroups { get; set; } = [];
+    public ObservableCollection<TreeItemViewModel> ServersGroups { get; set; } = [];
     public ObservableCollection<ConnectedServerViewModel> ConnectedServers { get; set; } = [];
+
+    public string SearchText
+    {
+        get;
+        set
+        {
+            if (Set(ref field, value))
+            {
+                UpdateFilter(field);
+            }
+        }
+    }
 
     public void ServerConnect(Server server)
     {
@@ -51,5 +57,15 @@ internal class MainViewModel : ObservableObject
         }
 
         ConnectedServers.Remove(model);
+    }
+
+    private void UpdateFilter(string pattern)
+    {
+        var filter = pattern ?? string.Empty;
+
+        foreach (var item in ServersGroups)
+        {
+            item.ApplyFilter(filter);
+        }
     }
 }

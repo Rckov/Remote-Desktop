@@ -7,10 +7,17 @@ namespace RemoteDesktop.Infrastructure.ValueConverters;
 
 internal class BooleanToVisibilityConverter : IValueConverter
 {
+    public bool Inverse { get; set; }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is bool boolValue)
         {
+            if (Inverse)
+            {
+                boolValue = !boolValue;
+            }
+
             return boolValue ? Visibility.Collapsed : Visibility.Visible;
         }
 

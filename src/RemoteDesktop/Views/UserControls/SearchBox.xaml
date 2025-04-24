@@ -26,7 +26,8 @@
                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBox bh:TextBoxHelper.Placeholder="Search..." Grid.Column="0" BorderThickness="0" Padding="4,2" Background="Transparent" Foreground="{DynamicResource TextForeground}" />
+            <TextBox bh:TextBoxHelper.Placeholder="Search..." Grid.Column="0" BorderThickness="0" Padding="4,2" Background="Transparent" Foreground="{DynamicResource TextForeground}"
+                     Text="{Binding SearchText, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock Grid.Column="1" Foreground="{DynamicResource TextInactiveForeground}" Margin="0,0,2,0" FontFamily="{StaticResource FontIcon}" Text="&#xE721;" FontSize="14" VerticalAlignment="Center" />
          </Grid>

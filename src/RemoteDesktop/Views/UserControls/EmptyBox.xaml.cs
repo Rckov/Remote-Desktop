@@ -1,15 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace RemoteDesktop.Views.UserControls
+namespace RemoteDesktop.Views.UserControls;
+
+public partial class EmptyBox : UserControl
 {
-    /// <summary>
-    /// Логика взаимодействия для EmptyBox.xaml
-    /// </summary>
-    public partial class EmptyBox : UserControl
+    public EmptyBox()
     {
-        public EmptyBox()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

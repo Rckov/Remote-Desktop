@@ -1,15 +1,21 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
-namespace RemoteDesktop.Views.UserControls
+namespace RemoteDesktop.Views.UserControls;
+
+public partial class SearchBox : UserControl
 {
-    /// <summary>
-    /// Логика взаимодействия для SearchBox.xaml
-    /// </summary>
-    public partial class SearchBox : UserControl
+    public static readonly DependencyProperty SearchTextProperty =
+        DependencyProperty.Register("SearchText", typeof(string), typeof(SearchBox), new PropertyMetadata(string.Empty));
+
+    public string SearchText
     {
-        public SearchBox()
-        {
-            InitializeComponent();
-        }
+        get => (string)GetValue(SearchTextProperty);
+        set => SetValue(SearchTextProperty, value);
+    }
+
+    public SearchBox()
+    {
+        InitializeComponent();
     }
 }
