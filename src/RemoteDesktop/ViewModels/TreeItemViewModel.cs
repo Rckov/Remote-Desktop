@@ -10,6 +10,7 @@ namespace RemoteDesktop.ViewModels;
 internal class TreeItemViewModel : ObservableObject
 {
     public string Name { get; }
+    public object Model { get; }
     public ObservableCollection<TreeItemViewModel> Children { get; }
 
     private bool _isVisible = true;
@@ -31,19 +32,21 @@ internal class TreeItemViewModel : ObservableObject
     public TreeItemViewModel(ServerGroup group)
     {
         Name = group.Name;
+        Model = group;
+
         Children = [.. group.Servers.Select(s => new TreeItemViewModel(s))];
     }
 
     public TreeItemViewModel(Server server)
     {
         Name = server.Name;
+        Model = server;
         Children = [];
     }
 
     public bool ApplyFilter(string filter)
     {
         var anyChildMatch = false;
-        var selfMatch = Name.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0;
 
         foreach (var child in Children)
         {
@@ -53,7 +56,7 @@ internal class TreeItemViewModel : ObservableObject
             }
         }
 
-        IsVisible = selfMatch || anyChildMatch;
+        IsVisible = Name.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0 || anyChildMatch;
 
         if (anyChildMatch)
         {

@@ -2,8 +2,11 @@
 using RemoteDesktop.Models;
 using RemoteDesktop.Models.Base;
 
-using System.Collections.ObjectModel;
 using System.Linq;
+
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using RemoteDesktop.Infrastructure;
 
 namespace RemoteDesktop.ViewModels;
 
@@ -12,12 +15,26 @@ internal class MainViewModel : ObservableObject
     public MainViewModel()
     {
         ServersGroups = [.. TestGenerated.GenerateServerGroups(10).Select(g => new TreeItemViewModel(g))];
+
+        ConnectCommand = new RelayCommand(ServerConnect);
     }
 
-    public ConnectedServerViewModel ActiveConnect { get; set; }
+    public TreeItemViewModel SelectedTreeItem
+    {
+        get;
+        set => Set(ref field, value);
+    }
+
+    public ConnectedServerViewModel ActiveConnect
+    {
+        get;
+        set => Set(ref field, value);
+    }
 
     public ObservableCollection<TreeItemViewModel> ServersGroups { get; set; } = [];
     public ObservableCollection<ConnectedServerViewModel> ConnectedServers { get; set; } = [];
+
+    public ICommand ConnectCommand { get; }
 
     public string SearchText
     {
@@ -31,17 +48,22 @@ internal class MainViewModel : ObservableObject
         }
     }
 
-    public void ServerConnect(Server server)
+    public void ServerConnect()
     {
-        if (ConnectedServers.Any(model => model.Equals(server)))
+        if (SelectedTreeItem.Model is not Server server)
         {
             return;
         }
 
-        var model = new ConnectedServerViewModel(server);
-        model.Connect();
+        if (ConnectedServers.Any(model => model.Name == server.Name))
+        {
+            return;
+        }
 
-        ConnectedServers.Add(model);
+        var con = new ConnectedServerViewModel(server);
+        con.Connect();
+
+        ConnectedServers.Add(con);
     }
 
     public void ServerDiconnect(ConnectedServerViewModel model)

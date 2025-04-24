@@ -20,4 +20,12 @@ public partial class MainWindow : Window
             viewModel.ServerDiconnect(e.Document.Content as ConnectedServerViewModel);
         }
     }
+
+    private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+    {
+        if (DataContext is MainViewModel viewModel)
+        {
+            viewModel.SelectedTreeItem = e.NewValue as TreeItemViewModel;
+        }
+    }
 }
