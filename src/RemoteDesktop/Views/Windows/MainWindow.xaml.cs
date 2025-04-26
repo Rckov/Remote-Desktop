@@ -11,6 +11,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        DataContext = App.Services.GetInstance<MainViewModel>();
     }
 
     private void Server_Diconnect(object sender, DocumentClosedEventArgs e)

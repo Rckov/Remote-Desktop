@@ -13,34 +13,34 @@ internal class TreeItemViewModel : ObservableObject
     public object Model { get; }
     public ObservableCollection<TreeItemViewModel> Children { get; }
 
-    private bool _isVisible = true;
-
     public bool IsVisible
     {
-        get => _isVisible;
-        set => Set(ref _isVisible, value);
+        get;
+        set => Set(ref field, value);
     }
-
-    private bool _isExpanded;
 
     public bool IsExpanded
     {
-        get => _isExpanded;
-        set => Set(ref _isExpanded, value);
+        get;
+        set => Set(ref field, value);
     }
 
-    public TreeItemViewModel(ServerGroup group)
+    protected TreeItemViewModel(string name, object model)
     {
-        Name = group.Name;
-        Model = group;
+        Name = name;
+        Model = model;
 
+        IsVisible = true;
+        IsExpanded = true;
+    }
+
+    public TreeItemViewModel(ServerGroup group) : this(group.Name, group)
+    {
         Children = [.. group.Servers.Select(s => new TreeItemViewModel(s))];
     }
 
-    public TreeItemViewModel(Server server)
+    public TreeItemViewModel(Server server) : this(server.Name, server)
     {
-        Name = server.Name;
-        Model = server;
         Children = [];
     }
 

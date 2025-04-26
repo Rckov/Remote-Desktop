@@ -13,10 +13,6 @@
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource WindowStyle}">
 
-   <Window.DataContext>
-      <vm:MainViewModel />
-   </Window.DataContext>
-
    <Window.Resources>
       <cv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityInverseConverter" Inverse="True" />
 
@@ -96,7 +92,7 @@
 
                               <TreeView.ItemContainerStyle>
                                  <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
-                                    <Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityInverseConverter}}" />
+                                    <Setter Property="Visibility" Value="{Binding IsVisible, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityInverseConverter}}" />
                                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                                  </Style>
                               </TreeView.ItemContainerStyle>

@@ -1,19 +1,25 @@
 ﻿using RemoteDesktop.Helpers;
+using RemoteDesktop.Infrastructure;
 using RemoteDesktop.Models;
 using RemoteDesktop.Models.Base;
-
-using System.Linq;
+using RemoteDesktop.Services.Interfaces;
 
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
-using RemoteDesktop.Infrastructure;
 
 namespace RemoteDesktop.ViewModels;
 
 internal class MainViewModel : ObservableObject
 {
-    public MainViewModel()
+    private IMessenger _messenger;
+    private IThemeManager _themeManager;
+
+    public MainViewModel(IMessenger messenger, IThemeManager themeManager)
     {
+        _messenger = messenger;
+        _themeManager = themeManager;
+
         ServersGroups = [.. TestGenerated.GenerateServerGroups(10).Select(g => new TreeItemViewModel(g))];
 
         ConnectCommand = new RelayCommand(ServerConnect);
@@ -83,11 +89,9 @@ internal class MainViewModel : ObservableObject
 
     private void UpdateFilter(string pattern)
     {
-        var filter = pattern ?? string.Empty;
-
         foreach (var item in ServersGroups)
         {
-            item.ApplyFilter(filter);
+            item.ApplyFilter(pattern);
         }
     }
 }
