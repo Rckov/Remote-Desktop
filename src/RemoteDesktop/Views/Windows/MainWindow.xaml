@@ -1,8 +1,8 @@
 ﻿<Window x:Class="RemoteDesktop.Views.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:cv="clr-namespace:RemoteDesktop.Infrastructure.ValueConverters"
         xmlns:st="clr-namespace:RemoteDesktop.Infrastructure.TemplateSelectors"
+        xmlns:cv="clr-namespace:RemoteDesktop.Infrastructure.ValueConverters"
         xmlns:vm="clr-namespace:RemoteDesktop.ViewModels"
         xmlns:ct="clr-namespace:RemoteDesktop.Views.UserControls"
         xmlns:ad="https://github.com/Dirkster99/AvalonDock"
@@ -98,7 +98,7 @@
                               </TreeView.ItemContainerStyle>
                            </TreeView>
 
-                           <ct:EmptyBox Grid.Row="1" Visibility="{Binding ElementName=TreeView, Path=HasItems, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                           <ct:EmptyBox Grid.Row="1" Desctiption="No Items" Visibility="{Binding ElementName=TreeView, Path=HasItems, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
                      </TabItem>
 
@@ -107,7 +107,11 @@
                </Border>
 
                <Border Grid.Column="2" Style="{StaticResource ContentPanel}" Padding="0">
-                  <ad:DockingManager Grid.Column="2" Margin="3" DocumentsSource="{Binding ConnectedServers}" ActiveContent="{Binding ActiveConnect}" IsVirtualizingDocument="True" DocumentClosed="Server_Diconnect">
+                  <ad:DockingManager Grid.Column="2" Margin="3"
+                                     DocumentsSource="{Binding ConnectedServers}"
+                                     ActiveContent="{Binding ActiveConnect}"
+                                     IsVirtualizingDocument="True"
+                                     DocumentClosed="Server_Diconnect">
                      <ad:DockingManager.Resources>
                         <DataTemplate DataType="{x:Type vm:ConnectedServerViewModel}">
                            <ct:RdpClient />
@@ -116,7 +120,17 @@
 
                      <ad:LayoutRoot>
                         <ad:LayoutPanel Orientation="Horizontal">
-                           <ad:LayoutDocumentPane />
+                           <ad:LayoutDocumentPane>
+                              <ad:LayoutDocument>
+                                 <StackPanel x:Name="Welcome" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="&#xE703;" Margin="0,0,7,0" FontSize="60" VerticalAlignment="Center" FontFamily="{StaticResource FontIcon}" />
+                                    <StackPanel TextBlock.FontSize="24" TextBlock.FontWeight="Bold">
+                                       <TextBlock Text="Welcome to" />
+                                       <TextBlock Text="Remote Desktop" />
+                                    </StackPanel>
+                                 </StackPanel>
+                              </ad:LayoutDocument>
+                           </ad:LayoutDocumentPane>
                         </ad:LayoutPanel>
                      </ad:LayoutRoot>
                   </ad:DockingManager>

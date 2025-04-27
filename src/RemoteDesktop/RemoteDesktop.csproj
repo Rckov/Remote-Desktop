@@ -17,8 +17,4 @@
     <PackageReference Include="SimpleInjector" Version="5.5.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Templates\" />
-  </ItemGroup>
 </Project>

@@ -8,6 +8,6 @@
             M13.9,13 L1.9,13 1.9,10.02 4.45,10.02 5.19,11.27 5.62,11.51 10.19,11.51 10.63,11.27 11.37,10.04 13.9,10.04 Z
             M13.878,9.02 L11.02,9.02 10.59,9.28 9.91,10.51 5.91,10.51 5.16,9.28 4.73,9.02 1.9,9.02 4.52,1.98 11.3,1.98 13.878,9.02 Z" />
 
-      <TextBlock Text="No items" FontWeight="SemiBold" Foreground="{DynamicResource GripForeground}" />
-</StackPanel>
+      <TextBlock Text="{Binding Desctiption, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}" FontWeight="SemiBold" Foreground="{DynamicResource GripForeground}" />
+   </StackPanel>
 </UserControl>

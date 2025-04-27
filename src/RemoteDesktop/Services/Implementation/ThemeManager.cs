@@ -1,4 +1,5 @@
-﻿using RemoteDesktop.Services.Interfaces;
+﻿using RemoteDesktop.Enums;
+using RemoteDesktop.Services.Interfaces;
 
 using System;
 using System.Collections.Generic;
@@ -46,10 +47,4 @@ internal class ThemeManager : IThemeManager
     {
         _themePaths.Add(type, path);
     }
-}
-
-public enum ThemeType
-{
-    Dark,
-    Light
 }
