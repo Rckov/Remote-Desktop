@@ -1,9 +1,13 @@
-﻿using RemoteDesktop.Helpers;
+﻿using AvalonDock.Themes;
+
+using RemoteDesktop.Helpers;
 using RemoteDesktop.Infrastructure;
 using RemoteDesktop.Models;
 using RemoteDesktop.Models.Base;
+using RemoteDesktop.Services.Implementation;
 using RemoteDesktop.Services.Interfaces;
 
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -23,6 +27,7 @@ internal class MainViewModel : ObservableObject
         ServersGroups = [.. TestGenerated.GenerateServerGroups(10).Select(g => new TreeItemViewModel(g))];
 
         ConnectCommand = new RelayCommand(ServerConnect);
+        ThemeChangeCommand = new RelayCommand(ThemeChange);
     }
 
     public TreeItemViewModel SelectedTreeItem
@@ -41,6 +46,7 @@ internal class MainViewModel : ObservableObject
     public ObservableCollection<ConnectedServerViewModel> ConnectedServers { get; set; } = [];
 
     public ICommand ConnectCommand { get; }
+    public ICommand ThemeChangeCommand { get; }
 
     public string SearchText
     {
@@ -93,5 +99,14 @@ internal class MainViewModel : ObservableObject
         {
             item.ApplyFilter(pattern);
         }
+    }
+
+    private void ThemeChange()
+    {
+        var curTheme = _themeManager.CurrentTheme;
+        var newTheme = curTheme == ThemeType.Light ? ThemeType.Dark : ThemeType.Light;
+
+        _themeManager.Apply(newTheme);
+
     }
 }

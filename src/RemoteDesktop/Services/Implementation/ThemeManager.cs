@@ -1,5 +1,4 @@
-﻿using RemoteDesktop.Models.Messages;
-using RemoteDesktop.Services.Interfaces;
+﻿using RemoteDesktop.Services.Interfaces;
 
 using System;
 using System.Collections.Generic;
@@ -10,18 +9,15 @@ namespace RemoteDesktop.Services.Implementation;
 
 internal class ThemeManager : IThemeManager
 {
-    private readonly IMessenger _messenger;
     private readonly Dictionary<ThemeType, string> _themePaths = [];
 
-    public ThemeManager(IMessenger messenger)
+    public ThemeManager()
     {
-        _messenger = messenger;
-
         AddTheme(ThemeType.Dark, "Resources/Themes/DarkBrushes.xaml");
         AddTheme(ThemeType.Light, "Resources/Themes/LightBrushes.xaml");
     }
 
-    public ThemeType CurrentTheme { get; private set; }
+    public ThemeType CurrentTheme { get; private set; } = ThemeType.Light;
 
     public void Apply(ThemeType themeType)
     {
@@ -44,8 +40,6 @@ internal class ThemeManager : IThemeManager
 
             dictionaries.Add(newTheme);
         }
-
-        _messenger.Send(new ThemeMessage(themeType));
     }
 
     private void AddTheme(ThemeType type, string path)
