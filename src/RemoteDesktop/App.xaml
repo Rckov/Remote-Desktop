@@ -1,15 +1,19 @@
 ﻿<Application x:Class="RemoteDesktop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cv="clr-namespace:RemoteDesktop.Infrastructure.Convertres"
              StartupUri="Views/Windows/MainWindow.xaml">
    <Application.Resources>
       <ResourceDictionary>
          <ResourceDictionary.MergedDictionaries>
-            <ResourceDictionary Source="/Views/Styles/Generic.xaml" />
-            <ResourceDictionary Source="/Views/Styles/AvalonDock.xaml" />
+            <ResourceDictionary Source="/Resources/Styles/Generic.xaml" />
+            <ResourceDictionary Source="/Resources/Styles/AvalonDock.xaml" />
 
             <ResourceDictionary Source="/Resources/Themes/LightBrushes.xaml" />
          </ResourceDictionary.MergedDictionaries>
+
+         <cv:TreeViewItemMarginConverter x:Key="TreeViewItemMarginConverter" />
+         <cv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       </ResourceDictionary>
    </Application.Resources>
 </Application>

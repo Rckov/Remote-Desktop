@@ -1,12 +1,12 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace RemoteDesktop.Views.UserControls;
+namespace RemoteDesktop.Views.Controls;
 
-public partial class SearchBox : UserControl
+public partial class SearchBar : UserControl
 {
     public static readonly DependencyProperty SearchTextProperty =
-        DependencyProperty.Register("SearchText", typeof(string), typeof(SearchBox), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register("SearchText", typeof(string), typeof(SearchBar), new PropertyMetadata(string.Empty));
 
     public string SearchText
     {
@@ -14,7 +14,7 @@ public partial class SearchBox : UserControl
         set => SetValue(SearchTextProperty, value);
     }
 
-    public SearchBox()
+    public SearchBar()
     {
         InitializeComponent();
     }

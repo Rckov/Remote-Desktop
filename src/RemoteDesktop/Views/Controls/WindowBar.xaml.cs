@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace RemoteDesktop.Views.UserControls;
+namespace RemoteDesktop.Views.Controls;
 
 public partial class WindowBar : UserControl
 {

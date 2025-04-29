@@ -8,7 +8,6 @@
     <LangVersion>preview</LangVersion>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <ApplicationIcon>Resources\appicon.ico</ApplicationIcon>
-    <UserSecretsId>1de7859d-3fb9-4533-b6e4-8b4e931d1055</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

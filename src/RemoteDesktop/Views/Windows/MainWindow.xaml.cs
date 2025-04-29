@@ -1,6 +1,4 @@
-﻿using AvalonDock;
-
-using RemoteDesktop.ViewModels;
+﻿using RemoteDesktop.ViewModels;
 
 using System.Windows;
 
@@ -12,21 +10,5 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         DataContext = App.Services.GetInstance<MainViewModel>();
-    }
-
-    private void Server_Diconnect(object sender, DocumentClosedEventArgs e)
-    {
-        if (DataContext is MainViewModel viewModel)
-        {
-            viewModel.ServerDiconnect(e.Document.Content as ConnectedServerViewModel);
-        }
-    }
-
-    private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-    {
-        if (DataContext is MainViewModel viewModel)
-        {
-            viewModel.SelectedTreeItem = e.NewValue as TreeItemViewModel;
-        }
     }
 }

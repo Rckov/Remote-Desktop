@@ -509,5 +509,8 @@
       <Setter Property="LayoutItemContainerStyle" Value="{StaticResource LayoutItemStyle}" />
       <Setter Property="DocumentPaneControlStyle" Value="{StaticResource DocumentPaneControlStyle}" />
       <Setter Property="AnchorablePaneControlStyle" Value="{StaticResource AnchorablePaneControl}" />
+      <Setter Property="AnchorablePaneControlStyle" Value="{StaticResource AnchorablePaneControl}" />
+      <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
+      <Setter Property="Effect" Value="{DynamicResource DropShadowEffect1}" />
    </Style>
 </ResourceDictionary>

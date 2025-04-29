@@ -1,5 +1,5 @@
 ﻿using RemoteDesktop.Models;
-using RemoteDesktop.Models.Base;
+using RemoteDesktop.ViewModels.Base;
 
 using System;
 using System.Collections.ObjectModel;
@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace RemoteDesktop.ViewModels;
 
-internal class TreeItemViewModel : ObservableObject
+internal class TreeItemViewModel : BaseViewModel
 {
     public string Name { get; }
     public object Model { get; }

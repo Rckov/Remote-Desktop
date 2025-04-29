@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace RemoteDesktop.Infrastructure.ValueConverters;
+namespace RemoteDesktop.Infrastructure.Convertres;
 
 internal class TreeViewItemMarginConverter : IValueConverter
 {

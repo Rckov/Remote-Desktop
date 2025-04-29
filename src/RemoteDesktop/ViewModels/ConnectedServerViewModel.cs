@@ -1,9 +1,9 @@
 ﻿using RemoteDesktop.Models;
-using RemoteDesktop.Models.Base;
+using RemoteDesktop.ViewModels.Base;
 
 namespace RemoteDesktop.ViewModels;
 
-internal class ConnectedServerViewModel : ObservableObject
+internal class ConnectedServerViewModel : BaseViewModel
 {
     public string Name
     {

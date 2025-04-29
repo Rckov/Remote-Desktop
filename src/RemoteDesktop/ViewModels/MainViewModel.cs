@@ -1,8 +1,8 @@
-﻿using RemoteDesktop.Enums;
-using RemoteDesktop.Infrastructure;
+﻿using RemoteDesktop.Infrastructure;
 using RemoteDesktop.Models;
-using RemoteDesktop.Models.Base;
+using RemoteDesktop.Services.Implementation;
 using RemoteDesktop.Services.Interfaces;
+using RemoteDesktop.ViewModels.Base;
 
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace RemoteDesktop.ViewModels;
 
-internal class MainViewModel : ObservableObject
+internal class MainViewModel : BaseViewModel
 {
     private IMessenger _messenger;
     private IThemeManager _themeManager;
