@@ -15,7 +15,6 @@
          <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
-            <RowDefinition Height="Auto" />
          </Grid.RowDefinitions>
 
          <controls:WindowBar Effect="{DynamicResource DropShadowEffect1}">
@@ -42,8 +41,6 @@
                <components:ConnectionWorkspace Grid.Column="2" />
             </Grid>
          </Border>
-
-         <components:LogStatus Grid.Row="2" />
       </Grid>
    </Border>
 </Window>

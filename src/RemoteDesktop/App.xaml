@@ -12,7 +12,6 @@
             <ResourceDictionary Source="/Resources/Themes/LightBrushes.xaml" />
          </ResourceDictionary.MergedDictionaries>
 
-         <cv:TreeViewItemMarginConverter x:Key="TreeViewItemMarginConverter" />
          <cv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       </ResourceDictionary>
    </Application.Resources>

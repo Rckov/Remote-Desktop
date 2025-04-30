@@ -19,6 +19,7 @@ public partial class App : Application
 
     private static Container ConfigureServices(Container container)
     {
+        container.Register<IStorageService, JsonStorageService>();
         container.Register<IMessenger, Messanger>(Lifestyle.Singleton);
         container.Register<IThemeManager, ThemeManager>(Lifestyle.Singleton);
 

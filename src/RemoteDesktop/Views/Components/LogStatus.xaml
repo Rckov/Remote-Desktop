@@ -1,8 +1,0 @@
-﻿<UserControl x:Class="RemoteDesktop.Views.Components.LogStatus"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-   <Border Style="{StaticResource ContentPanel}" CornerRadius="0" Padding="5">
-      <TextBlock Text="Status" />
-   </Border>
-</UserControl>

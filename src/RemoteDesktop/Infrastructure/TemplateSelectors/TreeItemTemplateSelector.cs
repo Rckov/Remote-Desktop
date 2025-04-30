@@ -1,6 +1,6 @@
-﻿using RemoteDesktop.ViewModels;
+﻿using RemoteDesktop.Models;
+using RemoteDesktop.ViewModels;
 
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,6 +14,6 @@ internal class TreeItemTemplateSelector : DataTemplateSelector
     public override DataTemplate SelectTemplate(object item, DependencyObject container)
     {
         var vm = item as TreeItemViewModel;
-        return vm.Children.Any() ? GroupTemplate : ServerTemplate;
+        return vm.Model is ServerGroup ? GroupTemplate : ServerTemplate;
     }
 }

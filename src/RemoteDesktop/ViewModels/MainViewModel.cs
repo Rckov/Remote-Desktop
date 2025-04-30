@@ -14,11 +14,27 @@ internal class MainViewModel : BaseViewModel
 {
     private IMessenger _messenger;
     private IThemeManager _themeManager;
+    private IStorageService _storage;
 
-    public MainViewModel(IMessenger messenger, IThemeManager themeManager)
+    public MainViewModel(IMessenger messenger, IThemeManager themeManager, IStorageService storage)
     {
         _messenger = messenger;
         _themeManager = themeManager;
+        _storage = storage;
+
+        ServersGroups = [.. _storage.LoadData().Select(x => new TreeItemViewModel(x))];
+
+        ServersGroups.Add(new TreeItemViewModel(new ServerGroup()
+        {
+            Name = "Test",
+            Servers =
+            [
+                new Server()
+                {
+                    Name = "Server Test 1"
+                }
+            ]
+        }));
 
         ConnectCommand = new RelayCommand(ServerConnect);
         ThemeChangeCommand = new RelayCommand(ThemeChange);
