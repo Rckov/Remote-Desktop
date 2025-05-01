@@ -6,20 +6,21 @@ using RemoteDesktop.ViewModels.Base;
 
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime;
 using System.Windows.Input;
 
 namespace RemoteDesktop.ViewModels;
 
 internal class MainViewModel : BaseViewModel
 {
-    private IMessenger _messenger;
-    private IThemeManager _themeManager;
+    private ISettingsService _settings;
+    private IThemeManager _theme;
     private IStorageService _storage;
 
-    public MainViewModel(IMessenger messenger, IThemeManager themeManager, IStorageService storage)
+    public MainViewModel(ISettingsService settings, IThemeManager theme, IStorageService storage)
     {
-        _messenger = messenger;
-        _themeManager = themeManager;
+        _theme = theme;
+        _settings = settings;
         _storage = storage;
 
         ServersGroups = [.. _storage.LoadData().Select(x => new TreeItemViewModel(x))];
@@ -35,6 +36,9 @@ internal class MainViewModel : BaseViewModel
                 }
             ]
         }));
+
+
+        _theme.Apply(_settings.Settings.ThemeType);
 
         ConnectCommand = new RelayCommand(ServerConnect);
         ThemeChangeCommand = new RelayCommand(ThemeChange);
@@ -113,9 +117,12 @@ internal class MainViewModel : BaseViewModel
 
     private void ThemeChange()
     {
-        var curTheme = _themeManager.CurrentTheme;
+        var curTheme = _theme.CurrentTheme;
         var newTheme = curTheme == ThemeType.Light ? ThemeType.Dark : ThemeType.Light;
 
-        _themeManager.Apply(newTheme);
+        _theme.Apply(newTheme);
+
+        _settings.Settings.ThemeType = newTheme;
+        _settings.SaveSettings();
     }
 }
