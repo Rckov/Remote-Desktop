@@ -1,6 +1,7 @@
 ﻿using RemoteDesktop.Services.Implementation;
 using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels;
+using RemoteDesktop.Views.Windows;
 
 using SimpleInjector;
 
@@ -26,6 +27,15 @@ public partial class App : Application
 
     public static string DataPath { get; private set; }
     public static Container Services { get; private set; }
+
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        var window = new MainWindow()
+        {
+            DataContext = Services.GetInstance<MainViewModel>()
+        };
+        window.Show();
+    }
 
     private static Container ConfigureServices(Container container)
     {

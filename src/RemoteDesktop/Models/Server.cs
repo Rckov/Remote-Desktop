@@ -5,15 +5,15 @@ using System.Runtime.Serialization;
 
 namespace RemoteDesktop.Models;
 
-
 [DataContract]
 internal class ServerGroup : ObservableObject
 {
     [DataMember]
-    public int Id { get; set; }
-
-    [DataMember]
-    public string Name { get; set; }
+    public string Name
+    {
+        get;
+        set => Set(ref field, value);
+    }
 
     [DataMember]
     public ObservableCollection<Server> Servers { get; set; } = [];
@@ -23,13 +23,11 @@ internal class ServerGroup : ObservableObject
 internal class Server : ObservableObject
 {
     [DataMember]
-    public int Id { get; set; }
-
-    [DataMember]
-    public int IdGroup { get; set; }
-
-    [DataMember]
-    public string Name { get; set; }
+    public string Name
+    {
+        get;
+        set => Set(ref field, value);
+    }
 
     [DataMember]
     public string Description { get; set; }

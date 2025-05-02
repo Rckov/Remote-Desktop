@@ -1,8 +1,7 @@
 ﻿<Application x:Class="RemoteDesktop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:cv="clr-namespace:RemoteDesktop.Infrastructure.Convertres"
-             StartupUri="Views/Windows/MainWindow.xaml">
+             xmlns:cv="clr-namespace:RemoteDesktop.Infrastructure.Convertres">
    <Application.Resources>
       <ResourceDictionary>
          <ResourceDictionary.MergedDictionaries>
