@@ -1,13 +1,12 @@
 ﻿using RemoteDesktop.Infrastructure;
+using RemoteDesktop.Infrastructure.Handlers;
 using RemoteDesktop.Models;
 using RemoteDesktop.Services.Implementation;
 using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels.Base;
 
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime;
 using System.Windows.Input;
 
 namespace RemoteDesktop.ViewModels;
@@ -26,47 +25,15 @@ internal class MainViewModel : BaseViewModel
 
         ServersGroups = [.. _storage.LoadData().Select(x => new TreeItemViewModel(x))];
 
-        ServersGroups.Add(new TreeItemViewModel(
-            new ServerGroup() {
-                Name = "Test",
-                Servers =
-                [
-                    new Server()
-                    {
-                        Name = "Server Test 1"
-                    }
-                ]
-        }));
-        ServersGroups.Add(new TreeItemViewModel(
-            new ServerGroup()
-            {
-                Name = "Test",
-                Servers =
-                [
-                    new Server()
-                    {
-                        Name = "Server Test 1"
-                    }
-                ]
-            }));
-        ServersGroups.Add(new TreeItemViewModel(
-            new ServerGroup()
-            {
-                Name = "Test",
-                Servers =
-                [
-                    new Server()
-                    {
-                        Name = "Server Test 1"
-                    }
-                ]
-            }));
-
         _theme.Apply(_settings.Settings.ThemeType);
+
+        DropHandler = new TreeDropHandler(ServersGroups);
 
         ConnectCommand = new RelayCommand(ServerConnect);
         ThemeChangeCommand = new RelayCommand(ThemeChange);
     }
+
+    public TreeDropHandler DropHandler { get; }
 
     public TreeItemViewModel SelectedTreeItem
     {
