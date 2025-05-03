@@ -11,6 +11,7 @@
    <SolidColorBrush x:Key="ButtonHoverBackground" Color="#F0F0F0" />
    <SolidColorBrush x:Key="ButtonPressedBackground" Color="#D8D8D8" />
    <SolidColorBrush x:Key="PrimaryBrush" Color="#326CF3" />
+   <SolidColorBrush x:Key="SelectContentBrush" Color="#90F0F0F0" />
 
    <DropShadowEffect x:Key="DropShadowEffect1" ShadowDepth="0.5" Opacity="0.04" />
 </ResourceDictionary>

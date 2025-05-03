@@ -12,6 +12,12 @@ namespace RemoteDesktop.Infrastructure.Behaviors;
 internal class TreeDropHandler : ITreeDropHandler
 {
     public event Action ItemMoved;
+    public Point DragMouseAnchorPoint { get; }
+
+    public TreeDropHandler()
+    {
+        DragMouseAnchorPoint = new Point(.4, 0);
+    }
 
     public void DragOver(IDropInfo info)
     {
@@ -70,4 +76,6 @@ internal class TreeDropHandler : ITreeDropHandler
 public interface ITreeDropHandler : IDropTarget
 {
     event Action ItemMoved;
+
+    Point DragMouseAnchorPoint { get; }
 }
