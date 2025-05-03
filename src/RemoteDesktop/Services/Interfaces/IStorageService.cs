@@ -1,4 +1,4 @@
-﻿using RemoteDesktop.Models;
+﻿using RemoteDesktop.ViewModels;
 
 using System.Collections.Generic;
 
@@ -6,7 +6,7 @@ namespace RemoteDesktop.Services.Interfaces;
 
 internal interface IStorageService
 {
-    void SaveData(IEnumerable<ServerGroup> groups);
+    void SaveData(IEnumerable<TreeItemViewModel> groups);
 
-    IEnumerable<ServerGroup> LoadData();
+    IEnumerable<TreeItemViewModel> LoadData();
 }

@@ -1,57 +1,37 @@
 ﻿using RemoteDesktop.Infrastructure;
-using RemoteDesktop.Infrastructure.Handlers;
-using RemoteDesktop.Models;
+using RemoteDesktop.Infrastructure.Behaviors;
 using RemoteDesktop.Services.Implementation;
 using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels.Base;
 
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 
 namespace RemoteDesktop.ViewModels;
 
 internal class MainViewModel : BaseViewModel
 {
-    private ISettingsService _settings;
-    private IThemeManager _theme;
-    private IStorageService _storage;
+    private readonly ISettingsService _settingsService;
+    private readonly IThemeManager _themeService;
+    private readonly IStorageService _storageService;
 
-    public MainViewModel(ISettingsService settings, IThemeManager theme, IStorageService storage)
+    public MainViewModel(
+        ISettingsService settingsService,
+        IThemeManager themeService,
+        IStorageService storageService,
+        ITreeDropHandler dropTarget)
     {
-        _theme = theme;
-        _settings = settings;
-        _storage = storage;
+        _themeService = themeService;
+        _settingsService = settingsService;
+        _storageService = storageService;
 
-        ServersGroups = [.. _storage.LoadData().Select(x => new TreeItemViewModel(x))];
+        _themeService.Apply(_settingsService.Settings.ThemeType);
 
-        _theme.Apply(_settings.Settings.ThemeType);
+        DropHandler = dropTarget;
+        DropHandler.ItemMoved += ServerGroups_Changed;
 
-        DropHandler = new TreeDropHandler(ServersGroups);
-
-        ConnectCommand = new RelayCommand(ServerConnect);
-        ThemeChangeCommand = new RelayCommand(ThemeChange);
+        ServersGroups = [.. _storageService.LoadData()];
     }
-
-    public TreeDropHandler DropHandler { get; }
-
-    public TreeItemViewModel SelectedTreeItem
-    {
-        get;
-        set => Set(ref field, value);
-    }
-
-    public ConnectedServerViewModel ActiveConnect
-    {
-        get;
-        set => Set(ref field, value);
-    }
-
-    public ObservableCollection<TreeItemViewModel> ServersGroups { get; set; } = [];
-    public ObservableCollection<ConnectedServerViewModel> ConnectedServers { get; set; } = [];
-
-    public ICommand ConnectCommand { get; }
-    public ICommand ThemeChangeCommand { get; }
 
     public string SearchText
     {
@@ -65,37 +45,30 @@ internal class MainViewModel : BaseViewModel
         }
     }
 
-    public void ServerConnect()
+    public ITreeDropHandler DropHandler { get; }
+
+    public TreeItemViewModel SelectedTreeItem
     {
-        if (SelectedTreeItem.Model is not Server server)
-        {
-            return;
-        }
-
-        if (ConnectedServers.Any(model => model.Name == server.Name))
-        {
-            return;
-        }
-
-        var con = new ConnectedServerViewModel(server);
-        con.Connect();
-
-        ConnectedServers.Add(con);
+        get;
+        set => Set(ref field, value);
     }
 
-    public void ServerDiconnect(ConnectedServerViewModel model)
+    public ConnectedServerViewModel ActiveConnect
     {
-        if (!ConnectedServers.Contains(model))
-        {
-            return;
-        }
+        get;
+        set => Set(ref field, value);
+    }
 
-        if (model.IsConnected)
-        {
-            model.Disconnect();
-        }
+    public ObservableCollection<TreeItemViewModel> ServersGroups { get; } = [];
+    public ObservableCollection<ConnectedServerViewModel> ConnectedServers { get; } = [];
 
-        ConnectedServers.Remove(model);
+    public ICommand ConnectCommand { get; private set; }
+    public ICommand ThemeChangeCommand { get; private set; }
+
+    protected override void InitializeCommands()
+    {
+        ConnectCommand = new RelayCommand(ServerConnect);
+        ThemeChangeCommand = new RelayCommand(ThemeChange);
     }
 
     private void UpdateFilter(string pattern)
@@ -108,12 +81,25 @@ internal class MainViewModel : BaseViewModel
 
     private void ThemeChange()
     {
-        var curTheme = _theme.CurrentTheme;
+        var curTheme = _themeService.CurrentTheme;
         var newTheme = curTheme == ThemeType.Light ? ThemeType.Dark : ThemeType.Light;
 
-        _theme.Apply(newTheme);
+        _themeService.Apply(newTheme);
 
-        _settings.Settings.ThemeType = newTheme;
-        _settings.SaveSettings();
+        _settingsService.Settings.ThemeType = newTheme;
+        _settingsService.SaveSettings();
+    }
+
+    private void ServerGroups_Changed()
+    {
+        _storageService.SaveData(ServersGroups);
+    }
+
+    public void ServerConnect()
+    {
+    }
+
+    public void ServerDiconnect(ConnectedServerViewModel model)
+    {
     }
 }

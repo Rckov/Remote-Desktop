@@ -5,26 +5,36 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace RemoteDesktop.ViewModels;
 
+[DataContract]
+[KnownType(typeof(Server))]
+[KnownType(typeof(ServerGroup))]
 internal class TreeItemViewModel : BaseViewModel
 {
+    [DataMember]
     public string Name
     {
         get;
         set => Set(ref field, value);
     }
 
+    [DataMember]
     public object Model { get; private set; }
-    public ObservableCollection<TreeItemViewModel> Children { get; }
 
+    [DataMember]
+    public ObservableCollection<TreeItemViewModel> Children { get; set; }
+
+    [DataMember]
     public bool IsVisible
     {
         get;
         set => Set(ref field, value);
     }
 
+    [DataMember]
     public bool IsExpanded
     {
         get;

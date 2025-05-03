@@ -1,5 +1,5 @@
-﻿using RemoteDesktop.Models;
-using RemoteDesktop.Services.Interfaces;
+﻿using RemoteDesktop.Services.Interfaces;
+using RemoteDesktop.ViewModels;
 
 using System.Collections.Generic;
 using System.IO;
@@ -12,24 +12,24 @@ internal class JsonStorageService : IStorageService
     private const string FileName = "servers.json";
     private static readonly string PathFileName = Path.Combine(App.DataPath, FileName);
 
-    public void SaveData(IEnumerable<ServerGroup> groups)
+    public void SaveData(IEnumerable<TreeItemViewModel> groups)
     {
-        var serializer = new DataContractJsonSerializer(typeof(IEnumerable<ServerGroup>));
+        var serializer = new DataContractJsonSerializer(typeof(IEnumerable<TreeItemViewModel>));
         using var stream = File.Create(PathFileName);
 
         serializer.WriteObject(stream, groups);
     }
 
-    public IEnumerable<ServerGroup> LoadData()
+    public IEnumerable<TreeItemViewModel> LoadData()
     {
         if (!File.Exists(PathFileName))
         {
             return [];
         }
 
-        var serializer = new DataContractJsonSerializer(typeof(IEnumerable<ServerGroup>));
+        var serializer = new DataContractJsonSerializer(typeof(IEnumerable<TreeItemViewModel>));
         using var stream = File.OpenRead(PathFileName);
 
-        return (IEnumerable<ServerGroup>)serializer.ReadObject(stream);
+        return (IEnumerable<TreeItemViewModel>)serializer.ReadObject(stream);
     }
 }

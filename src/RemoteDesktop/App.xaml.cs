@@ -1,4 +1,5 @@
-﻿using RemoteDesktop.Services.Implementation;
+﻿using RemoteDesktop.Infrastructure.Behaviors;
+using RemoteDesktop.Services.Implementation;
 using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels;
 using RemoteDesktop.Views.Windows;
@@ -41,9 +42,11 @@ public partial class App : Application
     {
         container.Register<IStorageService, JsonStorageService>();
         container.Register<ISettingsService, SettingsService>();
-        container.Register<IThemeManager, ThemeManager>(Lifestyle.Singleton);
+        container.Register<IThemeManager, ThemeManager>();
 
-        container.Register<MainViewModel>(Lifestyle.Transient);
+        container.Register<ITreeDropHandler, TreeDropHandler>();
+
+        container.Register<MainViewModel>();
         container.Verify();
 
         return container;
