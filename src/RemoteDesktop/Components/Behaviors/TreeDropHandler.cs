@@ -32,7 +32,7 @@ internal class TreeDropHandler : ITreeDropHandler
             return;
         }
 
-        if (dragged.Model is Server && targetVm?.Model is ServerGroup)
+        if (dragged.Model is Server && targetVm.Model is ServerGroup)
         {
             info.Effects = DragDropEffects.Move;
             info.DropTargetAdorner = DropTargetAdorners.Highlight;

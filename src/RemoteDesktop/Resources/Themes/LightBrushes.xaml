@@ -3,6 +3,7 @@
 
    <SolidColorBrush x:Key="BackgroundBrush" Color="#F2F2F2" />
    <SolidColorBrush x:Key="ContentBackgroundBrush" Color="#FFFFFF" />
+   <SolidColorBrush x:Key="ContentInactiveBackgroundBrush" Color="#FCFCFC" />
 
    <SolidColorBrush x:Key="TextBrush" Color="#242424" />
    <SolidColorBrush x:Key="TextBrush2" Color="#606060" />

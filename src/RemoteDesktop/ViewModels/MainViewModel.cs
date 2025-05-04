@@ -5,7 +5,6 @@ using RemoteDesktop.Services.Implementation;
 using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels.Base;
 
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -28,7 +27,7 @@ internal class MainViewModel : BaseViewModel
         _themeService.Apply(_settingsService.Settings.ThemeType);
 
         DropHandler = new TreeDropHandler();
-        DropHandler.ItemMoved += ServersGroups_Changed;
+        DropHandler.ItemMoved += OnServersGroupsChanged;
 
         ServersGroups = [.. _storageService.GetData<IEnumerable<ServerGroup>>().Select(x => new TreeItemViewModel(x))];
     }
@@ -82,7 +81,7 @@ internal class MainViewModel : BaseViewModel
         }
     }
 
-    private void ServersGroups_Changed()
+    private void OnServersGroupsChanged()
     {
         var groupModel = ServersGroups.Where(x => x.Model is ServerGroup);
         var group = groupModel.Select(x => x.Model).OfType<ServerGroup>();
