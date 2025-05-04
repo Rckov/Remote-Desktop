@@ -88,8 +88,9 @@ internal class TreeItemViewModel : ObservableObject
             switch (Model)
             {
                 case Server m:
-                    Name = m.Name; 
+                    Name = m.Name;
                     break;
+
                 case ServerGroup m:
                     Name = m.Name;
                     break;

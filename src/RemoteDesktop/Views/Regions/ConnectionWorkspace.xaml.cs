@@ -1,15 +1,23 @@
-﻿using System.Windows.Controls;
+﻿using AvalonDock;
 
-namespace RemoteDesktop.Views.Regions
+using RemoteDesktop.ViewModels;
+
+using System.Windows.Controls;
+
+namespace RemoteDesktop.Views.Regions;
+
+public partial class ConnectionWorkspace : UserControl
 {
-    /// <summary>
-    /// Логика взаимодействия для ConnectionWorkspace.xaml
-    /// </summary>
-    public partial class ConnectionWorkspace : UserControl
+    public ConnectionWorkspace()
     {
-        public ConnectionWorkspace()
+        InitializeComponent();
+    }
+
+    private void Server_Diconnect(object sender, DocumentClosedEventArgs e)
+    {
+        if (DataContext is MainViewModel viewModel)
         {
-            InitializeComponent();
+            viewModel.Diconnect(e.Document.Content as ConnectedServerViewModel);
         }
     }
 }

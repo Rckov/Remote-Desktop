@@ -7,7 +7,7 @@ internal class ConnectedServerViewModel : ObservableObject
 {
     public string Name
     {
-        get => Server?.Name;
+        get => Server.Name;
     }
 
     public Server Server { get; }

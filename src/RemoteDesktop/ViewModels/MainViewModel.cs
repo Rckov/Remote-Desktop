@@ -55,11 +55,21 @@ internal class MainViewModel : BaseViewModel
     public ObservableCollection<TreeItemViewModel> ServersGroups { get; }
     public ObservableCollection<ConnectedServerViewModel> ConnectedServers { get; } = [];
 
+    public ICommand ConnectCommand { get; private set; }
     public ICommand ThemeChangeCommand { get; private set; }
 
     protected override void InitializeCommands()
     {
+        ConnectCommand = new RelayCommand(Connect);
         ThemeChangeCommand = new RelayCommand(ThemeChange);
+    }
+
+    private void Connect()
+    {
+    }
+
+    internal void Diconnect(ConnectedServerViewModel model)
+    {
     }
 
     private void ThemeChange()

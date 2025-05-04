@@ -1,13 +1,10 @@
 ﻿<UserControl x:Class="RemoteDesktop.Views.Regions.ServerExplorerWorkspace"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-
-             xmlns:controls="clr-namespace:RemoteDesktop.Views.UserControls"
-
              xmlns:vm="clr-namespace:RemoteDesktop.ViewModels"
-             xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop">
+             xmlns:controls="clr-namespace:RemoteDesktop.Views.UserControls">
 
-    <Border Background="{DynamicResource ContentBackgroundBrush}"
+   <Border Background="{DynamicResource ContentBackgroundBrush}"
             Padding="1"
             CornerRadius="4"
             BorderBrush="{DynamicResource BorderBrush}"
@@ -23,7 +20,7 @@
 
                <controls:SearchBar Margin="4" SearchText="{Binding SearchText, Mode=TwoWay}" />
 
-               <TreeView ItemsSource="{Binding ServersGroups}" Grid.Row="1">
+               <TreeView ItemsSource="{Binding ServersGroups}" Grid.Row="1" SelectedItemChanged="TreeView_SelectedItemChanged">
                   <TreeView.ItemTemplate>
                      <HierarchicalDataTemplate DataType="{x:Type vm:TreeItemViewModel}" ItemsSource="{Binding Children}">
                         <StackPanel Orientation="Horizontal">
@@ -49,5 +46,5 @@
 
          <TabItem Header="Favorites" IsEnabled="False" />
       </TabControl>
-    </Border>
+   </Border>
 </UserControl>
