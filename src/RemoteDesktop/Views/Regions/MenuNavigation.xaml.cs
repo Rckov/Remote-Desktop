@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace RemoteDesktop.Views.Components;
+namespace RemoteDesktop.Views.Regions;
 
 public partial class MenuNavigation : UserControl
 {

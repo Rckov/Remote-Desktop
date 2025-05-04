@@ -29,7 +29,7 @@
                         <Button x:Name="DocumentCloseButton" Grid.Column="2" Margin="2,3,0,0"
                                 Command="{Binding Path=LayoutItem.CloseCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                 Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Visibility="Hidden">
-                           <TextBlock Text="&#xE106;" FontWeight="Bold" FontFamily="{StaticResource FontIcon}" FontSize="8" Foreground="{DynamicResource TextForeground}" />
+                           <TextBlock Text="&#xE106;" FontWeight="Bold" FontFamily="{StaticResource FontIcon}" FontSize="8" Foreground="{DynamicResource TextBrush}" />
                         </Button>
                      </Grid>
                   </Border>
@@ -79,8 +79,8 @@
    </Style>
 
    <Style x:Key="DocumentPaneControlStyle" TargetType="{x:Type ad:LayoutDocumentPaneControl}">
-      <Setter Property="Background" Value="{DynamicResource ContentBackground}" />
-      <Setter Property="Foreground" Value="{DynamicResource TextForeground}" />
+      <Setter Property="Background" Value="{DynamicResource ContentBackgroundBrush}" />
+      <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
       <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
       <Setter Property="BorderThickness" Value="1,0,1,1" />
       <Setter Property="Template">
@@ -107,8 +107,8 @@
                            <ad:ContextMenuEx ItemsSource="{Binding Model.Children, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="500">
                               <ad:ContextMenuEx.Style>
                                  <Style TargetType="{x:Type ad:ContextMenuEx}">
-                                    <Setter Property="Background" Value="{DynamicResource PopupBackground}" />
-                                    <Setter Property="Foreground" Value="{DynamicResource TextForeground2}" />
+                                    <Setter Property="Background" Value="{DynamicResource ContentBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource TextBrush2}" />
                                     <Setter Property="Template">
                                        <Setter.Value>
                                           <ControlTemplate TargetType="{x:Type ad:ContextMenuEx}">
@@ -124,7 +124,7 @@
                               </ad:ContextMenuEx.Style>
                               <ad:ContextMenuEx.ItemContainerStyle>
                                  <Style TargetType="{x:Type MenuItemEx}">
-                                    <Setter Property="Background" Value="{DynamicResource PanelBackground}" />
+                                    <Setter Property="Background" Value="{DynamicResource ContentBackgroundBrush}" />
                                     <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
                                     <Setter Property="BorderThickness" Value="1" />
                                     <Setter Property="HeaderTemplate" Value="{Binding Path=Root.Manager.DocumentPaneMenuItemHeaderTemplate}" />
@@ -151,7 +151,7 @@
                            </ad:ContextMenuEx>
                         </ad:DropDownButton.DropDownContextMenu>
                         <Border Background="Transparent">
-                           <TextBlock Text="&#xE972;" FontFamily="{StaticResource FontIcon}" Padding="2" FontSize="9" Foreground="{DynamicResource TextForeground}" />
+                           <TextBlock Text="&#xE972;" FontFamily="{StaticResource FontIcon}" Padding="2" FontSize="9" Foreground="{DynamicResource TextBrush}" />
                         </Border>
                      </ad:DropDownButton>
                   </Grid>
@@ -179,8 +179,8 @@
             <Style TargetType="{x:Type TabItem}">
                <Setter Property="Padding" Value="3,0" />
                <Setter Property="Margin" Value="0,2,0,0" />
-               <Setter Property="Background" Value="{DynamicResource ContentBackground}" />
-               <Setter Property="Foreground" Value="{DynamicResource TextForeground}" />
+               <Setter Property="Background" Value="{DynamicResource ContentBackgroundBrush}" />
+               <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
                <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
                <Setter Property="ToolTip" Value="{Binding ToolTip}" />
                <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
@@ -213,8 +213,8 @@
                            </Trigger>
 
                            <Trigger Property="Selector.IsSelected" Value="False">
-                              <Setter Property="Foreground" Value="{DynamicResource TextForeground2}" />
-                              <Setter Property="Background" Value="{DynamicResource Background}" />
+                              <Setter Property="Foreground" Value="{DynamicResource TextBrush2}" />
+                              <Setter Property="Background" Value="{DynamicResource BackgroundBrush}" />
                            </Trigger>
 
                            <MultiTrigger>
@@ -223,9 +223,9 @@
                                  <Condition Property="Selector.IsSelected" Value="False" />
                               </MultiTrigger.Conditions>
 
-                              <Setter Property="Background" Value="{DynamicResource ButtonHoverBackground}" />
+                              <Setter Property="Background" Value="{DynamicResource ButtonHoverBrush}" />
                               <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
-                              <Setter Property="Foreground" Value="{DynamicResource TextForeground}" />
+                              <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
                            </MultiTrigger>
                         </ControlTemplate.Triggers>
                      </ControlTemplate>
@@ -351,8 +351,8 @@
    </Style>
 
    <Style x:Key="AnchorablePaneControl" TargetType="{x:Type ad:LayoutAnchorablePaneControl}" BasedOn="{StaticResource AnchorablePaneControlStyle}">
-      <Setter Property="Foreground" Value="{DynamicResource TextForeground}" />
-      <Setter Property="Background" Value="{DynamicResource PanelBackground}" />
+      <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+      <Setter Property="Background" Value="{DynamicResource ContentBackgroundBrush}" />
       <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
       <Setter Property="Template">
          <Setter.Value>
@@ -385,10 +385,10 @@
    </Style>
 
    <Style x:Key="{x:Type ad:LayoutAnchorableFloatingWindowControl}" TargetType="{x:Type ad:LayoutAnchorableFloatingWindowControl}">
-      <Setter Property="Background" Value="{DynamicResource Background}" />
+      <Setter Property="Background" Value="{DynamicResource BackgroundBrush}" />
       <Setter Property="BorderThickness" Value="1" />
       <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
-      <Setter Property="Foreground" Value="{DynamicResource TextForeground}" />
+      <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
       <Setter Property="WindowChrome.WindowChrome">
          <Setter.Value>
             <WindowChrome CaptionHeight="26" CornerRadius="3,3,3,3" GlassFrameThickness="0" ResizeBorderThickness="10" />
@@ -435,9 +435,9 @@
    </Style>
 
    <Style x:Key="{x:Type ad:LayoutDocumentFloatingWindowControl}" TargetType="{x:Type ad:LayoutDocumentFloatingWindowControl}">
-      <Setter Property="Background" Value="{DynamicResource Background}" />
+      <Setter Property="Background" Value="{DynamicResource BackgroundBrush}" />
       <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
-      <Setter Property="Foreground" Value="{DynamicResource TextForeground}" />
+      <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
       <Setter Property="BorderThickness" Value="1" />
       <Setter Property="WindowChrome.WindowChrome">
          <Setter.Value>
@@ -505,12 +505,11 @@
    </Style>
 
    <Style TargetType="{x:Type ad:DockingManager}">
-      <Setter Property="Effect" Value="{DynamicResource DropShadowEffect2}" />
       <Setter Property="LayoutItemContainerStyle" Value="{StaticResource LayoutItemStyle}" />
       <Setter Property="DocumentPaneControlStyle" Value="{StaticResource DocumentPaneControlStyle}" />
       <Setter Property="AnchorablePaneControlStyle" Value="{StaticResource AnchorablePaneControl}" />
       <Setter Property="AnchorablePaneControlStyle" Value="{StaticResource AnchorablePaneControl}" />
       <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
-      <Setter Property="Effect" Value="{DynamicResource DropShadowEffect1}" />
+      <Setter Property="Effect" Value="{DynamicResource DropShadowEffect}" />
    </Style>
 </ResourceDictionary>

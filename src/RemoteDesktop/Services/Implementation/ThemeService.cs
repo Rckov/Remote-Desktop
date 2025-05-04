@@ -7,11 +7,11 @@ using System.Windows;
 
 namespace RemoteDesktop.Services.Implementation;
 
-internal class ThemeManager : IThemeManager
+internal class ThemeService : IThemeService
 {
     private readonly Dictionary<ThemeType, string> _themePaths = [];
 
-    public ThemeManager()
+    public ThemeService()
     {
         AddTheme(ThemeType.Dark, "Resources/Themes/DarkBrushes.xaml");
         AddTheme(ThemeType.Light, "Resources/Themes/LightBrushes.xaml");

@@ -2,7 +2,7 @@
 
 namespace RemoteDesktop.Services.Interfaces;
 
-public interface IThemeManager
+public interface IThemeService
 {
     ThemeType CurrentTheme { get; }
 

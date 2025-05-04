@@ -3,9 +3,9 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace RemoteDesktop.Infrastructure.Convertres;
+namespace RemoteDesktop.Components.Converters;
 
-internal class BooleanToVisibilityConverter : IValueConverter
+internal class BoolVisibilityConverter : IValueConverter
 {
     public bool Inverse { get; set; }
 

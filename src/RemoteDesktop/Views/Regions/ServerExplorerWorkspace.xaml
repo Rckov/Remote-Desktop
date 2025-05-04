@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="RemoteDesktop.Views.Regions.ServerExplorerWorkspace"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+             xmlns:controls="clr-namespace:RemoteDesktop.Views.UserControls"
+
+             xmlns:vm="clr-namespace:RemoteDesktop.ViewModels"
+             xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop">
+
+    <Border Background="{DynamicResource ContentBackgroundBrush}"
+            Padding="1"
+            CornerRadius="4"
+            BorderBrush="{DynamicResource BorderBrush}"
+            BorderThickness="1" Effect="{DynamicResource DropShadowEffect}">
+
+      <TabControl Style="{StaticResource TabControlUniformStyle}">
+         <TabItem Header="All">
+            <Grid>
+               <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition />
+               </Grid.RowDefinitions>
+
+               <controls:SearchBar Margin="4" SearchText="{Binding SearchText, Mode=TwoWay}" />
+
+               <TreeView ItemsSource="{Binding ServersGroups}" Grid.Row="1">
+                  <TreeView.ItemTemplate>
+                     <HierarchicalDataTemplate DataType="{x:Type vm:TreeItemViewModel}" ItemsSource="{Binding Children}">
+                        <StackPanel Orientation="Horizontal">
+                           <TextBlock Text="{Binding Model, Converter={StaticResource TreeItemIconConverter}}"
+                                      FontFamily="{StaticResource FontIcon}"
+                                      Foreground="{DynamicResource TextBrush}"
+                                      VerticalAlignment="Center" />
+
+                           <TextBlock Text="{Binding Name}" Margin="5,0,0,0" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center" />
+                        </StackPanel>
+                     </HierarchicalDataTemplate>
+                  </TreeView.ItemTemplate>
+
+                  <TreeView.ItemContainerStyle>
+                     <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                        <Setter Property="Visibility" Value="{Binding IsVisible, Mode=TwoWay, Converter={StaticResource BoolVisibilityInverseConverter}}" />
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                     </Style>
+                  </TreeView.ItemContainerStyle>
+               </TreeView>
+            </Grid>
+         </TabItem>
+
+         <TabItem Header="Favorites" IsEnabled="False" />
+      </TabControl>
+    </Border>
+</UserControl>

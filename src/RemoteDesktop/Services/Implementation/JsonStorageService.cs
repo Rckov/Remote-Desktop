@@ -1,35 +1,57 @@
 ﻿using RemoteDesktop.Services.Interfaces;
-using RemoteDesktop.ViewModels;
 
-using System.Collections.Generic;
+using System;
 using System.IO;
 using System.Runtime.Serialization.Json;
+using System.Windows;
 
 namespace RemoteDesktop.Services.Implementation;
 
 internal class JsonStorageService : IStorageService
 {
-    private const string FileName = "servers.json";
-    private static readonly string PathFileName = Path.Combine(App.DataPath, FileName);
+    public string DataPath { get; }
 
-    public void SaveData(IEnumerable<TreeItemViewModel> groups)
+    public JsonStorageService()
     {
-        var serializer = new DataContractJsonSerializer(typeof(IEnumerable<TreeItemViewModel>));
-        using var stream = File.Create(PathFileName);
-
-        serializer.WriteObject(stream, groups);
+        DataPath = Path.Combine(Bootstrapper.DataPath, "servers.json");
     }
 
-    public IEnumerable<TreeItemViewModel> LoadData()
+    public T GetData<T>()
     {
-        if (!File.Exists(PathFileName))
+        try
         {
-            return [];
+            if (File.Exists(DataPath))
+            {
+                var serializer = new DataContractJsonSerializer(typeof(T));
+
+                using (var stream = File.OpenRead(DataPath))
+                {
+                    return (T)serializer.ReadObject(stream);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Failed to load servers data: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        var serializer = new DataContractJsonSerializer(typeof(IEnumerable<TreeItemViewModel>));
-        using var stream = File.OpenRead(PathFileName);
+        return default;
+    }
 
-        return (IEnumerable<TreeItemViewModel>)serializer.ReadObject(stream);
+    public void SaveData<T>(T data)
+    {
+        try
+        {
+            var serializer = new DataContractJsonSerializer(typeof(T));
+
+            using (var stream = File.Create(DataPath))
+            {
+                serializer.WriteObject(stream, data);
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Failed to save servers data: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }

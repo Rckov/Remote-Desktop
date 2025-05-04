@@ -1,12 +1,8 @@
-﻿using RemoteDesktop.ViewModels;
-
-using System.Collections.Generic;
-
-namespace RemoteDesktop.Services.Interfaces;
+﻿namespace RemoteDesktop.Services.Interfaces;
 
 internal interface IStorageService
 {
-    void SaveData(IEnumerable<TreeItemViewModel> groups);
+    void SaveData<T>(T data);
 
-    IEnumerable<TreeItemViewModel> LoadData();
+    T GetData<T>();
 }

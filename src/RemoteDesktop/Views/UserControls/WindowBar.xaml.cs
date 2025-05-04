@@ -1,10 +1,10 @@
-﻿using RemoteDesktop.Infrastructure;
+﻿using RemoteDesktop.Components.Commands;
 
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace RemoteDesktop.Views.Controls;
+namespace RemoteDesktop.Views.UserControls;
 
 public partial class WindowBar : UserControl
 {

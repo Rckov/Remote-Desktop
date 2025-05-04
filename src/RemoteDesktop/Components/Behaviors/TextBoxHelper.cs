@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace RemoteDesktop.Infrastructure.Behaviors;
+namespace RemoteDesktop.Components.Behaviors;
 
 internal static class TextBoxHelper
 {

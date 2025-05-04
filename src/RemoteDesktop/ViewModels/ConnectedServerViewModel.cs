@@ -1,9 +1,9 @@
 ﻿using RemoteDesktop.Models;
-using RemoteDesktop.ViewModels.Base;
+using RemoteDesktop.Models.Base;
 
 namespace RemoteDesktop.ViewModels;
 
-internal class ConnectedServerViewModel : BaseViewModel
+internal class ConnectedServerViewModel : ObservableObject
 {
     public string Name
     {
@@ -16,13 +16,5 @@ internal class ConnectedServerViewModel : BaseViewModel
     public ConnectedServerViewModel(Server server)
     {
         Server = server;
-    }
-
-    public void Connect()
-    {
-    }
-
-    public void Disconnect()
-    {
     }
 }

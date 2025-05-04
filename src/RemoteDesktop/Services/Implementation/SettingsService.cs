@@ -1,18 +1,20 @@
 ﻿using RemoteDesktop.Models;
 using RemoteDesktop.Services.Interfaces;
 
+using System;
 using System.IO;
 using System.Runtime.Serialization.Json;
+using System.Windows;
 
 namespace RemoteDesktop.Services.Implementation;
 
 internal class SettingsService : ISettingsService
 {
-    private const string FileName = "settings.json";
-    private static readonly string PathFileName = Path.Combine(App.DataPath, FileName);
+    public string SettingPath { get; }
 
     public SettingsService()
     {
+        SettingPath = Path.Combine(Bootstrapper.SettingPath, "settings.json");
         Settings = LoadSettings();
     }
 
@@ -20,22 +22,40 @@ internal class SettingsService : ISettingsService
 
     public Settings LoadSettings()
     {
-        if (!File.Exists(PathFileName))
+        try
         {
-            return new Settings();
+            if (File.Exists(SettingPath))
+            {
+                var serializer = new DataContractJsonSerializer(typeof(Settings));
+
+                using (var stream = File.OpenRead(SettingPath))
+                {
+                    return (Settings)serializer.ReadObject(stream);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Failed to load settings.\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        var serializer = new DataContractJsonSerializer(typeof(Settings));
-        using var stream = File.OpenRead(PathFileName);
-
-        return (Settings)serializer.ReadObject(stream);
+        return new();
     }
 
     public void SaveSettings()
     {
-        var serializer = new DataContractJsonSerializer(typeof(Settings));
-        using var stream = File.Create(PathFileName);
+        try
+        {
+            var serializer = new DataContractJsonSerializer(typeof(Settings));
 
-        serializer.WriteObject(stream, Settings);
+            using (var stream = File.Create(SettingPath))
+            {
+                serializer.WriteObject(stream, Settings);
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Failed to save settings.\n" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }

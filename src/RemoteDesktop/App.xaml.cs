@@ -1,10 +1,7 @@
-﻿using RemoteDesktop.Infrastructure.Behaviors;
-using RemoteDesktop.Services.Implementation;
+﻿using RemoteDesktop.Services;
 using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels;
 using RemoteDesktop.Views.Windows;
-
-using SimpleInjector;
 
 using System;
 using System.IO;
@@ -22,33 +19,26 @@ public partial class App : Application
         {
             Directory.CreateDirectory(DataPath);
         }
-
-        Services = ConfigureServices(new Container());
     }
 
     public static string DataPath { get; private set; }
-    public static Container Services { get; private set; }
 
     protected override void OnStartup(StartupEventArgs e)
     {
-        var window = new MainWindow()
+        Bootstrapper.Initialize();
+        base.OnStartup(e);
+
+        var viewModel = new MainViewModel(
+            ServiceLocator.Get<ISettingsService>(),
+            ServiceLocator.Get<IThemeService>(),
+            ServiceLocator.Get<IStorageService>()
+        );
+
+        var window = new MainWindow
         {
-            DataContext = Services.GetInstance<MainViewModel>()
+            DataContext = viewModel
         };
+
         window.Show();
-    }
-
-    private static Container ConfigureServices(Container container)
-    {
-        container.Register<IStorageService, JsonStorageService>();
-        container.Register<ISettingsService, SettingsService>();
-        container.Register<IThemeManager, ThemeManager>();
-
-        container.Register<ITreeDropHandler, TreeDropHandler>();
-
-        container.Register<MainViewModel>();
-        container.Verify();
-
-        return container;
     }
 }

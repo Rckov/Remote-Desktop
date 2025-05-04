@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace RemoteDesktop.Views.Controls;
+namespace RemoteDesktop.Views.UserControls;
 
 public partial class SearchBar : UserControl
 {

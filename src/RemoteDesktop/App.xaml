@@ -1,17 +1,20 @@
 ﻿<Application x:Class="RemoteDesktop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:cv="clr-namespace:RemoteDesktop.Infrastructure.Convertres">
+             xmlns:converter="clr-namespace:RemoteDesktop.Components.Converters">
    <Application.Resources>
       <ResourceDictionary>
+         <converter:BoolVisibilityConverter x:Key="BoolVisibilityConverter" />
+         <converter:BoolVisibilityConverter x:Key="BoolVisibilityInverseConverter" Inverse="True" />
+         <converter:TreeItemIconConverter x:Key="TreeItemIconConverter" />
+
          <ResourceDictionary.MergedDictionaries>
             <ResourceDictionary Source="/Resources/Styles/Generic.xaml" />
             <ResourceDictionary Source="/Resources/Styles/AvalonDock.xaml" />
+            <ResourceDictionary Source="/Resources/Styles/TreeView.xaml" />
 
             <ResourceDictionary Source="/Resources/Themes/LightBrushes.xaml" />
          </ResourceDictionary.MergedDictionaries>
-
-         <cv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
       </ResourceDictionary>
    </Application.Resources>
 </Application>
