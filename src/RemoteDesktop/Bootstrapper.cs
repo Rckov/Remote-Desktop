@@ -23,9 +23,9 @@ internal static class Bootstrapper
         string exeDirectory = AppContext.BaseDirectory;
 
         DataPath = Path.Combine(exeDirectory, "data");
-        SettingPath = Path.Combine(exeDirectory, "settings");
-
         Directory.CreateDirectory(DataPath);
+
+        SettingPath = Path.Combine(exeDirectory, "settings");
         Directory.CreateDirectory(SettingPath);
     }
 

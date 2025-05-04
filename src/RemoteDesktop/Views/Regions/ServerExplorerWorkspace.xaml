@@ -23,13 +23,9 @@
                <TreeView ItemsSource="{Binding ServersGroups}" Grid.Row="1" SelectedItemChanged="TreeView_SelectedItemChanged">
                   <TreeView.ItemTemplate>
                      <HierarchicalDataTemplate DataType="{x:Type vm:TreeItemViewModel}" ItemsSource="{Binding Children}">
-                        <StackPanel Orientation="Horizontal">
-                           <TextBlock Text="{Binding Model, Converter={StaticResource TreeItemIconConverter}}"
-                                      FontFamily="{StaticResource FontIcon}"
-                                      Foreground="{DynamicResource TextBrush}"
-                                      VerticalAlignment="Center" />
-
-                           <TextBlock Text="{Binding Name}" Margin="5,0,0,0" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center" />
+                        <StackPanel Orientation="Horizontal" TextBlock.Foreground="{DynamicResource TextBrush}" >
+                           <TextBlock Text="{Binding Model, Converter={StaticResource TreeItemIconConverter}}" FontFamily="{StaticResource FontIcon}" VerticalAlignment="Center" />
+                           <TextBlock Text="{Binding Name}" Margin="5,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
                      </HierarchicalDataTemplate>
                   </TreeView.ItemTemplate>
