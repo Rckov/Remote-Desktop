@@ -28,6 +28,7 @@
                   Background="Transparent"
                   CaretBrush="{DynamicResource CaretBrush}"
                   Foreground="{DynamicResource TextBrush}"
+                  Style="{x:Null}"
                   Text="{Binding SearchText, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}" />
 
          <TextBlock Text="&#xE721;" FontFamily="{StaticResource FontIcon}" FontSize="14" Foreground="{DynamicResource TextDisabledBrush}" VerticalAlignment="Center" Margin="0,0,2,0" HorizontalAlignment="Right" />

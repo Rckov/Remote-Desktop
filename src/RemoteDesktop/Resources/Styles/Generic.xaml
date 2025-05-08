@@ -89,6 +89,39 @@
 
    <!--#endregion-->
 
+   <!--#region Button styles (Uniform) -->
+
+   <Style TargetType="{x:Type Button}">
+      <Setter Property="Padding" Value="3" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+
+      <Setter Property="Template">
+         <Setter.Value>
+            <ControlTemplate TargetType="Button">
+               <Border x:Name="Border" BorderThickness="1" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                  <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Padding="{TemplateBinding Padding}" Text="{TemplateBinding Content}" />
+               </Border>
+
+               <ControlTemplate.Triggers>
+                  <Trigger Property="IsMouseOver" Value="True">
+                     <Setter TargetName="Border" Property="Background" Value="{DynamicResource ButtonHoverBrush}" />
+                  </Trigger>
+                  <Trigger Property="IsPressed" Value="True">
+                     <Setter TargetName="Border" Property="Background" Value="{DynamicResource ButtonPressedBrush}" />
+                  </Trigger>
+                  <Trigger Property="IsEnabled" Value="False">
+                     <Setter Property="Foreground" Value="Gray" />
+                  </Trigger>
+               </ControlTemplate.Triggers>
+            </ControlTemplate>
+         </Setter.Value>
+      </Setter>
+   </Style>
+
+   <!--#endregion-->
+
    <!--#region TabControl styles (Uniform) -->
 
    <Style x:Key="TabControlUniformStyle" TargetType="{x:Type TabControl}">
@@ -147,6 +180,154 @@
                      <Setter Property="Foreground" Value="{DynamicResource TextDisabledBrush}" />
                   </Trigger>
                </ControlTemplate.Triggers>
+            </ControlTemplate>
+         </Setter.Value>
+      </Setter>
+   </Style>
+
+   <!--#endregion-->
+
+   <!--#region TextBox styles -->
+
+   <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+      <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+      <Setter Property="CaretBrush" Value="{DynamicResource CaretBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Padding" Value="4, 2" />
+
+      <Setter Property="Template">
+         <Setter.Value>
+            <ControlTemplate TargetType="{x:Type TextBox}">
+               <Border BorderBrush="{TemplateBinding BorderBrush}"
+                       BorderThickness="{TemplateBinding BorderThickness}"
+                       Background="{TemplateBinding Background}"
+                       Padding="{TemplateBinding Padding}">
+
+                  <ScrollViewer x:Name="PART_ContentHost"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Focusable="False"
+                                Cursor="IBeam" />
+               </Border>
+
+               <ControlTemplate.Triggers>
+                  <Trigger Property="IsMouseOver" Value="True">
+                     <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
+                  </Trigger>
+
+                  <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                     <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
+                  </Trigger>
+
+                  <Trigger Property="Validation.HasError" Value="True">
+                     <Setter Property="BorderBrush" Value="{DynamicResource ErrorBrush}" />
+                  </Trigger>
+               </ControlTemplate.Triggers>
+            </ControlTemplate>
+         </Setter.Value>
+      </Setter>
+
+      <Setter Property="Validation.ErrorTemplate">
+         <Setter.Value>
+            <ControlTemplate>
+               <DockPanel LastChildFill="True">
+                  <TextBlock Foreground="{DynamicResource ErrorBrush}" FontSize="11" DockPanel.Dock="Bottom" Text="{Binding [0].ErrorContent}" />
+                  <AdornedElementPlaceholder />
+               </DockPanel>
+            </ControlTemplate>
+         </Setter.Value>
+      </Setter>
+   </Style>
+
+   <!--#endregion-->
+
+   <!--#region ComboBox styles -->
+
+   <Style TargetType="ComboBoxItem">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+      <Setter Property="Padding" Value="5,3" />
+      <Setter Property="Template">
+         <Setter.Value>
+            <ControlTemplate TargetType="ComboBoxItem">
+               <Border x:Name="Border" Background="{TemplateBinding Background}" BorderThickness="0">
+                  <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" VerticalAlignment="Center" />
+               </Border>
+               <ControlTemplate.Triggers>
+                  <Trigger Property="IsMouseOver" Value="True">
+                     <Setter TargetName="Border" Property="Background" Value="{DynamicResource ButtonHoverBrush}" />
+                  </Trigger>
+                  <Trigger Property="IsSelected" Value="True">
+                     <Setter TargetName="Border" Property="Background" Value="{DynamicResource ButtonHoverBrush}" />
+                  </Trigger>
+                  <Trigger Property="IsEnabled" Value="False">
+                     <Setter Property="Opacity" Value="0.5" />
+                  </Trigger>
+               </ControlTemplate.Triggers>
+            </ControlTemplate>
+         </Setter.Value>
+      </Setter>
+   </Style>
+
+   <Style TargetType="ComboBox">
+      <Setter Property="Background" Value="{DynamicResource ContentBackgroundBrush}" />
+      <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+      <Setter Property="Padding" Value="5,3" />
+      <Setter Property="Template">
+         <Setter.Value>
+            <ControlTemplate TargetType="ComboBox">
+               <Grid>
+                  <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1">
+                     <Grid>
+                        <Grid.ColumnDefinitions>
+                           <ColumnDefinition />
+                           <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <ContentPresenter x:Name="ContentSite" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Margin="{TemplateBinding Padding}"  VerticalAlignment="Center" />
+
+                        <ToggleButton x:Name="ToggleButton" Grid.Column="1" BorderThickness="0" IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press">
+                           <ToggleButton.Template>
+                              <ControlTemplate TargetType="ToggleButton">
+                                 <Border x:Name="Border" Background="Transparent" BorderThickness="0" Width="20">
+                                    <Path x:Name="Arrow" Data="M 0,0 L 4,4 L 8,0 Z" Fill="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="8" Height="4" />
+                                 </Border>
+                              </ControlTemplate>
+                           </ToggleButton.Template>
+                        </ToggleButton>
+                     </Grid>
+                  </Border>
+
+                  <Popup x:Name="PART_Popup" AllowsTransparency="True" IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" PopupAnimation="Fade">
+                     <Border x:Name="DropDownBorder" Background="{DynamicResource ContentBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" MinWidth="{TemplateBinding ActualWidth}">
+                        <ScrollViewer SnapsToDevicePixels="True">
+                           <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
+                        </ScrollViewer>
+                     </Border>
+                  </Popup>
+               </Grid>
+               <ControlTemplate.Triggers>
+                  <Trigger Property="IsMouseOver" Value="True">
+                     <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ButtonHoverBrush}" />
+                  </Trigger>
+                  <Trigger Property="IsEnabled" Value="False">
+                     <Setter Property="Opacity" Value="0.5" />
+                  </Trigger>
+               </ControlTemplate.Triggers>
+            </ControlTemplate>
+         </Setter.Value>
+      </Setter>
+
+      <Setter Property="Validation.ErrorTemplate">
+         <Setter.Value>
+            <ControlTemplate>
+               <DockPanel LastChildFill="True">
+                  <TextBlock Foreground="{DynamicResource ErrorBrush}" FontSize="11" DockPanel.Dock="Bottom" Text="{Binding [0].ErrorContent}" />
+                  <AdornedElementPlaceholder />
+               </DockPanel>
             </ControlTemplate>
          </Setter.Value>
       </Setter>

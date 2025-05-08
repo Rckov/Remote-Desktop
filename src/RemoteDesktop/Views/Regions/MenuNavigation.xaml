@@ -14,13 +14,15 @@
       <Separator Style="{StaticResource SeparatorStyle}" />
 
       <MenuItem Header="Manage" Icon="&#xED25;">
-         <MenuItem Header="Add New Group" Icon="&#xE8F4;" />
-         <MenuItem Header="Add New Server" Icon="&#xE836;" />
+         <MenuItem Header="Create" Icon="&#xE710;">
+            <MenuItem Header="New Group" Icon="&#xE8F4;" />
+            <MenuItem Header="New Server" Command="{Binding AddServerCommand}" Icon="&#xE836;" />
+         </MenuItem>
 
          <Separator Style="{StaticResource SeparatorStyle}" />
 
-         <MenuItem Header="Edit" Icon="&#xE70F;" />
-         <MenuItem Header="Delete" Icon="&#xE74D;" />
+         <MenuItem Header="Edit" Command="{Binding EditSelectedTreeItemCommand}" Icon="&#xE70F;" />
+         <MenuItem Header="Delete" Icon="&#xE74D;" Command="{Binding DeleteSelectedTreeItemCommand}" />
       </MenuItem>
    </Menu>
 </UserControl>

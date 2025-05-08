@@ -14,7 +14,7 @@ internal class TreeItemMarginConverter : IValueConverter
         var left = 0.0;
         UIElement element = value as TreeViewItem;
 
-        while (element != null && element.GetType() != typeof(TreeView))
+        while (element is not null && element.GetType() != typeof(TreeView))
         {
             element = (UIElement)VisualTreeHelper.GetParent(element);
             if (element is TreeViewItem)

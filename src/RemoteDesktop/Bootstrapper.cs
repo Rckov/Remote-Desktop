@@ -1,6 +1,10 @@
 ﻿using RemoteDesktop.Services;
 using RemoteDesktop.Services.Implementation;
 using RemoteDesktop.Services.Interfaces;
+using RemoteDesktop.ViewModels;
+using RemoteDesktop.ViewModels.Dialogs;
+using RemoteDesktop.Views.Windows;
+using RemoteDesktop.Views.Windows.Dialogs;
 
 using System;
 using System.IO;
@@ -16,6 +20,21 @@ internal static class Bootstrapper
     {
         InitializePaths();
         InitializeServices();
+        InitializeViews();
+    }
+
+    public static void Start()
+    {
+        var windowService = ServiceLocator.Get<IWindowService>();
+
+        var viewModel = new MainViewModel(
+            ServiceLocator.Get<ISettingsService>(),
+            ServiceLocator.Get<IThemeService>(),
+            ServiceLocator.Get<IStorageService>(),
+            windowService
+        );
+
+        windowService.Show(viewModel);
     }
 
     private static void InitializePaths()
@@ -34,5 +53,16 @@ internal static class Bootstrapper
         ServiceLocator.Register<IThemeService>(new ThemeService());
         ServiceLocator.Register<ISettingsService>(new SettingsService());
         ServiceLocator.Register<IStorageService>(new JsonStorageService());
+        ServiceLocator.Register<IWindowService>(new WindowService());
+    }
+
+    private static void InitializeViews()
+    {
+        var service = ServiceLocator.Get<IWindowService>();
+
+        service.Register<MainWindow, MainViewModel>();
+
+        service.Register<ServerDialog, ServerEditViewModel>();
+        service.Register<ServerGroupDialog, ServerGroupEditViewModel>();
     }
 }

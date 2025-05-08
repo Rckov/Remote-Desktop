@@ -1,4 +1,5 @@
-﻿using RemoteDesktop.Models;
+﻿using RemoteDesktop.Extensions;
+using RemoteDesktop.Models;
 using RemoteDesktop.Models.Base;
 
 using System;
@@ -57,6 +58,21 @@ internal class TreeItemViewModel : ObservableObject
     {
         get;
         set => Set(ref field, value);
+    }
+
+    public void AddServer(Server server)
+    {
+        Children.Add(new TreeItemViewModel(server));
+    }
+
+    public void DeleteServer(Server server)
+    {
+        var item = Children.FindByName(server.Name);
+
+        if (item != null)
+        {
+            Children.Remove(item);
+        }
     }
 
     public bool ApplyFilter(string filter)

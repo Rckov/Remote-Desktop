@@ -24,7 +24,7 @@ internal class ThemeService : IThemeService
         var dictionaries = Application.Current.Resources.MergedDictionaries;
         var currentTheme = dictionaries.FirstOrDefault(d => _themePaths.ContainsValue(d.Source.OriginalString));
 
-        if (currentTheme != null)
+        if (currentTheme is not null)
         {
             dictionaries.Remove(currentTheme);
         }

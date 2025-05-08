@@ -48,13 +48,13 @@
       <TextBlock Grid.Column="1"
                  VerticalAlignment="Center"
                  Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                 Visibility="{Binding ShowTitle, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolVisibilityConverter}}"
+                 Visibility="{Binding ShowTitle, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BoolVisibilityInverseConverter}}"
                  Margin="5,0"
                  Foreground="{DynamicResource TextBrush}" />
 
       <ContentPresenter Grid.Column="2" Content="{Binding LeftContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
 
-      <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+      <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{x:Null}">
          <ContentPresenter Content="{Binding RightContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
 
          <Button Content="&#xE949;"
