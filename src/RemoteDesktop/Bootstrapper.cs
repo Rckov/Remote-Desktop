@@ -24,6 +24,7 @@ internal static class Bootstrapper
 
     public static void Start()
     {
+        // TO DO
         var windowService = ServiceLocator.Get<IWindowService>();
 
         var viewModel = new MainViewModel(
@@ -38,6 +39,7 @@ internal static class Bootstrapper
 
     private static void InitializePaths()
     {
+        // TO DO
         string exeDirectory = AppContext.BaseDirectory;
 
         DataPath = Path.Combine(exeDirectory, "data");

@@ -21,8 +21,8 @@
 
          <Separator Style="{StaticResource SeparatorStyle}" />
 
-         <MenuItem Header="Edit" Command="{Binding EditSelectedTreeItemCommand}" Icon="&#xE70F;" />
-         <MenuItem Header="Delete" Icon="&#xE74D;" Command="{Binding DeleteSelectedTreeItemCommand}" />
+         <MenuItem Header="Edit" Icon="&#xE70F;" Command="{Binding EditCommand}" />
+         <MenuItem Header="Delete" Icon="&#xE74D;" Command="{Binding DeleteCommand}" />
       </MenuItem>
    </Menu>
 </UserControl>

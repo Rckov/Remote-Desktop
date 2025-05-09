@@ -113,7 +113,7 @@
                                        <Setter.Value>
                                           <ControlTemplate TargetType="{x:Type ad:ContextMenuEx}">
                                              <Border Background="{TemplateBinding Background}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
-                                                <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{DynamicResource PanelBackground}">
+                                                <ScrollViewer VerticalScrollBarVisibility="Auto">
                                                    <ItemsPresenter />
                                                 </ScrollViewer>
                                              </Border>

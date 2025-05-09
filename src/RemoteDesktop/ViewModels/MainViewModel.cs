@@ -62,6 +62,8 @@ internal class MainViewModel : BaseViewModel
     public ICommand ChangeThemeCommand { get; private set; }
     public ICommand CreateServerCommand { get; private set; }
     public ICommand CreateGroupCommand { get; private set; }
+    public ICommand EditCommand { get; private set; }
+    public ICommand DeleteCommand { get; private set; }
 
     public override void InitializeCommands()
     {
@@ -69,6 +71,8 @@ internal class MainViewModel : BaseViewModel
         ChangeThemeCommand = new RelayCommand(ChangeTheme);
         CreateServerCommand = new RelayCommand(CreateServer);
         CreateGroupCommand = new RelayCommand(CreateGroup);
+        EditCommand = new RelayCommand(Edit);
+        DeleteCommand = new RelayCommand(Delete);
     }
 
     private void Connect()
@@ -92,7 +96,7 @@ internal class MainViewModel : BaseViewModel
 
         ServersGroups.Add(new(new ServerGroup()
         {
-            Name = viewModel.NameGroup
+            Name = viewModel.Name
         }));
 
         _dataService.Save();
@@ -112,6 +116,44 @@ internal class MainViewModel : BaseViewModel
         if (selectedGroup != null)
         {
             selectedGroup.Children.Add(new(viewModel.Server));
+        }
+
+        _dataService.Save();
+    }
+
+    private void Edit()
+    {
+        if (SelectedTreeItem == null)
+        {
+            return;
+        }
+
+        _dataService.Save();
+    }
+
+    private void Delete()
+    {
+        if (SelectedTreeItem == null)
+        {
+            return;
+        }
+
+        var result = QuestionMessageBox($"Are you sure you want to delete '{SelectedTreeItem.Name}'?");
+
+        if (!result)
+        {
+            return;
+        }
+
+        var parentItem = ServersGroups.FindParent(SelectedTreeItem);
+
+        if (parentItem == null)
+        {
+            ServersGroups.Remove(SelectedTreeItem);
+        }
+        else
+        {
+            parentItem.Children.Remove(SelectedTreeItem);
         }
 
         _dataService.Save();

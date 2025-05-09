@@ -31,7 +31,7 @@ internal static class Extensions
         }
         else
         {
-            return group.Servers.Any(s => string.Equals(s.Name, serverName, StringComparison.Ordinal));
+            return group.Servers.Any(x => string.Equals(x.Name, serverName, StringComparison.Ordinal));
         }
     }
 
@@ -40,7 +40,15 @@ internal static class Extensions
         CheckIsNull(treeItems);
         CheckIsNull(groupName);
 
-        return treeItems.FirstOrDefault(item => string.Equals(item.Name, groupName, StringComparison.OrdinalIgnoreCase));
+        return treeItems.FirstOrDefault(x => string.Equals(x.Name, groupName, StringComparison.OrdinalIgnoreCase));
+    }
+
+    public static TreeItemViewModel FindParent(this ICollection<TreeItemViewModel> treeItems, TreeItemViewModel treeItem)
+    {
+        CheckIsNull(treeItems);
+        CheckIsNull(treeItem);
+
+        return treeItems.FirstOrDefault(parent => parent.Children.Contains(treeItem));
     }
 
     public static void CopyPropertiesTo(this Server source, Server target)

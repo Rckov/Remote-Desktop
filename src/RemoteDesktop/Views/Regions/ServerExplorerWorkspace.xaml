@@ -4,6 +4,13 @@
              xmlns:vm="clr-namespace:RemoteDesktop.ViewModels"
              xmlns:controls="clr-namespace:RemoteDesktop.Views.UserControls">
 
+   <UserControl.Resources>
+      <ContextMenu x:Key="TreeContextMenu">
+         <MenuItem Header="Edit" Icon="&#xE70F;" Command="{Binding EditCommand}" />
+         <MenuItem Header="Delete" Icon="&#xE74D;" Command="{Binding DeleteCommand}" />
+      </ContextMenu>
+   </UserControl.Resources>
+
    <Border Background="{DynamicResource ContentBackgroundBrush}"
            Padding="1"
            CornerRadius="4"
@@ -20,7 +27,7 @@
 
                <controls:SearchBar Margin="4" SearchText="{Binding SearchText, Mode=TwoWay}" />
 
-               <TreeView ItemsSource="{Binding ServersGroups}" Grid.Row="1" SelectedItemChanged="TreeView_SelectedItemChanged">
+               <TreeView ItemsSource="{Binding ServersGroups}" ContextMenu="{StaticResource TreeContextMenu}" Grid.Row="1" SelectedItemChanged="TreeView_SelectedItemChanged">
                   <TreeView.ItemTemplate>
                      <HierarchicalDataTemplate DataType="{x:Type vm:TreeItemViewModel}" ItemsSource="{Binding Children}">
                         <StackPanel Orientation="Horizontal" TextBlock.Foreground="{DynamicResource TextBrush}">

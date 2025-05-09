@@ -4,11 +4,10 @@ using RemoteDesktop.Models;
 using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels.Base;
 
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 
 namespace RemoteDesktop.ViewModels;
@@ -84,6 +83,7 @@ internal class ServerModalViewModel : BaseViewModel
 
     private void Save()
     {
+        // TO DO
         IList<string> errors =
         [
             ValidateProperty(nameof(Name)),
@@ -98,13 +98,13 @@ internal class ServerModalViewModel : BaseViewModel
 
         if (errors.Any())
         {
-            ShowMessageBox(string.Join(Environment.NewLine, errors));
+            ErrorMessageBox(string.Join(Environment.NewLine, errors));
             return;
         }
 
         if (_dataService.Groups.ServerExists(SelectedGroup, Name))
         {
-            ShowMessageBox("Server with this name already exists in the selected group");
+            ErrorMessageBox("Server with this name already exists in the selected group");
             return;
         }
 
@@ -118,13 +118,9 @@ internal class ServerModalViewModel : BaseViewModel
         Ok();
     }
 
-    private void ShowMessageBox(string message)
-    {
-        MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-    }
-
     private string ValidateProperty(string columnName)
     {
+        // TO DO
         return columnName switch
         {
             nameof(Name) when string.IsNullOrWhiteSpace(Name) => "Name cannot be empty",

@@ -2,6 +2,7 @@
 using RemoteDesktop.Models.Base;
 
 using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace RemoteDesktop.ViewModels.Base;
@@ -32,5 +33,25 @@ internal abstract class BaseViewModel : ObservableObject
     public virtual void Cancel()
     {
         CloseRequest?.Invoke(false);
+    }
+
+    public void ErrorMessageBox(string message)
+    {
+        MessageBoxShow(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+
+    public void InfoMessageBox(string message)
+    {
+        MessageBoxShow(message, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+
+    public bool QuestionMessageBox(string message)
+    {
+        return MessageBoxShow(message, "Question", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+    }
+
+    public MessageBoxResult MessageBoxShow(string message, string title, MessageBoxButton messageButton, MessageBoxImage image)
+    {
+        return MessageBox.Show(message, title, messageButton, image);
     }
 }

@@ -77,6 +77,7 @@ internal class TreeItemViewModel : ObservableObject
 
     private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
+        // TO DO
         if (Model is not ServerGroup group)
         {
             return;
