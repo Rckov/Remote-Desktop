@@ -1,11 +1,9 @@
-﻿using RemoteDesktop.Extensions;
-using RemoteDesktop.Models;
+﻿using RemoteDesktop.Models;
 using RemoteDesktop.Models.Base;
 
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
 
 namespace RemoteDesktop.ViewModels;
@@ -16,11 +14,6 @@ internal class TreeItemViewModel : ObservableObject
     {
         Name = name;
         Model = model;
-
-        if (Model is INotifyPropertyChanged notify)
-        {
-            PropertyChangedEventManager.AddHandler(notify, OnNamePropertyChanged, nameof(Name));
-        }
 
         IsVisible = true;
         IsExpanded = true;
@@ -60,21 +53,6 @@ internal class TreeItemViewModel : ObservableObject
         set => Set(ref field, value);
     }
 
-    public void AddServer(Server server)
-    {
-        Children.Add(new TreeItemViewModel(server));
-    }
-
-    public void DeleteServer(Server server)
-    {
-        var item = Children.FindByName(server.Name);
-
-        if (item != null)
-        {
-            Children.Remove(item);
-        }
-    }
-
     public bool ApplyFilter(string filter)
     {
         var anyChildMatch = false;
@@ -95,26 +73,6 @@ internal class TreeItemViewModel : ObservableObject
         }
 
         return IsVisible;
-    }
-
-    private void OnNamePropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName == nameof(Name))
-        {
-            switch (Model)
-            {
-                case Server m:
-                    Name = m.Name;
-                    break;
-
-                case ServerGroup m:
-                    Name = m.Name;
-                    break;
-
-                default:
-                    break;
-            }
-        }
     }
 
     private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

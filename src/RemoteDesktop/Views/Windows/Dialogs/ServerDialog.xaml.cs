@@ -1,4 +1,4 @@
-﻿using RemoteDesktop.ViewModels.Dialogs;
+﻿using RemoteDesktop.ViewModels;
 
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -8,7 +8,7 @@ namespace RemoteDesktop.Views.Windows.Dialogs;
 
 public partial class ServerDialog : Window
 {
-    private Regex _regex = new("[^0-9]+");
+    private readonly Regex _regex = new("[^0-9]+");
 
     public ServerDialog()
     {
@@ -28,7 +28,7 @@ public partial class ServerDialog : Window
 
     private void SubscribeViewModelEvents()
     {
-        if (DataContext is ServerEditViewModel viewModel)
+        if (DataContext is ServerModalViewModel viewModel)
         {
             viewModel.CloseRequest += OnCloseRequest;
         }

@@ -4,7 +4,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace RemoteDesktop.Components.Converters;
+namespace RemoteDesktop.Common.Converters;
 
 internal class TreeItemIconConverter : IValueConverter
 {

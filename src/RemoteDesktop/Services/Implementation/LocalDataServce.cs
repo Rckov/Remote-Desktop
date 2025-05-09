@@ -1,32 +1,35 @@
-﻿using RemoteDesktop.Services.Interfaces;
+﻿using RemoteDesktop.Models;
+using RemoteDesktop.Services.Interfaces;
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Windows;
 
 namespace RemoteDesktop.Services.Implementation;
 
-internal class JsonStorageService : IStorageService
+internal class LocalDataServce : IDataService
 {
-    public string DataPath { get; }
+    public string DataPath { get; private set; }
+    public ICollection<ServerGroup> Groups { get; private set; }
 
-    public JsonStorageService()
+    public LocalDataServce()
     {
         DataPath = Path.Combine(Bootstrapper.DataPath, "servers.json");
     }
 
-    public T GetData<T>()
+    public void Load()
     {
         try
         {
             if (File.Exists(DataPath))
             {
-                var serializer = new DataContractJsonSerializer(typeof(T));
+                var serializer = new DataContractJsonSerializer(typeof(List<ServerGroup>));
 
                 using (var stream = File.OpenRead(DataPath))
                 {
-                    return (T)serializer.ReadObject(stream);
+                    Groups = (List<ServerGroup>)serializer.ReadObject(stream);
                 }
             }
         }
@@ -34,19 +37,17 @@ internal class JsonStorageService : IStorageService
         {
             MessageBox.Show("Failed to load servers data: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
-        return default;
     }
 
-    public void SaveData<T>(T data)
+    public void Save()
     {
         try
         {
-            var serializer = new DataContractJsonSerializer(typeof(T));
+            var serializer = new DataContractJsonSerializer(typeof(List<ServerGroup>));
 
             using (var stream = File.Create(DataPath))
             {
-                serializer.WriteObject(stream, data);
+                serializer.WriteObject(stream, Groups);
             }
         }
         catch (Exception ex)

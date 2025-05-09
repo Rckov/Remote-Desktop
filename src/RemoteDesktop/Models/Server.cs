@@ -1,33 +1,23 @@
-﻿using RemoteDesktop.Models.Base;
-
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
 namespace RemoteDesktop.Models;
 
 [DataContract]
-internal class ServerGroup : ObservableObject
+internal class ServerGroup
 {
     [DataMember]
-    public string Name
-    {
-        get;
-        set => Set(ref field, value);
-    }
+    public string Name { get; set; }
 
     [DataMember]
     public ObservableCollection<Server> Servers { get; set; } = [];
 }
 
 [DataContract]
-internal class Server : ObservableObject
+internal class Server
 {
     [DataMember]
-    public string Name
-    {
-        get;
-        set => Set(ref field, value);
-    }
+    public string Name { get; set; }
 
     [DataMember]
     public string Description { get; set; }

@@ -19,12 +19,12 @@ internal class ThemeService : IThemeService
 
     public ThemeType CurrentTheme { get; private set; } = ThemeType.Light;
 
-    public void Apply(ThemeType themeType)
+    public void ApplyTheme(ThemeType themeType)
     {
         var dictionaries = Application.Current.Resources.MergedDictionaries;
         var currentTheme = dictionaries.FirstOrDefault(d => _themePaths.ContainsValue(d.Source.OriginalString));
 
-        if (currentTheme is not null)
+        if (currentTheme != null)
         {
             dictionaries.Remove(currentTheme);
         }

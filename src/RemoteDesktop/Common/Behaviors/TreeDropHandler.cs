@@ -7,7 +7,14 @@ using System;
 using System.Collections;
 using System.Windows;
 
-namespace RemoteDesktop.Components.Behaviors;
+namespace RemoteDesktop.Common.Behaviors;
+
+public interface ITreeDropHandler : IDropTarget
+{
+    event Action ItemMoved;
+
+    Point DragMouseAnchorPoint { get; }
+}
 
 internal class TreeDropHandler : ITreeDropHandler
 {
@@ -84,11 +91,4 @@ internal class TreeDropHandler : ITreeDropHandler
     {
         DragOver(info);
     }
-}
-
-public interface ITreeDropHandler : IDropTarget
-{
-    event Action ItemMoved;
-
-    Point DragMouseAnchorPoint { get; }
 }

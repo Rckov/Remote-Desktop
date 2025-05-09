@@ -31,9 +31,13 @@ internal class WindowService : IWindowService
             throw new InvalidOperationException($"No view registered for '{typeof(TViewModel).Name}'.");
         }
 
-        var win = (Window)Activator.CreateInstance(viewType);
-        win.DataContext = viewModel;
-        win.Show();
+        var window = (Window)Activator.CreateInstance(viewType);
+
+        if (window != null)
+        {
+            window.DataContext = viewModel;
+            window.Show();
+        }
     }
 
     public bool? ShowDialog<TViewModel>(TViewModel viewModel) where TViewModel : class
@@ -43,8 +47,14 @@ internal class WindowService : IWindowService
             throw new InvalidOperationException($"No view registered for '{typeof(TViewModel).Name}'.");
         }
 
-        var win = (Window)Activator.CreateInstance(viewType);
-        win.DataContext = viewModel;
-        return win.ShowDialog();
+        var window = (Window)Activator.CreateInstance(viewType);
+
+        if (window != null)
+        {
+            window.DataContext = viewModel;
+            return window.ShowDialog();
+        }
+
+        return false;
     }
 }

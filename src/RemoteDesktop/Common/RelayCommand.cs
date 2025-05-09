@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace RemoteDesktop.Components.Commands;
+namespace RemoteDesktop.Common;
 
 internal class RelayCommand(Action<object> execute, Predicate<object> canExecute = null) : ICommand
 {

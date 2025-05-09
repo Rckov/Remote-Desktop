@@ -1,4 +1,4 @@
-﻿using RemoteDesktop.Components.Commands;
+﻿using RemoteDesktop.Common;
 
 using System.Windows;
 using System.Windows.Controls;

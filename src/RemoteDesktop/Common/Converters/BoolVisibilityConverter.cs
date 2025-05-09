@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace RemoteDesktop.Components.Converters;
+namespace RemoteDesktop.Common.Converters;
 
 internal class BoolVisibilityConverter : IValueConverter
 {

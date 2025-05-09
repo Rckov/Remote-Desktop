@@ -9,58 +9,44 @@ namespace RemoteDesktop.Extensions;
 
 internal static class Extensions
 {
-    public static IEnumerable<ServerGroup> GetServerGroups(this ICollection<TreeItemViewModel> treeItems)
+    public static bool GroupExists(this ICollection<ServerGroup> groups, string groupName)
     {
-        if (treeItems == null)
-        {
-            throw new ArgumentNullException(nameof(treeItems));
-        }
+        CheckIsNull(groups);
+        CheckIsNull(groupName);
 
-        foreach (var item in treeItems)
+        return groups.Any(x => string.Equals(x.Name, groupName, StringComparison.Ordinal));
+    }
+
+    public static bool ServerExists(this ICollection<ServerGroup> groups, string groupName, string serverName)
+    {
+        CheckIsNull(groups);
+        CheckIsNull(groupName);
+        CheckIsNull(serverName);
+
+        var group = groups.FirstOrDefault(x => string.Equals(x.Name, groupName, StringComparison.Ordinal));
+
+        if (group == null)
         {
-            if (item.Model is ServerGroup group)
-            {
-                yield return group;
-            }
+            return false;
+        }
+        else
+        {
+            return group.Servers.Any(s => string.Equals(s.Name, serverName, StringComparison.Ordinal));
         }
     }
 
-    public static IEnumerable<string> GetServerGroupNames(this ICollection<TreeItemViewModel> treeItems)
+    public static TreeItemViewModel FindByName(this ICollection<TreeItemViewModel> treeItems, string groupName)
     {
-        if (treeItems == null)
-        {
-            throw new ArgumentNullException(nameof(treeItems));
-        }
+        CheckIsNull(treeItems);
+        CheckIsNull(groupName);
 
-        return treeItems.GetServerGroups().Select(group => group.Name);
-    }
-
-    public static TreeItemViewModel FindByName(this ICollection<TreeItemViewModel> treeItems, string name)
-    {
-        if (treeItems == null)
-        {
-            throw new ArgumentNullException(nameof(treeItems));
-        }
-
-        if (name == null)
-        {
-            throw new ArgumentNullException(nameof(name));
-        }
-
-        return treeItems.FirstOrDefault(item => string.Equals(item.Name, name, StringComparison.OrdinalIgnoreCase));
+        return treeItems.FirstOrDefault(item => string.Equals(item.Name, groupName, StringComparison.OrdinalIgnoreCase));
     }
 
     public static void CopyPropertiesTo(this Server source, Server target)
     {
-        if (source == null)
-        {
-            throw new ArgumentNullException(nameof(source));
-        }
-
-        if (target == null)
-        {
-            throw new ArgumentNullException(nameof(target));
-        }
+        CheckIsNull(source);
+        CheckIsNull(target);
 
         target.Name = source.Name;
         target.Description = source.Description;
@@ -68,5 +54,13 @@ internal static class Extensions
         target.Username = source.Username;
         target.Password = source.Password;
         target.Port = source.Port;
+    }
+
+    public static void CheckIsNull<T>(T value)
+    {
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
     }
 }

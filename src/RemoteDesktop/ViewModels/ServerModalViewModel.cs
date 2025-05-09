@@ -1,37 +1,34 @@
-﻿using RemoteDesktop.Components.Commands;
+﻿using RemoteDesktop.Common;
 using RemoteDesktop.Extensions;
 using RemoteDesktop.Models;
+using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels.Base;
 
-using System;
 using System.Collections.Generic;
+using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
-namespace RemoteDesktop.ViewModels.Dialogs;
+namespace RemoteDesktop.ViewModels;
 
-internal class ServerEditViewModel : BaseViewModel, IDataErrorInfo
+internal class ServerModalViewModel : BaseViewModel
 {
-    private bool _isValidationActive = false;
+    private readonly IDataService _dataService;
 
-    public ServerEditViewModel(IEnumerable<string> groups, Server server = null)
+    public ServerModalViewModel(IDataService dataService, Server server = null)
     {
-        Groups = [.. groups];
-        Server = new Server();
+        _dataService = dataService;
 
-        if (server is not null)
-        {
-            server.CopyPropertiesTo(Server);
-        }
+        Server = new();
+        server?.CopyPropertiesTo(Server);
 
         Port = 3389;
+        Groups = [.. _dataService.Groups.Select(x => x.Name)];
     }
 
-    public event Action<bool> CloseRequest;
-
     public ICommand SaveCommand { get; private set; }
-    public ICommand CloseCommand { get; private set; }
 
     public Server Server { get; private set; }
 
@@ -79,25 +76,35 @@ internal class ServerEditViewModel : BaseViewModel, IDataErrorInfo
         set => Set(ref field, value);
     }
 
-    public string this[string columnName]
+    public override void InitializeCommands()
     {
-        get => ValidateProperty(columnName);
-    }
-
-    public string Error { get; }
-
-    protected override void InitializeCommands()
-    {
-        SaveCommand = new RelayCommand(Save, HasErrors);
-        CloseCommand = new RelayCommand(Close);
+        base.InitializeCommands();
+        SaveCommand = new RelayCommand(Save);
     }
 
     private void Save()
     {
-        _isValidationActive = true;
+        IList<string> errors =
+        [
+            ValidateProperty(nameof(Name)),
+            ValidateProperty(nameof(Host)),
+            ValidateProperty(nameof(Username)),
+            ValidateProperty(nameof(Password)),
+            ValidateProperty(nameof(Port)),
+            ValidateProperty(nameof(SelectedGroup)),
+        ];
 
-        if (HasErrors())
+        errors = [.. errors.Where(e => e != null)];
+
+        if (errors.Any())
         {
+            ShowMessageBox(string.Join(Environment.NewLine, errors));
+            return;
+        }
+
+        if (_dataService.Groups.ServerExists(SelectedGroup, Name))
+        {
+            ShowMessageBox("Server with this name already exists in the selected group");
             return;
         }
 
@@ -108,21 +115,16 @@ internal class ServerEditViewModel : BaseViewModel, IDataErrorInfo
         Server.Password = Password;
         Server.Port = Port;
 
-        CloseRequest?.Invoke(true);
+        Ok();
     }
 
-    private void Close()
+    private void ShowMessageBox(string message)
     {
-        CloseRequest?.Invoke(false);
+        MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
     private string ValidateProperty(string columnName)
     {
-        if (!_isValidationActive)
-        {
-            return null;
-        }
-
         return columnName switch
         {
             nameof(Name) when string.IsNullOrWhiteSpace(Name) => "Name cannot be empty",
@@ -134,15 +136,5 @@ internal class ServerEditViewModel : BaseViewModel, IDataErrorInfo
 
             _ => null
         };
-    }
-
-    private bool HasErrors()
-    {
-        return !string.IsNullOrEmpty(this[nameof(Name)]) ||
-               !string.IsNullOrEmpty(this[nameof(Host)]) ||
-               !string.IsNullOrEmpty(this[nameof(Username)]) ||
-               !string.IsNullOrEmpty(this[nameof(Password)]) ||
-               !string.IsNullOrEmpty(this[nameof(Port)]) ||
-               !string.IsNullOrEmpty(this[nameof(SelectedGroup)]);
     }
 }

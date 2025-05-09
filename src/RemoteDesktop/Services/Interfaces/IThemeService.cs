@@ -6,5 +6,5 @@ public interface IThemeService
 {
     ThemeType CurrentTheme { get; }
 
-    void Apply(ThemeType themeType);
+    void ApplyTheme(ThemeType themeType);
 }
