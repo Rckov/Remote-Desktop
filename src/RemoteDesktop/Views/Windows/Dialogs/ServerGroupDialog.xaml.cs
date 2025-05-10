@@ -19,7 +19,7 @@ public partial class ServerGroupDialog : Window
 
     private void SubscribeViewModelEvents()
     {
-        if (DataContext is ServerModalViewModel viewModel)
+        if (DataContext is ServerGroupModalViewModel viewModel)
         {
             viewModel.CloseRequest += OnCloseRequest;
         }

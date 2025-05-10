@@ -15,7 +15,7 @@
 
       <MenuItem Header="Manage" Icon="&#xED25;">
          <MenuItem Header="Create" Icon="&#xE710;">
-            <MenuItem Header="New Group" Icon="&#xE8F4;" />
+            <MenuItem Header="New Group" Command="{Binding CreateGroupCommand}" Icon="&#xE8F4;" />
             <MenuItem Header="New Server" Command="{Binding CreateServerCommand}" Icon="&#xE836;" />
          </MenuItem>
 

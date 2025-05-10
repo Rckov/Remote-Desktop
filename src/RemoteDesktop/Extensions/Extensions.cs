@@ -64,6 +64,15 @@ internal static class Extensions
         target.Port = source.Port;
     }
 
+    public static void CopyPropertiesTo(this ServerGroup source, ServerGroup target)
+    {
+        CheckIsNull(source);
+        CheckIsNull(target);
+
+        target.Name = source.Name;
+        target.Servers = source.Servers;
+    }
+
     public static void CheckIsNull<T>(T value)
     {
         if (value == null)

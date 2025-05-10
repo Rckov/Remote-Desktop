@@ -94,10 +94,7 @@ internal class MainViewModel : BaseViewModel
             return;
         }
 
-        ServersGroups.Add(new(new ServerGroup()
-        {
-            Name = viewModel.Name
-        }));
+        ServersGroups.Add(new(viewModel.Group));
 
         _dataService.Save();
     }

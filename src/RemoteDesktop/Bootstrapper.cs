@@ -63,7 +63,6 @@ internal static class Bootstrapper
 
         service.Register<MainWindow, MainViewModel>();
         service.Register<ServerDialog, ServerModalViewModel>();
-
-        //service.Register<ServerGroupDialog, ServerGroupEditViewModel>();
+        service.Register<ServerGroupDialog, ServerGroupModalViewModel>();
     }
 }

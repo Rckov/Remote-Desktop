@@ -6,6 +6,7 @@
         Height="440"
         Title="ServerDialog"
 
+        ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource WindowStyle}">
 
@@ -40,7 +41,7 @@
                <StackPanel Margin="0">
                   <StackPanel>
                      <TextBlock Text="Name*:" />
-                     <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                     <TextBox Text="{Binding Name}" />
                   </StackPanel>
 
                   <StackPanel>
@@ -50,27 +51,27 @@
 
                   <StackPanel>
                      <TextBlock Text="Host*:" />
-                     <TextBox Text="{Binding Host, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                     <TextBox Text="{Binding Host}" />
                   </StackPanel>
 
                   <StackPanel>
                      <TextBlock Text="Port*:" />
-                     <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" PreviewTextInput="NumberValidationTextBox" />
+                     <TextBox Text="{Binding Port}" PreviewTextInput="NumberValidationTextBox" />
                   </StackPanel>
 
                   <StackPanel>
                      <TextBlock Text="Username*:" />
-                     <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                     <TextBox Text="{Binding Username}" />
                   </StackPanel>
 
                   <StackPanel>
                      <TextBlock Text="Password*:" />
-                     <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged,  ValidatesOnDataErrors=True}" />
+                     <TextBox Text="{Binding Password}" />
                   </StackPanel>
 
                   <StackPanel>
                      <TextBlock Text="Group*:" />
-                     <ComboBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                     <ComboBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}" />
                   </StackPanel>
 
                   <UniformGrid Rows="1" Margin="0,5,0,0">
