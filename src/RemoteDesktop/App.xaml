@@ -9,11 +9,11 @@
          <converter:TreeItemIconConverter x:Key="TreeItemIconConverter" />
 
          <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
+            <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+
             <ResourceDictionary Source="/Resources/Styles/Generic.xaml" />
             <ResourceDictionary Source="/Resources/Styles/AvalonDock.xaml" />
-            <ResourceDictionary Source="/Resources/Styles/TreeView.xaml" />
-
-            <ResourceDictionary Source="/Resources/Themes/LightBrushes.xaml" />
          </ResourceDictionary.MergedDictionaries>
       </ResourceDictionary>
    </Application.Resources>

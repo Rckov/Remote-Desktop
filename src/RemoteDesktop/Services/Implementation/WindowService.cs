@@ -1,4 +1,6 @@
-﻿using RemoteDesktop.Services.Interfaces;
+﻿using Microsoft.Extensions.DependencyInjection;
+
+using RemoteDesktop.Services.Interfaces;
 
 using System;
 using System.Collections.Generic;
@@ -6,55 +8,46 @@ using System.Windows;
 
 namespace RemoteDesktop.Services.Implementation;
 
-internal class WindowService : IWindowService
+internal class WindowService(IWindowFactory factory, IServiceProvider provider) : IWindowService
 {
-    private readonly Dictionary<Type, Type> _windows = [];
-
-    public void Register<TView, TViewModel>() where TView : Window
+    public void Show<TViewModel>(object parameter = null) where TViewModel : class
     {
-        var type = typeof(TViewModel);
-
-        if (_windows.ContainsKey(type))
-        {
-            _windows[type] = typeof(TView);
-        }
-        else
-        {
-            _windows.Add(type, typeof(TView));
-        }
+        var window = GetWindow<TViewModel>(parameter);
+        window.Show();
     }
 
-    public void Show<TViewModel>(TViewModel viewModel) where TViewModel : class
+    public bool? ShowDialog<TViewModel>(object parameter = null) where TViewModel : class
     {
-        if (!_windows.TryGetValue(typeof(TViewModel), out var viewType))
-        {
-            throw new InvalidOperationException($"No view registered for '{typeof(TViewModel).Name}'.");
-        }
-
-        var window = (Window)Activator.CreateInstance(viewType);
-
-        if (window != null)
-        {
-            window.DataContext = viewModel;
-            window.Show();
-        }
+        var window = GetWindow<TViewModel>(parameter);
+        return window.ShowDialog();
     }
 
-    public bool? ShowDialog<TViewModel>(TViewModel viewModel) where TViewModel : class
+    private Window GetWindow<TViewModel>(object parameter = null) where TViewModel : class
     {
-        if (!_windows.TryGetValue(typeof(TViewModel), out var viewType))
+        var viewModel = provider.GetRequiredService<TViewModel>();
+
+        if (parameter != null && viewModel is IParameterReceiver receiver)
         {
-            throw new InvalidOperationException($"No view registered for '{typeof(TViewModel).Name}'.");
+            receiver.SetParameter(parameter);
         }
 
-        var window = (Window)Activator.CreateInstance(viewType);
+        return factory.CreateWindow(viewModel);
+    }
+}
 
-        if (window != null)
+internal class WindowFactory(IServiceProvider provider, Dictionary<Type, Type> views) : IWindowFactory
+{
+    public Window CreateWindow<TViewModel>(TViewModel viewModel)
+    {
+        var vmType = typeof(TViewModel);
+
+        if (!views.TryGetValue(vmType, out var viewType))
         {
-            window.DataContext = viewModel;
-            return window.ShowDialog();
+            throw new InvalidOperationException($"View not registered for {vmType.Name}");
         }
 
-        return false;
+        var window = (Window)provider.GetRequiredService(viewType);
+        window.DataContext = viewModel;
+        return window;
     }
 }

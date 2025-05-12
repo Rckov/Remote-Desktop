@@ -1,80 +1,40 @@
-﻿using RemoteDesktop.Common;
-using RemoteDesktop.Common.Behaviors;
-using RemoteDesktop.Extensions;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+
 using RemoteDesktop.Models;
-using RemoteDesktop.Services.Implementation;
+using RemoteDesktop.Models.Messages;
 using RemoteDesktop.Services.Interfaces;
-using RemoteDesktop.ViewModels.Base;
 
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Input;
 
 namespace RemoteDesktop.ViewModels;
 
-internal class MainViewModel : BaseViewModel
+internal partial class MainViewModel : ObservableObject
 {
-    private readonly IThemeService _themeService;
-    private readonly IDataService _dataService;
-    private readonly ISettingsService _settingsService;
     private readonly IWindowService _windowService;
+    private readonly IMessenger _messenger;
 
-    public MainViewModel(IThemeService themeService, IDataService dataService, ISettingsService settingsService, IWindowService windowService)
+    [ObservableProperty]
+    private string _searchText;
+
+    [ObservableProperty]
+    private TreeItemViewModel _selectedItem;
+
+    public MainViewModel(IWindowService windowService, IMessenger messenger)
     {
-        _themeService = themeService;
-        _dataService = dataService;
-        _settingsService = settingsService;
         _windowService = windowService;
+        _messenger = messenger;
 
-        _dataService.Load();
-        _themeService.ApplyTheme(settingsService.Settings.ThemeType);
-
-        DropHandler = new TreeDropHandler();
-        DropHandler.ItemMoved += dataService.Save;
-
-        ServersGroups = [.. dataService.Groups.Select(x => new TreeItemViewModel(x))];
-    }
-
-    public ITreeDropHandler DropHandler { get; }
-
-    public string SearchText
-    {
-        get;
-        set
-        {
-            if (Set(ref field, value))
-            {
-                UpdateFilter(field);
-            }
-        }
-    }
-
-    public TreeItemViewModel SelectedTreeItem
-    {
-        get;
-        set => Set(ref field, value);
+        _messenger.Register<ValueChangedMessageEx<Server>>(this, (r, msg) => OnServerHandler(msg));
+        _messenger.Register<ValueChangedMessageEx<ServerGroup>>(this, (r, msg) => OnGroupHandler(msg));
     }
 
     public ObservableCollection<TreeItemViewModel> ServersGroups { get; }
     public ObservableCollection<ConnectedServerViewModel> ConnectedServers { get; } = [];
-    public ICommand ConnectCommand { get; private set; }
-    public ICommand ChangeThemeCommand { get; private set; }
-    public ICommand CreateServerCommand { get; private set; }
-    public ICommand CreateGroupCommand { get; private set; }
-    public ICommand EditCommand { get; private set; }
-    public ICommand DeleteCommand { get; private set; }
 
-    public override void InitializeCommands()
-    {
-        ConnectCommand = new RelayCommand(Connect);
-        ChangeThemeCommand = new RelayCommand(ChangeTheme);
-        CreateServerCommand = new RelayCommand(CreateServer);
-        CreateGroupCommand = new RelayCommand(CreateGroup);
-        EditCommand = new RelayCommand(Edit);
-        DeleteCommand = new RelayCommand(Delete);
-    }
-
+    [RelayCommand]
     private void Connect()
     {
         throw new NotImplementedException();
@@ -85,93 +45,54 @@ internal class MainViewModel : BaseViewModel
         throw new NotImplementedException();
     }
 
-    private void CreateGroup()
-    {
-        var viewModel = new ServerGroupModalViewModel(_dataService);
-
-        if (_windowService.ShowDialog(viewModel) != true)
-        {
-            return;
-        }
-
-        ServersGroups.Add(new(viewModel.Group));
-
-        _dataService.Save();
-    }
-
+    [RelayCommand]
     private void CreateServer()
     {
-        var viewModel = new ServerModalViewModel(_dataService);
-
-        if (_windowService.ShowDialog(viewModel) != true)
-        {
-            return;
-        }
-
-        var selectedGroup = ServersGroups.FindByName(viewModel.SelectedGroup);
-
-        if (selectedGroup != null)
-        {
-            selectedGroup.Children.Add(new(viewModel.Server));
-        }
-
-        _dataService.Save();
+        _windowService.ShowDialog<ServerViewModel>();
     }
 
-    private void Edit()
+    [RelayCommand]
+    private void CreateGroup()
     {
-        if (SelectedTreeItem == null)
-        {
-            return;
-        }
-
-        _dataService.Save();
+        _windowService.ShowDialog<ServerGroupViewModel>();
     }
 
-    private void Delete()
+    [RelayCommand]
+    private void UpdateSelectedModel()
     {
-        if (SelectedTreeItem == null)
+        if (SelectedItem == null)
         {
             return;
         }
 
-        var result = QuestionMessageBox($"Are you sure you want to delete '{SelectedTreeItem.Name}'?");
-
-        if (!result)
+        var result = SelectedItem.Item switch
         {
-            return;
-        }
+            Server server => _windowService.ShowDialog<ServerViewModel>(server),
+            ServerGroup group => _windowService.ShowDialog<ServerGroupViewModel>(group),
+            _ => false
+        };
 
-        var parentItem = ServersGroups.FindParent(SelectedTreeItem);
-
-        if (parentItem == null)
+        if (result == true)
         {
-            ServersGroups.Remove(SelectedTreeItem);
+            // TO DO Save
         }
-        else
-        {
-            parentItem.Children.Remove(SelectedTreeItem);
-        }
-
-        _dataService.Save();
     }
 
-    private void ChangeTheme()
-    {
-        var curTheme = _themeService.CurrentTheme;
-        var newTheme = curTheme == ThemeType.Light ? ThemeType.Dark : ThemeType.Light;
-
-        _themeService.ApplyTheme(newTheme);
-
-        _settingsService.Settings.ThemeType = newTheme;
-        _settingsService.SaveSettings();
-    }
-
-    private void UpdateFilter(string pattern)
+    partial void OnSearchTextChanged(string value)
     {
         foreach (var item in ServersGroups)
         {
-            item.ApplyFilter(pattern);
+            item.ApplyFilter(value);
         }
+    }
+
+    private void OnServerHandler(ValueChangedMessageEx<Server> message)
+    {
+
+    }
+
+    private void OnGroupHandler(ValueChangedMessageEx<ServerGroup> message)
+    {
+
     }
 }

@@ -1,36 +1,12 @@
-﻿using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
+﻿namespace RemoteDesktop.Models;
 
-namespace RemoteDesktop.Models;
-
-[DataContract]
-internal class ServerGroup
-{
-    [DataMember]
-    public string Name { get; set; }
-
-    [DataMember]
-    public ObservableCollection<Server> Servers { get; set; } = [];
-}
-
-[DataContract]
 internal class Server
 {
-    [DataMember]
     public string Name { get; set; }
-
-    [DataMember]
     public string Description { get; set; }
-
-    [DataMember]
     public string Host { get; set; }
-
-    [DataMember]
     public string Username { get; set; }
-
-    [DataMember]
     public string Password { get; set; }
-
-    [DataMember]
-    public int Port { get; set; }
+    public int Port { get; set; } = 3389;
+    public string GroupName { get; set; }
 }

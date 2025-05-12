@@ -1,20 +1,23 @@
-﻿using RemoteDesktop.Models;
-using RemoteDesktop.Models.Base;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+using RemoteDesktop.Models;
 
 namespace RemoteDesktop.ViewModels;
 
-internal class ConnectedServerViewModel : ObservableObject
+internal partial class ConnectedServerViewModel : ObservableObject
 {
-    public string Name
-    {
-        get => Server.Name;
-    }
+    [ObservableProperty]
+    private string _name;
 
-    public Server Server { get; }
-    public bool IsConnected { get; internal set; }
+    [ObservableProperty]
+    private Server _server;
+
+    [ObservableProperty]
+    private bool _isConnected;
 
     public ConnectedServerViewModel(Server server)
     {
         Server = server;
+        Name = server.Name;
     }
 }

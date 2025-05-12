@@ -1,86 +1,30 @@
-﻿<Window x:Class="RemoteDesktop.Views.Windows.Dialogs.ServerDialog"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:RemoteDesktop.Views.UserControls"
-        Width="350"
-        Height="440"
-        Title="ServerDialog"
+﻿<hc:Window x:Class="RemoteDesktop.Views.Windows.Dialogs.ServerDialog"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:hc="https://handyorg.github.io/handycontrol"
 
-        ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen"
-        Style="{StaticResource WindowStyle}">
+           Height="420" 
+           Width="300" 
+           Title="{Binding Title}"
 
-   <Window.Resources>
-      <Style TargetType="{x:Type StackPanel}">
-         <Setter Property="Margin" Value="0,0,0,5" />
-      </Style>
+           ResizeMode="CanMinimize"
+           WindowStartupLocation="CenterScreen"
+           Style="{StaticResource WindowWin10}">
 
-      <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxStyle}">
-         <Setter Property="Margin" Value="0,2,0,0" />
-      </Style>
-   </Window.Resources>
+   <Border Margin="4" Padding="5" CornerRadius="5" Background="{DynamicResource RegionBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Effect="{DynamicResource DropShadowEffect}">
+      <hc:UniformSpacingPanel Orientation="Vertical" Spacing="20">
+         <hc:TextBox hc:InfoElement.Placeholder="Server name" hc:InfoElement.Title="Name" Text="{Binding Name}" />
+         <hc:TextBox hc:InfoElement.Placeholder="Server description" hc:InfoElement.Necessary="False" hc:InfoElement.Title="Description" Text="{Binding Description}" />
+         <hc:TextBox hc:InfoElement.Placeholder="192.168.0.0" hc:InfoElement.Title="Host" Text="{Binding Host}" />
+         <hc:TextBox hc:InfoElement.Placeholder="3389" hc:InfoElement.Title="Port" Text="{Binding Port}" />
+         <hc:TextBox hc:InfoElement.Placeholder="Administrator" hc:InfoElement.Title="Username" Text="{Binding Username}" />
+         <hc:PasswordBox hc:InfoElement.Placeholder="Password" hc:InfoElement.Title="Password" UnsafePassword="{Binding Password}" />
+         <hc:ComboBox hc:InfoElement.Placeholder="Local" hc:InfoElement.Title="Group" SelectedItem="{Binding GroupName}" />
 
-   <Border Style="{StaticResource BorderWindowStyle}">
-      <Grid>
-         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-         </Grid.RowDefinitions>
-
-         <controls:WindowBar Title="SERVER EDITOR" ShowTitle="True" CanMaximized="False" Background="{DynamicResource ContentBackgroundBrush}" Effect="{DynamicResource DropShadowEffect}" />
-
-         <Border Background="{DynamicResource ContentBackgroundBrush}"
-                 Padding="5"
-                 Grid.Row="1"
-                 Margin="4"
-                 CornerRadius="4"
-                 BorderBrush="{DynamicResource BorderBrush}"
-                 BorderThickness="1" Effect="{DynamicResource DropShadowEffect}">
-
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-               <StackPanel Margin="0">
-                  <StackPanel>
-                     <TextBlock Text="Name*:" />
-                     <TextBox Text="{Binding Name}" />
-                  </StackPanel>
-
-                  <StackPanel>
-                     <TextBlock Text="Description" />
-                     <TextBox Text="{Binding Description}" />
-                  </StackPanel>
-
-                  <StackPanel>
-                     <TextBlock Text="Host*:" />
-                     <TextBox Text="{Binding Host}" />
-                  </StackPanel>
-
-                  <StackPanel>
-                     <TextBlock Text="Port*:" />
-                     <TextBox Text="{Binding Port}" PreviewTextInput="NumberValidationTextBox" />
-                  </StackPanel>
-
-                  <StackPanel>
-                     <TextBlock Text="Username*:" />
-                     <TextBox Text="{Binding Username}" />
-                  </StackPanel>
-
-                  <StackPanel>
-                     <TextBlock Text="Password*:" />
-                     <TextBox Text="{Binding Password}" />
-                  </StackPanel>
-
-                  <StackPanel>
-                     <TextBlock Text="Group*:" />
-                     <ComboBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}" />
-                  </StackPanel>
-
-                  <UniformGrid Rows="1" Margin="0,5,0,0">
-                     <Button Content="Save" Command="{Binding SaveCommand}" Margin="0,0,1,0" />
-                     <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="1,0,0,0" />
-                  </UniformGrid>
-               </StackPanel>
-            </ScrollViewer>
-         </Border>
-      </Grid>
+         <hc:UniformSpacingPanel Margin="0,2,0,0" Spacing="2">
+            <Button Content="{Binding ButtonSuccess}" Width="138" Style="{DynamicResource ButtonSuccess}" Command="{Binding OkCommand}" />
+            <Button Content="Cancel" IsCancel="True" Width="138" Style="{DynamicResource ButtonDefault}" />
+         </hc:UniformSpacingPanel>
+      </hc:UniformSpacingPanel>
    </Border>
-</Window>
+</hc:Window>

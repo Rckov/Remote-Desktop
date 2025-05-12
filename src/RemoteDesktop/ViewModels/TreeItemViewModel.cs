@@ -1,19 +1,34 @@
-﻿using RemoteDesktop.Models;
-using RemoteDesktop.Models.Base;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+using RemoteDesktop.Models;
 
 using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 
 namespace RemoteDesktop.ViewModels;
 
-internal class TreeItemViewModel : ObservableObject
+internal partial class TreeItemViewModel : ObservableObject
 {
-    public TreeItemViewModel(string name, object model)
+    [ObservableProperty]
+    private object _item;
+
+    [ObservableProperty]
+    private string _name;
+
+    [ObservableProperty]
+    private bool _isExpanded;
+
+    [ObservableProperty]
+    private bool _isVisible;
+
+    [ObservableProperty]
+    public ObservableCollection<TreeItemViewModel> _children;
+
+    public TreeItemViewModel(string name, object item)
     {
         Name = name;
-        Model = model;
+        Item = item;
 
         IsVisible = true;
         IsExpanded = true;
@@ -22,35 +37,11 @@ internal class TreeItemViewModel : ObservableObject
     public TreeItemViewModel(Server server) : this(server.Name, server)
     {
         Children = [];
-        CollectionChangedEventManager.AddHandler(Children, OnChildrenCollectionChanged);
     }
 
     public TreeItemViewModel(ServerGroup group) : this(group.Name, group)
     {
         Children = [.. group.Servers.Select(s => new TreeItemViewModel(s))];
-        CollectionChangedEventManager.AddHandler(Children, OnChildrenCollectionChanged);
-    }
-
-    public string Name
-    {
-        get;
-        set => Set(ref field, value);
-    }
-
-    public object Model { get; private set; }
-
-    public ObservableCollection<TreeItemViewModel> Children { get; set; }
-
-    public bool IsExpanded
-    {
-        get;
-        set => Set(ref field, value);
-    }
-
-    public bool IsVisible
-    {
-        get;
-        set => Set(ref field, value);
     }
 
     public bool ApplyFilter(string filter)
@@ -73,35 +64,5 @@ internal class TreeItemViewModel : ObservableObject
         }
 
         return IsVisible;
-    }
-
-    private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-    {
-        // TO DO
-        if (Model is not ServerGroup group)
-        {
-            return;
-        }
-
-        if (e.Action == NotifyCollectionChangedAction.Add)
-        {
-            var item = (TreeItemViewModel)e.NewItems[0];
-            var newIndex = e.NewStartingIndex < 0 ? 0 : e.NewStartingIndex;
-
-            if (item.Model is Server server)
-            {
-                group.Servers.Insert(newIndex, server);
-            }
-        }
-
-        if (e.Action == NotifyCollectionChangedAction.Remove)
-        {
-            var item = (TreeItemViewModel)e.OldItems[0];
-
-            if (item.Model is Server server)
-            {
-                group.Servers.Remove(server);
-            }
-        }
     }
 }
