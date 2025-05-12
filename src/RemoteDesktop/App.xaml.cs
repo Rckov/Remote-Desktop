@@ -5,8 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using RemoteDesktop.Services.Implementation;
 using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels;
-using RemoteDesktop.Views.Windows;
-using RemoteDesktop.Views.Windows.Dialogs;
+using RemoteDesktop.Views;
+using RemoteDesktop.Views.Dialogs;
 
 using System;
 using System.Collections.Generic;

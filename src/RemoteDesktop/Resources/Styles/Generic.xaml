@@ -75,10 +75,10 @@
                <StackPanel>
                   <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                      <Grid>
-                        <AdornedElementPlaceholder Name="adorner"/>
+                        <AdornedElementPlaceholder Name="adorner" />
                      </Grid>
                   </Border>
-                  <TextBlock Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" Foreground="{DynamicResource DangerBrush}" Margin="80,0,0,0" FontSize="11"/>
+                  <TextBlock Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" Foreground="{DynamicResource DangerBrush}" Margin="80,0,0,0" FontSize="11" />
                </StackPanel>
             </ControlTemplate>
          </Setter.Value>
@@ -102,10 +102,10 @@
                <StackPanel>
                   <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                      <Grid>
-                        <AdornedElementPlaceholder Name="adorner"/>
+                        <AdornedElementPlaceholder Name="adorner" />
                      </Grid>
                   </Border>
-                  <TextBlock Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" Foreground="{DynamicResource DangerBrush}" Margin="80,0,0,0" FontSize="11"/>
+                  <TextBlock Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" Foreground="{DynamicResource DangerBrush}" Margin="80,0,0,0" FontSize="11" />
                </StackPanel>
             </ControlTemplate>
          </Setter.Value>
@@ -127,10 +127,10 @@
                <StackPanel>
                   <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                      <Grid>
-                        <AdornedElementPlaceholder Name="adorner"/>
+                        <AdornedElementPlaceholder Name="adorner" />
                      </Grid>
                   </Border>
-                  <TextBlock Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" Foreground="{DynamicResource DangerBrush}" Margin="80,0,0,0" FontSize="11"/>
+                  <TextBlock Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" Foreground="{DynamicResource DangerBrush}" Margin="80,0,0,0" FontSize="11" />
                </StackPanel>
             </ControlTemplate>
          </Setter.Value>
@@ -138,5 +138,4 @@
    </Style>
 
    <!--#endregion-->
-
 </ResourceDictionary>

@@ -88,11 +88,9 @@ internal partial class MainViewModel : ObservableObject
 
     private void OnServerHandler(ValueChangedMessageEx<Server> message)
     {
-
     }
 
     private void OnGroupHandler(ValueChangedMessageEx<ServerGroup> message)
     {
-
     }
 }

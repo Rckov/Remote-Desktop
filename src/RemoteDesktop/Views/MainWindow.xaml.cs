@@ -4,7 +4,7 @@ using RemoteDesktop.ViewModels;
 
 using System.Windows;
 
-namespace RemoteDesktop.Views.Windows;
+namespace RemoteDesktop.Views;
 
 public partial class MainWindow
 {
