@@ -52,7 +52,7 @@ internal partial class ServerViewModel(IMessenger messenger) : ObservableValidat
     private string _groupName;
 
     [ObservableProperty]
-    private Server _server;
+    private Server _server = new();
 
     [ObservableProperty]
     private Server _oldServer;

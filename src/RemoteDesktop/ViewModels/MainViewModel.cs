@@ -13,8 +13,9 @@ namespace RemoteDesktop.ViewModels;
 
 internal partial class MainViewModel : ObservableObject
 {
-    private readonly IWindowService _windowService;
+    private readonly IWindowService _window;
     private readonly IMessenger _messenger;
+    private readonly INotificationService _notification;
 
     [ObservableProperty]
     private string _searchText;
@@ -22,10 +23,11 @@ internal partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private TreeItemViewModel _selectedItem;
 
-    public MainViewModel(IWindowService windowService, IMessenger messenger)
+    public MainViewModel(IWindowService window, IMessenger messenger, INotificationService notification)
     {
-        _windowService = windowService;
+        _window = window;
         _messenger = messenger;
+        _notification = notification;
 
         _messenger.Register<ValueChangedMessageEx<Server>>(this, (r, msg) => OnServerHandler(msg));
         _messenger.Register<ValueChangedMessageEx<ServerGroup>>(this, (r, msg) => OnGroupHandler(msg));
@@ -48,13 +50,13 @@ internal partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void CreateServer()
     {
-        _windowService.ShowDialog<ServerViewModel>();
+        _window.ShowDialog<ServerViewModel>();
     }
 
     [RelayCommand]
     private void CreateGroup()
     {
-        _windowService.ShowDialog<ServerGroupViewModel>();
+        _window.ShowDialog<ServerGroupViewModel>();
     }
 
     [RelayCommand]
@@ -65,17 +67,6 @@ internal partial class MainViewModel : ObservableObject
             return;
         }
 
-        var result = SelectedItem.Item switch
-        {
-            Server server => _windowService.ShowDialog<ServerViewModel>(server),
-            ServerGroup group => _windowService.ShowDialog<ServerGroupViewModel>(group),
-            _ => false
-        };
-
-        if (result == true)
-        {
-            // TO DO Save
-        }
     }
 
     partial void OnSearchTextChanged(string value)

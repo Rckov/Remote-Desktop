@@ -26,7 +26,7 @@ internal partial class ServerGroupViewModel(IMessenger messenger) : ObservableVa
     private string _name;
 
     [ObservableProperty]
-    private ServerGroup _group;
+    private ServerGroup _group = new();
 
     [ObservableProperty]
     private ServerGroup _oldGroup;
