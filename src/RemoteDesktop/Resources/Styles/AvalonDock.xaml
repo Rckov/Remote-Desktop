@@ -26,7 +26,7 @@
                         <Button x:Name="DocumentCloseButton" Grid.Column="2" Margin="2,3,0,0"
                                 Command="{Binding Path=LayoutItem.CloseCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                 Style="{StaticResource BaseStyle}" Visibility="Hidden" Padding="0" Background="Transparent" Width="14" Height="14" BorderThickness="0">
-                           <TextBlock Text="&#xE106;" FontWeight="Bold" FontFamily="{StaticResource FontIcon}" Foreground="{DynamicResource ThirdlyTextBrush}" />
+                           <TextBlock Text="&#xE106;" FontWeight="Bold" FontFamily="{StaticResource FontIcon}" FontSize="8" Foreground="{DynamicResource ThirdlyTextBrush}" />
                         </Button>
                      </Grid>
                   </Border>

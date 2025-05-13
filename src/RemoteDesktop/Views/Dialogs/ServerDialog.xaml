@@ -11,7 +11,7 @@
            WindowStartupLocation="CenterScreen"
            Style="{StaticResource WindowWin10}">
 
-   <Border Margin="4" Padding="5" CornerRadius="5" Background="{DynamicResource RegionBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Effect="{DynamicResource DropShadowEffect}">
+   <Border Style="{StaticResource ContentBorder}">
       <hc:UniformSpacingPanel Orientation="Vertical" Spacing="20">
          <hc:TextBox hc:InfoElement.Placeholder="Server name" hc:InfoElement.Title="Name" Text="{Binding Name}" />
          <hc:TextBox hc:InfoElement.Placeholder="Server description" hc:InfoElement.Necessary="False" hc:InfoElement.Title="Description" Text="{Binding Description}" />

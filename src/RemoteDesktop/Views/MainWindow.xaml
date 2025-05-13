@@ -39,7 +39,7 @@
 
       <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="Transparent" />
 
-      <Border Margin="4,4,1,4" Padding="4" CornerRadius="5" Background="{DynamicResource RegionBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Effect="{DynamicResource DropShadowEffect}">
+      <Border Margin="4,4,1,4" Padding="4" Style="{StaticResource ContentBorder}">
          <hc:TabControl Style="{StaticResource TabControlInLine}" BorderThickness="0,1,0,0">
             <hc:TabItem Header="All">
                <Grid>

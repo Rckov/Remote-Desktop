@@ -6,7 +6,15 @@
 
    <DropShadowEffect x:Key="DropShadowEffect" ShadowDepth="0.5" Opacity="0.04" />
 
-   <!--#region Menu styles -->
+   <Style x:Key="ContentBorder" TargetType="{x:Type Border}">
+      <Setter Property="Margin" Value="4" />
+      <Setter Property="Padding" Value="5" />
+      <Setter Property="Background" Value="{DynamicResource RegionBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="5" />
+      <Setter Property="Effect" Value="{DynamicResource DropShadowEffect}" />
+   </Style>
 
    <Style TargetType="{x:Type MenuItem}">
       <Setter Property="Margin" Value="0" />
@@ -62,8 +70,6 @@
 
    <!--#endregion-->
 
-   <!--#region TextBox styles -->
-
    <Style TargetType="{x:Type hc:TextBox}" BasedOn="{StaticResource TextBoxExtend}">
       <Setter Property="hc:InfoElement.Necessary" Value="True" />
       <Setter Property="hc:InfoElement.TitleWidth" Value="80" />
@@ -84,10 +90,6 @@
          </Setter.Value>
       </Setter>
    </Style>
-
-   <!--#endregion-->
-
-   <!--#region PasswordBox styles -->
 
    <Style TargetType="{x:Type hc:PasswordBox}" BasedOn="{StaticResource PasswordBoxPlusBaseStyle}">
       <Setter Property="ShowEyeButton" Value="True" />
@@ -112,10 +114,6 @@
       </Setter>
    </Style>
 
-   <!--#endregion-->
-
-   <!--#region ComboBox styles -->
-
    <Style TargetType="{x:Type hc:ComboBox}" BasedOn="{StaticResource ComboBoxExtend}">
       <Setter Property="hc:InfoElement.Necessary" Value="True" />
       <Setter Property="hc:InfoElement.TitleWidth" Value="80" />
@@ -136,6 +134,4 @@
          </Setter.Value>
       </Setter>
    </Style>
-
-   <!--#endregion-->
 </ResourceDictionary>

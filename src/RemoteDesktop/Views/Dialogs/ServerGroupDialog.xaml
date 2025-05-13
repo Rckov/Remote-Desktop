@@ -1,0 +1,24 @@
+﻿<hc:Window x:Class="RemoteDesktop.Views.Dialogs.ServerGroupDialog"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:hc="https://handyorg.github.io/handycontrol"
+
+           Height="130"
+           Width="300"
+           Title="{Binding Title}"
+
+           ResizeMode="CanMinimize"
+           WindowStartupLocation="CenterScreen"
+           Style="{StaticResource WindowWin10}">
+
+   <Border Style="{StaticResource ContentBorder}">
+      <hc:UniformSpacingPanel Orientation="Vertical" Spacing="20">
+         <hc:TextBox hc:InfoElement.Placeholder="Group name" hc:InfoElement.Title="Name" Text="{Binding Name}" />
+
+         <hc:UniformSpacingPanel Margin="0,2,0,0" Spacing="2">
+            <Button Content="{Binding ButtonSuccess}" Width="138" Style="{DynamicResource ButtonSuccess}" Command="{Binding OkCommand}" />
+            <Button Content="Cancel" IsCancel="True" Width="138" Style="{DynamicResource ButtonDefault}" />
+         </hc:UniformSpacingPanel>
+      </hc:UniformSpacingPanel>
+   </Border>
+</hc:Window>

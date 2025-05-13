@@ -22,7 +22,7 @@ internal partial class ServerViewModel(IMessenger messenger) : ObservableValidat
     [ObservableProperty]
     [Required(ErrorMessage = "Required field")]
     [MinLength(5, ErrorMessage = "Minimum length is 5 characters")]
-    [MaxLength(20, ErrorMessage = "Maximum length is 20 characters")]
+    [MaxLength(15, ErrorMessage = "Maximum length is 15 characters")]
     private string _name;
 
     [ObservableProperty]

@@ -34,14 +34,14 @@ public partial class App : Application
         services.AddTransient<ServerDialog>();
 
         services.AddTransient<ServerGroupViewModel>();
-        //services.AddTransient<ServerGroupDialog>();
+        services.AddTransient<ServerGroupDialog>();
 
         var views = new Dictionary<Type, Type>
         {
             { typeof(MainViewModel), typeof(MainWindow) },
 
             { typeof(ServerViewModel), typeof(ServerDialog) },
-            //{ typeof(ServerGroupViewModel), typeof(ServerGroupDialog) },
+            { typeof(ServerGroupViewModel), typeof(ServerGroupDialog) },
         };
 
         services.AddSingleton<IWindowFactory>(sp => new WindowFactory(sp, views));
