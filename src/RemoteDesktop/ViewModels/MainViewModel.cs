@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
+using HandyControl.Themes;
+
 using RemoteDesktop.Models;
 using RemoteDesktop.Models.Messages;
 using RemoteDesktop.Services.Interfaces;
@@ -39,7 +41,7 @@ internal partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void Connect()
     {
-        throw new NotImplementedException();
+        var curTheme = Theme.GetSkin(null);
     }
 
     internal void Diconnect(ConnectedServerViewModel model)
@@ -67,6 +69,11 @@ internal partial class MainViewModel : ObservableObject
             return;
         }
 
+    }
+
+    [RelayCommand]
+    private void ChangeTheme()
+    {
     }
 
     partial void OnSearchTextChanged(string value)
