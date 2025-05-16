@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 
-using HandyControl.Controls;
-
 using Microsoft.Extensions.DependencyInjection;
 
 using RemoteDesktop.Services.Implementation;
@@ -50,6 +48,7 @@ public partial class App : Application
         services.AddSingleton<IWindowService, WindowService>();
         services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
         services.AddSingleton<INotificationService, NotificationService>();
+        services.AddSingleton<IDataService, JsonDataService>(sp => new JsonDataService("servers.json"));
 
         return services.BuildServiceProvider();
     }

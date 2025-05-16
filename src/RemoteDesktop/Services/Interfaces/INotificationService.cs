@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace RemoteDesktop.Services.Interfaces;
 
-namespace RemoteDesktop.Services.Interfaces;
 internal interface INotificationService
 {
-    void InfoMessage(string message);
-    void SuccessMessage(string message);
-    void ErrorMessage(string message);
+    void ShowInfo(string message);
+
+    void ShowWarning(string message);
+
+    void ShowError(string message);
+
+    void ShowSuccess(string message);
 }

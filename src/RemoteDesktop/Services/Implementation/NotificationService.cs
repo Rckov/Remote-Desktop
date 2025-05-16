@@ -3,26 +3,26 @@ using HandyControl.Data;
 
 using RemoteDesktop.Services.Interfaces;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace RemoteDesktop.Services.Implementation;
+
 internal class NotificationService : INotificationService
 {
-    public void InfoMessage(string message)
+    public void ShowInfo(string message)
     {
         Growl.Info(GetGrowInfo(message));
     }
 
-    public void ErrorMessage(string message)
+    public void ShowWarning(string message)
+    {
+        Growl.Warning(GetGrowInfo(message));
+    }
+
+    public void ShowError(string message)
     {
         Growl.Error(GetGrowInfo(message));
     }
 
-    public void SuccessMessage(string message)
+    public void ShowSuccess(string message)
     {
         Growl.Success(GetGrowInfo(message));
     }
@@ -32,7 +32,6 @@ internal class NotificationService : INotificationService
         return new GrowlInfo
         {
             Message = message,
-            ShowDateTime = false,
             StaysOpen = false,
             ShowCloseButton = true,
             WaitTime = 1

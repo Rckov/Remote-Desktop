@@ -7,6 +7,7 @@ using RemoteDesktop.Models.Messages;
 using RemoteDesktop.Services.Interfaces;
 
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace RemoteDesktop.ViewModels;
@@ -59,26 +60,30 @@ internal partial class ServerViewModel(IMessenger messenger) : ObservableValidat
 
     public void SetParameter(object parameter)
     {
-        if (parameter is not Server server)
+
+        if (parameter is Server server)
         {
-            return;
+            Title = "Edit Server";
+            ButtonSuccess = "Save changes";
+
+            Name = server.Name;
+            Description = server.Description;
+            Host = server.Host;
+            Port = server.Port;
+            Username = server.Username;
+            Password = server.Password;
+            GroupName = server.GroupName;
+
+            OldServer = server;
         }
-
-        Title = "Edit Server";
-        ButtonSuccess = "Save changes";
-
-        Name = server.Name;
-        Description = server.Description;
-        Host = server.Host;
-        Port = server.Port;
-        Username = server.Username;
-        Password = server.Password;
-        GroupName = server.GroupName;
-
-        OldServer = server;
     }
 
     public event Action<bool> CloseRequest;
+
+    public ObservableCollection<string> Groups { get; set; } = new ObservableCollection<string>()
+    {
+        "TestGroup"
+    };
 
     [RelayCommand]
     public void Ok()

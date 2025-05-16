@@ -48,7 +48,15 @@
                      <RowDefinition />
                   </Grid.RowDefinitions>
 
-                  <hc:SearchBar Margin="0,5,0,0" hc:InfoElement.Placeholder="Search..." Style="{StaticResource SearchBarExtend}" />
+                  <hc:SearchBar Margin="0,5,0,0" hc:InfoElement.Placeholder="Search..." Text="{Binding SearchText}" Style="{StaticResource SearchBarExtend}" />
+
+                  <TreeView Grid.Row="1" BorderThickness="0" ItemsSource="{Binding ServersGroups}">
+                     <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type vm:TreeItemViewModel}" ItemsSource="{Binding Children}">
+                           <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                        </HierarchicalDataTemplate>
+                     </TreeView.ItemTemplate>
+                  </TreeView>
                </Grid>
             </hc:TabItem>
             <hc:TabItem Header="Favorites" IsEnabled="False" />

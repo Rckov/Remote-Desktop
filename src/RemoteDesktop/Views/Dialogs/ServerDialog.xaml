@@ -19,7 +19,7 @@
          <hc:TextBox hc:InfoElement.Placeholder="3389" hc:InfoElement.Title="Port" Text="{Binding Port}" />
          <hc:TextBox hc:InfoElement.Placeholder="Administrator" hc:InfoElement.Title="Username" Text="{Binding Username}" />
          <hc:PasswordBox hc:InfoElement.Placeholder="Password" hc:InfoElement.Title="Password" UnsafePassword="{Binding Password}" />
-         <hc:ComboBox hc:InfoElement.Placeholder="Local" hc:InfoElement.Title="Group" SelectedItem="{Binding GroupName}" />
+         <hc:ComboBox hc:InfoElement.Placeholder="Local" hc:InfoElement.Title="Group" SelectedItem="{Binding GroupName}" ItemsSource="{Binding Groups}" />
 
          <hc:UniformSpacingPanel Margin="0,2,0,0" Spacing="2">
             <Button Content="{Binding ButtonSuccess}" Width="138" Style="{DynamicResource ButtonSuccess}" Command="{Binding OkCommand}" />
