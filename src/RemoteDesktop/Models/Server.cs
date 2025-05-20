@@ -1,4 +1,6 @@
-﻿namespace RemoteDesktop.Models;
+﻿using System.Runtime.Serialization;
+
+namespace RemoteDesktop.Models;
 
 internal class Server
 {
@@ -9,4 +11,9 @@ internal class Server
     public string Password { get; set; }
     public int Port { get; set; } = 3389;
     public string GroupName { get; set; }
+
+    public override string ToString()
+    {
+        return "Server";
+    }
 }

@@ -2,84 +2,261 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
+using HandyControl.Data;
+using HandyControl.Tools.Extension;
+
+using RemoteDesktop.Extensions;
 using RemoteDesktop.Models;
 using RemoteDesktop.Models.Messages;
 using RemoteDesktop.Services.Interfaces;
+using RemoteDesktop.ViewModels.Parameters;
 
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 
 namespace RemoteDesktop.ViewModels;
 
 internal partial class MainViewModel : ObservableObject
 {
-    private readonly IWindowService _window;
+    private readonly IWindowService _windowService;
     private readonly IMessenger _messenger;
-    private readonly INotificationService _notification;
-    private readonly IDataService _data;
+    private readonly IDataService _dataService;
+    private readonly INotificationService _notificationService;
+
+    public MainViewModel(IWindowService windowService, IMessenger messenger, IDataService dataService, INotificationService notificationService)
+    {
+        _windowService = windowService;
+        _messenger = messenger;
+        _dataService = dataService;
+        _notificationService = notificationService;
+
+        ServersGroups = [.. _dataService.Load().ToTreeItems()];
+        // поправить
+        ConnectedServers.CollectionChanged += (_, _) => HasConnectedServers = ConnectedServers.Any();
+
+        _messenger.Register<ValueMessage<Server>>(this, (r, msg) => OnServerHandler(msg));
+        _messenger.Register<ValueMessage<ServerGroup>>(this, (r, msg) => OnGroupHandler(msg));
+    }
 
     [ObservableProperty]
     private string _searchText;
 
+    // поправить
+    [ObservableProperty]
+    private bool _hasConnectedServers;
+
     [ObservableProperty]
     private TreeItemViewModel _selectedItem;
 
-    public MainViewModel(
-        IWindowService window,
-        IMessenger messenger,
-        INotificationService notification,
-        IDataService dataService)
-    {
-        _window = window;
-        _messenger = messenger;
-        _notification = notification;
-        _data = dataService;
+    [ObservableProperty]
+    private ObservableCollection<TreeItemViewModel> _serversGroups;
 
-        var loadedGroups = _data.Load();
-        ServersGroups = new ObservableCollection<TreeItemViewModel>(
-            loadedGroups.Select(g => new TreeItemViewModel(g))
-        );
-
-        _messenger.Register<ValueChangedMessageEx<Server>>(this, (r, msg) => OnServerHandler(msg));
-        _messenger.Register<ValueChangedMessageEx<ServerGroup>>(this, (r, msg) => OnGroupHandler(msg));
-    }
-
-    public ObservableCollection<TreeItemViewModel> ServersGroups { get; } = [];
-    public ObservableCollection<ConnectedServerViewModel> ConnectedServers { get; } = [];
+    [ObservableProperty]
+    private ObservableCollection<ConnectedServerViewModel> _connectedServers = [];
 
     [RelayCommand]
     private void Connect()
     {
-        throw new NotImplementedException();
+        if (SelectedItem?.Model is not Server server)
+        {
+            return;
+        }
+
+        ConnectedServers.AddIfNotExists(new ConnectedServerViewModel(server));
     }
 
-    internal void Diconnect(ConnectedServerViewModel model)
+    [RelayCommand]
+    internal void Disconnect(ConnectedServerViewModel connection)
     {
-        throw new NotImplementedException();
+        connection.IsConnected = false;
     }
 
     [RelayCommand]
     private void CreateServer()
     {
-        var groups = ServersGroups.Select(x => x.Name);
-        _window.ShowDialog<ServerViewModel>(groups);
+        CreateOrUpdateModel<Server, ServerViewModel>();
     }
 
     [RelayCommand]
     private void CreateGroup()
     {
-        var groups = ServersGroups.Select(x => x.Name);
-        _window.ShowDialog<ServerGroupViewModel>(groups);
+        CreateOrUpdateModel<ServerGroup, ServerGroupViewModel>();
     }
 
     [RelayCommand]
-    private void UpdateSelectedModel()
+    private void Edit()
     {
         if (SelectedItem == null)
         {
             return;
         }
+
+        var result = SelectedItem.Model switch
+        {
+            Server server => CreateOrUpdateModel<Server, ServerViewModel>(server),
+            ServerGroup group => CreateOrUpdateModel<ServerGroup, ServerGroupViewModel>(group),
+            _ => false
+        };
+
+        if (result)
+        {
+            _notificationService.Show($"{SelectedItem.Model} '{SelectedItem.Name}' has been updated.", InfoType.Info);
+        }
+    }
+
+    [RelayCommand]
+    private void Delete()
+    {
+        if (SelectedItem == null)
+        {
+            return;
+        }
+
+        switch (SelectedItem.Model)
+        {
+            case Server server:
+                DeleteServer(server);
+                break;
+
+            case ServerGroup group:
+                DeleteGroup(group);
+                break;
+        }
+
+        Save();
+    }
+
+    public void HandleServerUpdate(Server value, Server oldValue)
+    {
+        if (value == null || oldValue == null)
+        {
+            return;
+        }
+
+        if (value.GroupName != oldValue.GroupName)
+        {
+            MoveServer(value, value.GroupName);
+        }
+        else
+        {
+            var group = ServersGroups.GetByName(oldValue.GroupName);
+            group?.UpdateServer(value, oldValue);
+        }
+    }
+
+    public void MoveServer(Server server, string newGroupName)
+    {
+        var oldGroup = ServersGroups.GetByName(server.GroupName);
+        var newGroup = ServersGroups.GetByName(newGroupName);
+
+        if (oldGroup == null || newGroup == null || oldGroup == newGroup)
+        {
+            return;
+        }
+
+        oldGroup.RemoveServer(server);
+        server.GroupName = newGroupName;
+        newGroup.AddServer(server);
+
+        Save();
+    }
+
+    public void Save()
+    {
+        _dataService.Save(ServersGroups.GetGroups());
+    }
+
+    private void DeleteServer(Server server)
+    {
+        if (!_notificationService.Ask($"Are you sure you want to delete the server '{server.Name}'?"))
+        {
+            return;
+        }
+
+        var groupItem = ServersGroups.GetByName(server.GroupName);
+        groupItem?.RemoveServer(server);
+
+        _notificationService.Show($"Server '{server.Name}' has been deleted.", InfoType.Info);
+    }
+
+    private void DeleteGroup(ServerGroup group)
+    {
+        if (!_notificationService.Ask($"Are you sure you want to delete the group '{group.Name}'?"))
+        {
+            return;
+        }
+
+        var groupItem = ServersGroups.GetByName(group.Name);
+        if (groupItem != null)
+        {
+            ServersGroups.Remove(groupItem);
+        }
+
+        _notificationService.Show($"Group '{group.Name}' has been deleted.", InfoType.Info);
+    }
+
+    private void OnServerHandler(ValueMessage<Server> msg)
+    {
+        switch (msg.Action)
+        {
+            case ChangeAction.Create:
+                HandleServerCreation(msg.Value);
+                break;
+            case ChangeAction.Update:
+                HandleServerUpdate(msg.Value, msg.OldValue);
+                break;
+        }
+
+        Save();
+    }
+
+    private void OnGroupHandler(ValueMessage<ServerGroup> msg)
+    {
+        switch (msg.Action)
+        {
+            case ChangeAction.Create:
+                HandleGroupCreation(msg.Value);
+                break;
+            case ChangeAction.Update:
+                HandleGroupUpdate(msg.Value, msg.OldValue);
+                break;
+        }
+
+        Save();
+    }
+
+    private void HandleServerCreation(Server value)
+    {
+        if (value == null)
+        {
+            return;
+        }
+
+        var target = ServersGroups.GetByName(value.GroupName);
+        target?.AddServer(value);
+    }
+
+    private void HandleGroupCreation(ServerGroup value)
+    {
+        if (value == null)
+        {
+            return;
+        }
+
+        ServersGroups.Add(new TreeItemViewModel(value));
+    }
+
+    private void HandleGroupUpdate(ServerGroup value, ServerGroup oldValue)
+    {
+        if (value == null || oldValue == null)
+        {
+            return;
+        }
+
+        var target = ServersGroups.GetByName(oldValue.Name);
+        target?.UpdateGroup(value);
     }
 
     partial void OnSearchTextChanged(string value)
@@ -90,74 +267,11 @@ internal partial class MainViewModel : ObservableObject
         }
     }
 
-    private void OnServerHandler(ValueChangedMessageEx<Server> message)
+    private bool CreateOrUpdateModel<T, TViewModel>(T model = default) where TViewModel : class
     {
-        var server = message.Value;
-        var groupVm = ServersGroups
-            .FirstOrDefault(vm => vm.Item is ServerGroup g && g.Name == server.GroupName);
+        var list = ServersGroups.GetNames();
+        var data = new InputData<T>(model, list);
 
-        if (groupVm is null)
-            return;
-
-        switch (message.Action)
-        {
-            case ChangeAction.Create:
-                groupVm.Children.Add(new TreeItemViewModel(server));
-                if (groupVm.Item is ServerGroup group)
-                    group.Servers.Add(server);
-                break;
-
-            case ChangeAction.Update:
-                var existingVm = groupVm.Children.FirstOrDefault(vm => vm.Item == message.OldValue);
-                if (existingVm != null)
-                {
-                    existingVm.Item = server;
-                    existingVm.Name = server.Name;
-
-                    if (groupVm.Item is ServerGroup g)
-                    {
-                        var index = g.Servers.IndexOf(message.OldValue);
-                        if (index >= 0)
-                            g.Servers[index] = server;
-                    }
-                }
-                break;
-        }
-
-        SaveState();
-    }
-
-    private void OnGroupHandler(ValueChangedMessageEx<ServerGroup> message)
-    {
-        switch (message.Action)
-        {
-            case ChangeAction.Create:
-                ServersGroups.Add(new TreeItemViewModel(message.Value));
-                break;
-
-            case ChangeAction.Update:
-                var existingVm = ServersGroups.FirstOrDefault(vm => vm.Item == message.OldValue);
-                if (existingVm != null)
-                {
-                    existingVm.Item = message.Value;
-                    existingVm.Name = message.Value.Name;
-
-                    existingVm.Children.Clear();
-                    foreach (var server in message.Value.Servers)
-                        existingVm.Children.Add(new TreeItemViewModel(server));
-                }
-                break;
-        }
-
-        SaveState();
-    }
-
-    private void SaveState()
-    {
-        var groups = ServersGroups
-            .Where(vm => vm.Item is ServerGroup)
-            .Select(vm => (ServerGroup)vm.Item);
-
-        _data.Save(groups);
+        return _windowService.ShowDialog<TViewModel>(data) == true;
     }
 }

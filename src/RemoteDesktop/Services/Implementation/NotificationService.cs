@@ -3,26 +3,60 @@ using HandyControl.Data;
 
 using RemoteDesktop.Services.Interfaces;
 
+using System.Windows;
+
+using MessageBox = HandyControl.Controls.MessageBox;
+
 namespace RemoteDesktop.Services.Implementation;
 
 internal class NotificationService : INotificationService
 {
-    public void ShowInfo(string message)
+    public bool Ask(string message, string caption = "Question")
+    {
+        var info = new MessageBoxInfo
+        {
+            Message = message,
+            Caption = caption,
+            Button = MessageBoxButton.YesNo,
+            IconBrushKey = ResourceToken.AccentBrush,
+            IconKey = ResourceToken.AskGeometry
+        };
+
+        return MessageBox.Show(info) == MessageBoxResult.Yes;
+    }
+
+    public void Show(string message, InfoType infoType)
+    {
+        switch (infoType)
+        {
+            case InfoType.Success:
+                ShowSuccess(message);
+                break;
+
+            case InfoType.Info:
+                ShowInfo(message);
+                break;
+
+            case InfoType.Error:
+                ShowError(message);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void ShowInfo(string message)
     {
         Growl.Info(GetGrowInfo(message));
     }
 
-    public void ShowWarning(string message)
-    {
-        Growl.Warning(GetGrowInfo(message));
-    }
-
-    public void ShowError(string message)
+    private void ShowError(string message)
     {
         Growl.Error(GetGrowInfo(message));
     }
 
-    public void ShowSuccess(string message)
+    private void ShowSuccess(string message)
     {
         Growl.Success(GetGrowInfo(message));
     }

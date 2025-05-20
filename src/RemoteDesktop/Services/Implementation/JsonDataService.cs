@@ -1,22 +1,17 @@
-﻿using RemoteDesktop.Models;
+﻿using Newtonsoft.Json;
+
+using RemoteDesktop.Models;
 using RemoteDesktop.Services.Interfaces;
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
+using System.Runtime.Serialization.Json;
 
 namespace RemoteDesktop.Services.Implementation;
 
 internal class JsonDataService(string filePath) : IDataService
 {
-    private static readonly JsonSerializerOptions _options = new()
-    {
-        WriteIndented = true,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-    };
-
-    public IList<ServerGroup> Load()
+    public IEnumerable<ServerGroup> Load()
     {
         if (!File.Exists(filePath))
         {
@@ -25,10 +20,10 @@ internal class JsonDataService(string filePath) : IDataService
 
         try
         {
-            string json = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<List<ServerGroup>>(json, _options) ?? [];
+            var data = File.ReadAllText(filePath);
+            return JsonConvert.DeserializeObject<IEnumerable<ServerGroup>>(data);
         }
-        catch (Exception ex) when (ex is IOException or JsonException)
+        catch
         {
             return [];
         }
@@ -36,7 +31,13 @@ internal class JsonDataService(string filePath) : IDataService
 
     public void Save(IEnumerable<ServerGroup> groups)
     {
-        var json = JsonSerializer.Serialize(groups, _options);
-        File.WriteAllText(filePath, json);
+        var settings = new JsonSerializerSettings
+        {
+            Formatting = Formatting.Indented,
+            NullValueHandling = NullValueHandling.Ignore
+        };
+
+        var data = JsonConvert.SerializeObject(groups, settings);
+        File.WriteAllText(filePath, data);
     }
 }

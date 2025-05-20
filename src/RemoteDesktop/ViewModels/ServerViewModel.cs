@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using RemoteDesktop.Models;
 using RemoteDesktop.Models.Messages;
 using RemoteDesktop.Services.Interfaces;
+using RemoteDesktop.ViewModels.Parameters;
 
 using System;
 using System.Collections.ObjectModel;
@@ -15,20 +16,10 @@ namespace RemoteDesktop.ViewModels;
 internal partial class ServerViewModel(IMessenger messenger) : ObservableValidator, IParameterReceiver
 {
     [ObservableProperty]
-    private string _title = "Create server";
-
-    [ObservableProperty]
-    private string _buttonSuccess = "Create";
-
-    [ObservableProperty]
     [Required(ErrorMessage = "Required field")]
-    [MinLength(5, ErrorMessage = "Minimum length is 5 characters")]
-    [MaxLength(15, ErrorMessage = "Maximum length is 15 characters")]
     private string _name;
 
     [ObservableProperty]
-    [MinLength(5, ErrorMessage = "Minimum length is 5 characters")]
-    [MaxLength(20, ErrorMessage = "Maximum length is 20 characters")]
     private string _description;
 
     [ObservableProperty]
@@ -53,37 +44,11 @@ internal partial class ServerViewModel(IMessenger messenger) : ObservableValidat
     private string _groupName;
 
     [ObservableProperty]
-    private Server _server = new();
+    private ObservableCollection<string> _groupNames;
 
-    [ObservableProperty]
     private Server _oldServer;
 
-    public void SetParameter(object parameter)
-    {
-
-        if (parameter is Server server)
-        {
-            Title = "Edit Server";
-            ButtonSuccess = "Save changes";
-
-            Name = server.Name;
-            Description = server.Description;
-            Host = server.Host;
-            Port = server.Port;
-            Username = server.Username;
-            Password = server.Password;
-            GroupName = server.GroupName;
-
-            OldServer = server;
-        }
-    }
-
     public event Action<bool> CloseRequest;
-
-    public ObservableCollection<string> Groups { get; set; } = new ObservableCollection<string>()
-    {
-        "TestGroup"
-    };
 
     [RelayCommand]
     public void Ok()
@@ -95,32 +60,46 @@ internal partial class ServerViewModel(IMessenger messenger) : ObservableValidat
             return;
         }
 
-        FillProperties();
-        SendServerMessage();
+        var server = new Server
+        {
+            Name = Name,
+            Description = Description,
+            Host = Host,
+            Port = Port,
+            Username = Username,
+            Password = Password,
+            GroupName = GroupName
+        };
+
+        _ = _oldServer is null
+            ? messenger.Send(new ValueMessage<Server>(ChangeAction.Create, server))
+            : messenger.Send(new ValueMessage<Server>(ChangeAction.Update, server, _oldServer));
 
         CloseRequest?.Invoke(true);
     }
 
-    private void FillProperties()
+    public void SetParameter(object parameter = null)
     {
-        Server.Name = Name;
-        Server.Description = Description;
-        Server.Host = Host;
-        Server.Port = Port;
-        Server.Username = Username;
-        Server.Password = Password;
-        Server.GroupName = GroupName;
-    }
-
-    private void SendServerMessage()
-    {
-        if (Server is null)
+        if (parameter is not InputData<Server> data)
         {
-            throw new InvalidOperationException("Server is not initialized.");
+            throw new ArgumentNullException(nameof(parameter));
         }
 
-        _ = OldServer is null
-            ? messenger.Send(new ValueChangedMessageEx<Server>(ChangeAction.Create, Server))
-            : messenger.Send(new ValueChangedMessageEx<Server>(ChangeAction.Update, Server, OldServer));
+        GroupNames = [.. data.Names];
+
+        if (data.Value == null)
+        {
+            return;
+        }
+
+        _oldServer = data.Value;
+
+        Name = _oldServer.Name;
+        Description = _oldServer.Description;
+        Host = _oldServer.Host;
+        Port = _oldServer.Port;
+        Username = _oldServer.Username;
+        Password = _oldServer.Password;
+        GroupName = _oldServer.GroupName;
     }
 }

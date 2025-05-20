@@ -1,12 +1,10 @@
-﻿namespace RemoteDesktop.Services.Interfaces;
+﻿using HandyControl.Data;
+
+namespace RemoteDesktop.Services.Interfaces;
 
 internal interface INotificationService
 {
-    void ShowInfo(string message);
+    bool Ask(string message, string caption = "Question");
 
-    void ShowWarning(string message);
-
-    void ShowError(string message);
-
-    void ShowSuccess(string message);
+    void Show(string message, InfoType infoType);
 }

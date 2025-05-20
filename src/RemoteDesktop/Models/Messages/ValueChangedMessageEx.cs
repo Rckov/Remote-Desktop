@@ -8,7 +8,7 @@ public enum ChangeAction
     Update,
 }
 
-public class ValueChangedMessageEx<T>(ChangeAction action, T newValue, T oldValue = default) : ValueChangedMessage<T>(newValue)
+public class ValueMessage<T>(ChangeAction action, T newValue, T oldValue = default) : ValueChangedMessage<T>(newValue)
 {
     public T OldValue { get; } = oldValue;
     public ChangeAction Action { get; } = action;

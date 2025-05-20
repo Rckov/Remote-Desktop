@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 
 namespace RemoteDesktop.Services.Interfaces;
 
@@ -17,5 +16,5 @@ internal interface IWindowFactory
 
 internal interface IParameterReceiver
 {
-    void SetParameter(IDictionary<string, object> parameter);
+    void SetParameter(object parameter = null);
 }

@@ -5,6 +5,8 @@
            xmlns:hc="https://handyorg.github.io/handycontrol"
            xmlns:ad="https://github.com/Dirkster99/AvalonDock"
            xmlns:vm="clr-namespace:RemoteDesktop.ViewModels"
+           
+           xmlns:control="clr-namespace:RemoteDesktop.Views.UserControls"
 
            Height="650"
            Width="1200"
@@ -48,14 +50,36 @@
                      <RowDefinition />
                   </Grid.RowDefinitions>
 
-                  <hc:SearchBar Margin="0,5,0,0" hc:InfoElement.Placeholder="Search..." Text="{Binding SearchText}" Style="{StaticResource SearchBarExtend}" />
+                  <hc:SearchBar Margin="0,3" hc:InfoElement.Placeholder="Search..." Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchBarExtend}" />
 
-                  <TreeView Grid.Row="1" BorderThickness="0" ItemsSource="{Binding ServersGroups}">
+                  <TreeView Grid.Row="1" BorderThickness="0" ItemsSource="{Binding ServersGroups}" AllowDrop="True" hc:Empty.ShowEmpty="True"
+                            SelectedItemChanged="TreeView_SelectedItemChanged"
+                            Drop="TreeView_Drop"
+                            DragOver="TreeView_DragOver"
+                            PreviewMouseMove="TreeView_PreviewMouseMove">
+                     <TreeView.ContextMenu>
+                        <ContextMenu>
+                           <MenuItem Header="Edit" Icon="&#xE70F;" Command="{Binding EditCommand}" />
+                           <MenuItem Header="Delete" Icon="&#xE74D;" Command="{Binding DeleteCommand}" />
+                        </ContextMenu>
+                     </TreeView.ContextMenu>
+
                      <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type vm:TreeItemViewModel}" ItemsSource="{Binding Children}">
-                           <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                           <StackPanel Orientation="Horizontal" TextBlock.Foreground="{DynamicResource PrimaryTextBrush}">
+                              <TextBlock Text="{Binding Icon}" FontFamily="{StaticResource FontIcon}" VerticalAlignment="Center" />
+                              <TextBlock Text="{Binding Name}" Margin="5,0,0,0" VerticalAlignment="Center" />
+                           </StackPanel>
                         </HierarchicalDataTemplate>
                      </TreeView.ItemTemplate>
+
+                     <TreeView.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                           <Setter Property="ToolTip" Value="{Binding Model.Description}" />
+                           <Setter Property="Visibility" Value="{Binding IsVisible, Mode=TwoWay, Converter={StaticResource Boolean2VisibilityConverter}}" />
+                           <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                        </Style>
+                     </TreeView.ItemContainerStyle>
                   </TreeView>
                </Grid>
             </hc:TabItem>
@@ -63,35 +87,22 @@
          </hc:TabControl>
       </Border>
 
-      <ad:DockingManager Margin="1,4,4,4" Grid.Column="2" DocumentsSource="{Binding ConnectedServers}">
+      <ad:DockingManager Margin="1,4,4,4" Grid.Column="2" DocumentsSource="{Binding ConnectedServers}" DocumentClosing="Server_Diconnect"
+                         Visibility="{Binding HasConnectedServers, Converter={StaticResource Boolean2VisibilityConverter}}">
+
          <ad:DockingManager.Resources>
             <DataTemplate DataType="{x:Type vm:ConnectedServerViewModel}">
-               <TextBlock Text="123" />
-            </DataTemplate>
+                <control:RdpViewerControl IsConnected="{Binding IsConnected}"
+                                          Host="{Binding Server.Host}"
+                                          Port="{Binding Server.Port}"
+                                          Username="{Binding Server.Username}"
+                                          Password="{Binding Server.Password}" />
+                </DataTemplate>
          </ad:DockingManager.Resources>
 
          <ad:LayoutRoot>
             <ad:LayoutPanel Orientation="Horizontal">
-               <ad:LayoutDocumentPane>
-                  <ad:LayoutDocument>
-                     <StackPanel x:Name="Welcome" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="&#xE703;" Margin="0,0,7,0" FontSize="60" VerticalAlignment="Center" FontFamily="{StaticResource FontIcon}" />
-                        <StackPanel TextBlock.FontSize="24" TextBlock.FontWeight="Bold">
-                           <TextBlock Text="Welcome to" />
-                           <TextBlock Text="Remote Desktop" />
-                        </StackPanel>
-                     </StackPanel>
-                  </ad:LayoutDocument>
-                  <ad:LayoutDocument>
-                     <StackPanel x:Name="Welcome1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="&#xE703;" Margin="0,0,7,0" FontSize="60" VerticalAlignment="Center" FontFamily="{StaticResource FontIcon}" />
-                        <StackPanel TextBlock.FontSize="24" TextBlock.FontWeight="Bold">
-                           <TextBlock Text="Welcome to" />
-                           <TextBlock Text="Remote Desktop" />
-                        </StackPanel>
-                     </StackPanel>
-                  </ad:LayoutDocument>
-               </ad:LayoutDocumentPane>
+               <ad:LayoutDocumentPane />
             </ad:LayoutPanel>
          </ad:LayoutRoot>
       </ad:DockingManager>

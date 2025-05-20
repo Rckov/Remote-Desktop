@@ -5,45 +5,27 @@ using CommunityToolkit.Mvvm.Messaging;
 using RemoteDesktop.Models;
 using RemoteDesktop.Models.Messages;
 using RemoteDesktop.Services.Interfaces;
+using RemoteDesktop.ViewModels.Parameters;
 
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace RemoteDesktop.ViewModels;
 
-internal partial class ServerGroupViewModel(IMessenger messenger) : ObservableValidator, IParameterReceiver
+public partial class ServerGroupViewModel(IMessenger messenger) : ObservableValidator, IParameterReceiver
 {
     [ObservableProperty]
-    private string _title = "Create group";
-
-    [ObservableProperty]
-    private string _buttonSuccess = "Create";
-
-    [ObservableProperty]
-    [Required(ErrorMessage = "Required field")]
-    [MinLength(5, ErrorMessage = "Minimum length is 5 characters")]
-    [MaxLength(15, ErrorMessage = "Maximum length is 15 characters")]
+    [CustomValidation(typeof(ServerGroupViewModel), nameof(ValidateName))]
     private string _name;
 
     [ObservableProperty]
-    private ServerGroup _group = new();
+    private string _description;
 
     [ObservableProperty]
+    private ObservableCollection<string> _groupNames;
+
     private ServerGroup _oldGroup;
-
-    public void SetParameter(object parameter)
-    {
-        if (parameter is not ServerGroup group)
-        {
-            return;
-        }
-
-        Title = "Edit Group";
-        ButtonSuccess = "Save changes";
-
-        Name = group.Name;
-        OldGroup = group;
-    }
 
     public event Action<bool> CloseRequest;
 
@@ -57,26 +39,53 @@ internal partial class ServerGroupViewModel(IMessenger messenger) : ObservableVa
             return;
         }
 
-        FillProperties();
-        SendGroupMessage();
+        var group = new ServerGroup
+        {
+            Name = Name,
+            Description = Description,
+        };
+
+        _ = _oldGroup is null
+            ? messenger.Send(new ValueMessage<ServerGroup>(ChangeAction.Create, group))
+            : messenger.Send(new ValueMessage<ServerGroup>(ChangeAction.Update, group, _oldGroup));
 
         CloseRequest?.Invoke(true);
     }
 
-    private void FillProperties()
+    public void SetParameter(object parameter = null)
     {
-        Group.Name = Name;
-    }
-
-    private void SendGroupMessage()
-    {
-        if (Group is null)
+        if (parameter is not InputData<ServerGroup> data)
         {
-            throw new InvalidOperationException("ServerGroup is not initialized.");
+            throw new ArgumentNullException(nameof(parameter));
         }
 
-        _ = OldGroup is null
-            ? messenger.Send(new ValueChangedMessageEx<ServerGroup>(ChangeAction.Create, Group))
-            : messenger.Send(new ValueChangedMessageEx<ServerGroup>(ChangeAction.Update, Group, OldGroup));
+        GroupNames = [.. data.Names];
+
+        if (data.Value == null)
+        {
+            return;
+        }
+
+        _oldGroup = data.Value;
+
+        Name = _oldGroup.Name;
+        Description = _oldGroup.Description;
+    }
+
+    public static ValidationResult ValidateName(string name, ValidationContext context)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return new("Required field");
+        }
+
+        var instance = (ServerGroupViewModel)context.ObjectInstance;
+
+        if (instance.GroupNames.Contains(name))
+        {
+            return new("This name already exists");
+        }
+
+        return ValidationResult.Success;
     }
 }

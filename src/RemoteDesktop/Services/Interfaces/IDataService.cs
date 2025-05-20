@@ -6,7 +6,7 @@ namespace RemoteDesktop.Services.Interfaces;
 
 internal interface IDataService
 {
-    IList<ServerGroup> Load();
+    IEnumerable<ServerGroup> Load();
 
     void Save(IEnumerable<ServerGroup> groups);
 }
