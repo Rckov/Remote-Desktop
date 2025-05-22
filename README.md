@@ -6,7 +6,7 @@
 
 A desktop application for managing and connecting to multiple remote desktop (RDP) sessions using the built-in Windows Remote Desktop ActiveX client.
 
-## Features
+### Features
 
 - Manage server groups and individual RDP connections
 - Support for multiple concurrent connections via tabbed interface (`AvalonDock`)
@@ -24,8 +24,8 @@ A desktop application for managing and connecting to multiple remote desktop (RD
 2. Extract the ZIP archive to your preferred directory.
 3. Run `Remote Desktop.exe`.  
 
-## Suggestions
+### Suggestions
 Feel free to create an issue if you have any suggestions or ideas to improve the application.
 
-## License
+### License
 Licensed under [MIT](LICENSE). [Report an Issue](https://github.com/Rckov/Xslt-Editor/issues)
