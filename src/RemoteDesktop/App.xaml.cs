@@ -1,30 +1,35 @@
-﻿using RemoteDesktop.Services.Implementation;
+﻿using Microsoft.Extensions.DependencyInjection;
+
 using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels;
 
-using SimpleInjector;
-
+using System;
 using System.Windows;
 
 namespace RemoteDesktop;
 
 public partial class App : Application
 {
+    private readonly IServiceProvider _provider;
+
     public App()
     {
-        Services = ConfigureServices(new Container());
+        _provider = ConfigureServices(new ServiceCollection());
     }
 
-    public static Container Services { get; private set; }
+    public static string BaseDirectory => AppContext.BaseDirectory;
 
-    private static Container ConfigureServices(Container container)
+    private ServiceProvider ConfigureServices(IServiceCollection services)
     {
-        container.Register<IMessenger, Messanger>(Lifestyle.Singleton);
-        container.Register<IThemeManager, ThemeManager>(Lifestyle.Singleton);
+        services.AddViews();
+        services.AddServices();
 
-        container.Register<MainViewModel>(Lifestyle.Transient);
-        container.Verify();
+        return services.BuildServiceProvider();
+    }
 
-        return container;
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        var service = _provider.GetRequiredService<IWindowService>();
+        service.Show<MainViewModel>();
     }
 }

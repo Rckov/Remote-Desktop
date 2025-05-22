@@ -1,28 +1,37 @@
-﻿using RemoteDesktop.Models;
-using RemoteDesktop.Models.Base;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+using RemoteDesktop.Extensions;
+using RemoteDesktop.Models;
+
+using System;
 
 namespace RemoteDesktop.ViewModels;
 
-internal class ConnectedServerViewModel : ObservableObject
+internal partial class ConnectedServerViewModel(Server server) : ObservableObject
 {
+    [ObservableProperty]
+    private bool _isConnected;
+
+    [ObservableProperty]
+    private bool _isSelected;
+
+    [ObservableProperty]
+    private string _errorReason;
+
+    public event EventHandler<string> OnDisconnected;
+
     public string Name
     {
-        get => Server?.Name;
+        get => server.Name;
     }
 
-    public Server Server { get; }
-    public bool IsConnected { get; internal set; }
-
-    public ConnectedServerViewModel(Server server)
+    public Server Server
     {
-        Server = server;
+        get => server.Clone();
     }
 
-    public void Connect()
+    partial void OnErrorReasonChanged(string value)
     {
-    }
-
-    public void Disconnect()
-    {
+        OnDisconnected?.Invoke(this, value);
     }
 }
