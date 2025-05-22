@@ -3,28 +3,10 @@ using HandyControl.Data;
 
 using RemoteDesktop.Services.Interfaces;
 
-using System.Windows;
-
-using MessageBox = HandyControl.Controls.MessageBox;
-
 namespace RemoteDesktop.Services.Implementation;
 
 internal class NotificationService : INotificationService
 {
-    public bool Ask(string message, string caption = "Question")
-    {
-        var info = new MessageBoxInfo
-        {
-            Message = message,
-            Caption = caption,
-            Button = MessageBoxButton.YesNo,
-            IconBrushKey = ResourceToken.AccentBrush,
-            IconKey = ResourceToken.AskGeometry
-        };
-
-        return MessageBox.Show(info) == MessageBoxResult.Yes;
-    }
-
     public void Show(string message, InfoType infoType)
     {
         switch (infoType)
@@ -68,7 +50,7 @@ internal class NotificationService : INotificationService
             Message = message,
             StaysOpen = false,
             ShowCloseButton = true,
-            WaitTime = 1
+            WaitTime = 1,
         };
     }
 }

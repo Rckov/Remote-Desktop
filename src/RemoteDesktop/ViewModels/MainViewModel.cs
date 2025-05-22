@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
 using HandyControl.Data;
-using HandyControl.Tools.Extension;
 
 using RemoteDesktop.Extensions;
 using RemoteDesktop.Models;
@@ -11,10 +10,11 @@ using RemoteDesktop.Models.Messages;
 using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels.Parameters;
 
-using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
+using System.Windows;
+
+using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace RemoteDesktop.ViewModels;
 
@@ -33,7 +33,6 @@ internal partial class MainViewModel : ObservableObject
         _notificationService = notificationService;
 
         ServersGroups = [.. _dataService.Load().ToTreeItems()];
-        // поправить
         ConnectedServers.CollectionChanged += (_, _) => HasConnectedServers = ConnectedServers.Any();
 
         _messenger.Register<ValueMessage<Server>>(this, (r, msg) => OnServerHandler(msg));
@@ -43,7 +42,6 @@ internal partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private string _searchText;
 
-    // поправить
     [ObservableProperty]
     private bool _hasConnectedServers;
 
@@ -64,13 +62,24 @@ internal partial class MainViewModel : ObservableObject
             return;
         }
 
-        ConnectedServers.AddIfNotExists(new ConnectedServerViewModel(server));
+        var newConnection = new ConnectedServerViewModel(server)
+        {
+            IsSelected = true,
+            IsConnected = true
+        };
+        newConnection.OnDisconnected += Connection_OnDisconnected;
+
+        ConnectedServers.Add(newConnection);
     }
 
     [RelayCommand]
     internal void Disconnect(ConnectedServerViewModel connection)
     {
-        connection.IsConnected = false;
+        if (connection.IsConnected)
+        {
+            connection.IsConnected = false;
+            ConnectedServers.Remove(connection);
+        }
     }
 
     [RelayCommand]
@@ -170,7 +179,7 @@ internal partial class MainViewModel : ObservableObject
 
     private void DeleteServer(Server server)
     {
-        if (!_notificationService.Ask($"Are you sure you want to delete the server '{server.Name}'?"))
+        if (!Ask($"Are you sure you want to delete the server '{server.Name}'?"))
         {
             return;
         }
@@ -183,7 +192,7 @@ internal partial class MainViewModel : ObservableObject
 
     private void DeleteGroup(ServerGroup group)
     {
-        if (!_notificationService.Ask($"Are you sure you want to delete the group '{group.Name}'?"))
+        if (!Ask($"Are you sure you want to delete the group '{group.Name}'?"))
         {
             return;
         }
@@ -204,6 +213,7 @@ internal partial class MainViewModel : ObservableObject
             case ChangeAction.Create:
                 HandleServerCreation(msg.Value);
                 break;
+
             case ChangeAction.Update:
                 HandleServerUpdate(msg.Value, msg.OldValue);
                 break;
@@ -219,6 +229,7 @@ internal partial class MainViewModel : ObservableObject
             case ChangeAction.Create:
                 HandleGroupCreation(msg.Value);
                 break;
+
             case ChangeAction.Update:
                 HandleGroupUpdate(msg.Value, msg.OldValue);
                 break;
@@ -267,11 +278,52 @@ internal partial class MainViewModel : ObservableObject
         }
     }
 
+    private void Connection_OnDisconnected(object sender, string e)
+    {
+        if (sender is not ConnectedServerViewModel model)
+        {
+            return;
+        }
+
+        model.OnDisconnected -= Connection_OnDisconnected;
+
+        MessageShow(model.ErrorReason);
+        ConnectedServers.Remove(model);
+    }
+
     private bool CreateOrUpdateModel<T, TViewModel>(T model = default) where TViewModel : class
     {
         var list = ServersGroups.GetNames();
         var data = new InputData<T>(model, list);
 
         return _windowService.ShowDialog<TViewModel>(data) == true;
+    }
+
+    private bool Ask(string message, string caption = "Question")
+    {
+        var info = new MessageBoxInfo
+        {
+            Message = message,
+            Caption = caption,
+            Button = MessageBoxButton.YesNo,
+            IconBrushKey = ResourceToken.AccentBrush,
+            IconKey = ResourceToken.AskGeometry
+        };
+
+        return MessageBox.Show(info) == MessageBoxResult.Yes;
+    }
+
+    private void MessageShow(string message)
+    {
+        var info = new MessageBoxInfo
+        {
+            Message = message,
+            Caption = "Error",
+            Button = MessageBoxButton.OK,
+            IconBrushKey = ResourceToken.AccentBrush,
+            IconKey = ResourceToken.ErrorGeometry
+        };
+
+        MessageBox.Show(info);
     }
 }

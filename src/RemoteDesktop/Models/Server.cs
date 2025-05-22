@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace RemoteDesktop.Models;
+﻿namespace RemoteDesktop.Models;
 
 internal class Server
 {
