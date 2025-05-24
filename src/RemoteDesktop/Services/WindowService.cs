@@ -1,4 +1,6 @@
-﻿using RemoteDesktop.Services.Interfaces;
+﻿using DryIoc;
+
+using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels;
 
 using System;
@@ -10,7 +12,7 @@ namespace RemoteDesktop.Services;
 /// <summary>
 /// Service for displaying windows using view models and a factory.
 /// </summary>
-internal class WindowService(IWindowFactory factory, IServiceProvider provider) : IWindowService
+internal class WindowService(IWindowFactory factory, IContainer container) : IWindowService
 {
     /// <summary>
     /// <inheritdoc/>
@@ -41,7 +43,7 @@ internal class WindowService(IWindowFactory factory, IServiceProvider provider) 
     /// </summary>
     private Window GetWindow<TViewModel>(object parameter = null) where TViewModel : class
     {
-        var viewModel = (TViewModel)provider.GetService(typeof(TViewModel));
+        var viewModel = container.Resolve(typeof(TViewModel));
 
         if (parameter != null && viewModel is IParameterReceiver receiver)
         {
@@ -55,21 +57,21 @@ internal class WindowService(IWindowFactory factory, IServiceProvider provider) 
 /// <summary>
 /// Factory for creating windows based on view models and registered view types.
 /// </summary>
-internal class WindowFactory(IServiceProvider provider, Dictionary<Type, Type> views) : IWindowFactory
+internal class WindowFactory(Dictionary<Type, Type> views, IContainer container) : IWindowFactory
 {
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
     public Window CreateWindow<TViewModel>(TViewModel viewModel)
     {
-        var vmType = typeof(TViewModel);
+        var vmType = viewModel.GetType();
 
         if (!views.TryGetValue(vmType, out var viewType))
         {
             throw new InvalidOperationException($"View not registered for {vmType.Name}");
         }
 
-        var window = (Window)provider.GetService(viewType);
+        var window = (Window)container.Resolve(viewType);
         window.DataContext = viewModel;
         return window;
     }

@@ -1,9 +1,12 @@
-﻿using RemoteDesktop.Common;
+﻿using DryIoc.ImTools;
+
+using RemoteDesktop.Common;
 using RemoteDesktop.Common.Base;
 using RemoteDesktop.Models;
 using RemoteDesktop.Services.Interfaces;
 
 using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace RemoteDesktop.ViewModels;
@@ -26,6 +29,14 @@ internal class MainViewModel : BaseViewModel
         _notificationService = notificationService;
         _dataService = dataService;
     }
+
+    public string SearchText
+    {
+        get;
+        set => OnSearchTextChanged(field, value);
+    }
+
+    public ObservableCollection<TreeItemViewModel> ServersGroups { get; set; }
 
     public ICommand ConnectCommand { get; private set; }
     public ICommand CreateServerCommand { get; private set; }
@@ -62,6 +73,20 @@ internal class MainViewModel : BaseViewModel
     {
         throw new NotImplementedException();
     }
+
+    private void OnSearchTextChanged(string fieldValue, string value)
+    {
+        if (!Set(ref fieldValue, value))
+        {
+            return;
+        }
+
+        foreach (var item in ServersGroups)
+        {
+            item.ApplyFilter(value);
+        }
+    }
+
 
     private bool CreateOrUpdateModel<T, TViewModel>(T model = default) where TViewModel : class
     {
