@@ -1,35 +1,60 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-using RemoteDesktop.Services.Interfaces;
+﻿using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels;
+
+using SimpleInjector;
 
 using System;
 using System.Windows;
 
 namespace RemoteDesktop;
 
-public partial class App : Application
+public partial class App
 {
-    private readonly IServiceProvider _provider;
-
     public App()
     {
-        _provider = ConfigureServices(new ServiceCollection());
+        Container = ConfigureServices();
     }
 
+    /// <summary>
+    /// Base directory of the application.
+    /// </summary>
     public static string BaseDirectory => AppContext.BaseDirectory;
 
-    private ServiceProvider ConfigureServices(IServiceCollection services)
-    {
-        services.AddViews();
-        services.AddServices();
+    /// <summary>
+    /// DI Container.
+    /// </summary>
+    public static Container Container { get; set; }
 
-        return services.BuildServiceProvider();
+    /// <summary>
+    /// Configures the Simple Injector container by registering views and services.
+    /// </summary>
+    private static Container ConfigureServices()
+    {
+        var container = new Container();
+
+        container.RegisterViews();
+        container.RegisterServices();
+        container.RegisterInstance<IServiceProvider>(container);
+        container.Verify();
+
+        return container;
     }
 
+    /// <summary>
+    /// Handles application startup event.
+    /// </summary>
     protected override void OnStartup(StartupEventArgs e)
     {
-        var service = _provider.GetRequiredService<IWindowService>();
+        var service = Container.GetInstance<IWindowService>();
         service.Show<MainViewModel>();
+    }
+
+    /// <summary>
+    /// Handles application exit event.
+    /// </summary>
+    protected override void OnExit(ExitEventArgs e)
+    {
+        base.OnExit(e);
+        Container?.Dispose();
     }
 }

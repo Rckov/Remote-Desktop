@@ -3,10 +3,16 @@ using HandyControl.Data;
 
 using RemoteDesktop.Services.Interfaces;
 
-namespace RemoteDesktop.Services.Implementation;
+namespace RemoteDesktop.Services;
 
+/// <summary>
+/// Shows notifications using HandyControl Growl.
+/// </summary>
 internal class NotificationService : INotificationService
 {
+    /// <summary>
+    /// <inheritdoc />
+    /// </summary>
     public void Show(string message, InfoType infoType)
     {
         switch (infoType)

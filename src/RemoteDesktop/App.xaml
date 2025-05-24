@@ -5,11 +5,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <hc:ThemeResources />
-                <hc:Theme />
+                <ResourceDictionary Source="pack://application:,,,/HandyControl.Wpf;component/Themes/SkinDefault.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl.Wpf;component/Themes/Theme.xaml"/>
 
                 <ResourceDictionary Source="/Resources/Styles/Generic.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/AvalonDock.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
