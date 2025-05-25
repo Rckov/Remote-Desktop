@@ -1,133 +1,73 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
+﻿using RemoteDesktop.Common.Base;
 using RemoteDesktop.Extensions;
 using RemoteDesktop.Models;
 
-using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 
 namespace RemoteDesktop.ViewModels;
 
-internal partial class TreeItemViewModel : ObservableObject
+internal class TreeItemViewModel : BaseViewModel
 {
-    [ObservableProperty]
-    private object _model;
-
-    [ObservableProperty]
-    private string _name;
-
-    [ObservableProperty]
-    private string _icon;
-
-    [ObservableProperty]
-    private bool _isExpanded;
-
-    [ObservableProperty]
-    private bool _isVisible;
-
-    [ObservableProperty]
-    private ObservableCollection<TreeItemViewModel> _children;
-
     public TreeItemViewModel(string name, object model)
     {
         Name = name;
-        Model = model;
-
+        ItemModel = model;
         IsVisible = true;
         IsExpanded = true;
 
-        SetIcon(Model);
+        SetIcon(ItemModel);
     }
 
     public TreeItemViewModel(Server server) : this(server.Name, server)
     {
-        Children = [];
+        Servers = [];
     }
 
     public TreeItemViewModel(ServerGroup group) : this(group.Name, group)
     {
-        Children = [.. group.Servers.ToTreeItems()];
+        Servers = [.. group.Servers.ToTreeItems()];
+        group.Servers.CollectionChanged += Servers_CollectionChanged;
     }
 
-    public void AddServer(Server server)
+    public object ItemModel
     {
-        if (Model is not ServerGroup groupModel)
-        {
-            return;
-        }
-
-        groupModel.Servers.Add(server);
-        Children.Add(new TreeItemViewModel(server));
+        get;
+        set => Set(ref field, value);
     }
 
-    public void UpdateServer(Server server)
+    public string Name
     {
-        if (Model is not Server serverModel)
-        {
-            return;
-        }
-
-        Name = server.Name;
-        serverModel.Name = server.Name;
-        serverModel.Description = server.Description;
-        serverModel.Host = server.Host;
-        serverModel.Port = server.Port;
-        serverModel.Username = server.Username;
-        serverModel.Password = server.Password;
-        serverModel.GroupName = server.GroupName;
+        get;
+        set => Set(ref field, value);
     }
 
-    public void UpdateServer(Server value, Server oldValue)
+    public string Icon
     {
-        if (Model is not ServerGroup groupModel)
-        {
-            return;
-        }
-
-        var target = Children.GetByName(oldValue.Name);
-        target?.UpdateServer(value);
+        get;
+        set => Set(ref field, value);
     }
 
-    public void RemoveServer(Server server)
+    public bool IsVisible
     {
-        if (Model is not ServerGroup groupModel)
-        {
-            return;
-        }
-
-        groupModel.Servers.Remove(server);
-
-        var item = Children.GetByName(server.Name);
-
-        if (item != null)
-        {
-            Children.Remove(item);
-        }
+        get;
+        set => Set(ref field, value);
     }
 
-    public void UpdateGroup(ServerGroup group)
+    public bool IsExpanded
     {
-        if (Model is not ServerGroup groupModel)
-        {
-            return;
-        }
-
-        Name = group.Name;
-        groupModel.Name = group.Name;
-        groupModel.Description = group.Description;
-
-        foreach (var item in groupModel.Servers)
-        {
-            item.GroupName = group.Name;
-        }
+        get;
+        set => Set(ref field, value);
     }
+
+    public ObservableCollection<TreeItemViewModel> Servers { get; }
 
     public bool ApplyFilter(string filter)
     {
         var anyChildMatch = false;
 
-        foreach (var child in Children)
+        foreach (var child in Servers)
         {
             if (child.ApplyFilter(filter))
             {
@@ -135,7 +75,7 @@ internal partial class TreeItemViewModel : ObservableObject
             }
         }
 
-        IsVisible = Name.Contains(filter, StringComparison.OrdinalIgnoreCase) || anyChildMatch;
+        IsVisible = Name.Contains(filter) || anyChildMatch;
 
         if (anyChildMatch)
         {
@@ -143,6 +83,33 @@ internal partial class TreeItemViewModel : ObservableObject
         }
 
         return IsVisible;
+    }
+
+    private void Servers_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.Action == NotifyCollectionChangedAction.Add)
+        {
+            foreach (Server newServer in e.NewItems)
+            {
+                Servers.Add(new TreeItemViewModel(newServer));
+            }
+
+            return;
+        }
+
+        if (e.Action == NotifyCollectionChangedAction.Remove)
+        {
+            foreach (Server removedServer in e.OldItems)
+            {
+                var item = Servers.FirstOrDefault(c => c.ItemModel == removedServer);
+                if (item != null)
+                {
+                    Servers.Remove(item);
+                }
+            }
+
+            return;
+        }
     }
 
     // Create/Move to IIconService

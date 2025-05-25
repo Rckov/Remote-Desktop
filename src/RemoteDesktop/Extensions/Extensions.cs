@@ -10,51 +10,34 @@ namespace RemoteDesktop.Extensions;
 
 internal static class Extensions
 {
+    /// <summary>
+    /// Converts a collection of <see cref="Server"/> into <see cref="TreeItemViewModel"/>.
+    /// </summary>
+    /// <param name="items">Collection of servers, must not be null.</param>
     public static IEnumerable<TreeItemViewModel> ToTreeItems(this IEnumerable<Server> items)
     {
         CheckIsNull(items);
         return items.Select(x => new TreeItemViewModel(x));
     }
 
+    /// <summary>
+    /// Converts a collection of <see cref="ServerGroup"/> into <see cref="TreeItemViewModel"/>.
+    /// </summary>
+    /// <param name="items">Collection of server groups, must not be null.</param>
     public static IEnumerable<TreeItemViewModel> ToTreeItems(this IEnumerable<ServerGroup> items)
     {
         CheckIsNull(items);
         return items.Select(x => new TreeItemViewModel(x));
     }
 
-    public static IEnumerable<string> GetNames(this ICollection<TreeItemViewModel> items)
-    {
-        CheckIsNull(items);
-        return items.Select(x => x.Name);
-    }
-
-    public static IEnumerable<ServerGroup> GetGroups(this IEnumerable<TreeItemViewModel> items)
-    {
-        CheckIsNull(items);
-        return items.Select(x => x.Model as ServerGroup);
-    }
-
-    public static TreeItemViewModel GetByName(this IEnumerable<TreeItemViewModel> items, string name)
-    {
-        CheckIsNull(items);
-        CheckIsNull(name);
-        return items.FirstOrDefault(x => x.Name == name);
-    }
-
-    public static Server Clone(this Server server)
-    {
-        return new Server
-        {
-            Name = server.Name,
-            Description = server.Description,
-            Host = server.Host,
-            Username = server.Username,
-            Password = server.Password,
-            Port = server.Port,
-            GroupName = server.GroupName
-        };
-    }
-
+    /// <summary>
+    /// Checks if the value is null.
+    /// </summary>
+    /// <typeparam name="T">Type of the value.</typeparam>
+    /// <param name="value">Value to check.</param>
+    /// <param name="paramName">Parameter name for exception (auto-filled).</param>
+    /// <exception cref="ArgumentNullException">If value is null.</exception>
+    /// <exception cref="ArgumentException">If string is empty or whitespace.</exception>
     public static void CheckIsNull<T>(T value, [CallerMemberName] string paramName = "")
     {
         if (value is null)

@@ -6,12 +6,14 @@
         <ResourceDictionary Source="pack://application:,,,/AvalonDock;component/Themes/Generic.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <FontFamily x:Key="FontIcon">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+
     <Style x:Key="LayoutDocumentTabItem" TargetType="{x:Type ad:LayoutDocumentTabItem}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ad:LayoutDocumentTabItem}">
                     <ad:DropDownControlArea DropDownContextMenu="{Binding Root.Manager.DocumentContextMenu}"
-                                       DropDownContextMenuDataContext="{Binding LayoutItem, RelativeSource={RelativeSource TemplatedParent}}">
+                                            DropDownContextMenuDataContext="{Binding LayoutItem, RelativeSource={RelativeSource TemplatedParent}}">
                         <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -21,11 +23,11 @@
                                 </Grid.ColumnDefinitions>
                                 <Border Grid.ColumnSpan="3" Background="Transparent" />
                                 <ContentPresenter Content="{Binding Model, RelativeSource={RelativeSource TemplatedParent}}" Margin="4"
-                                          ContentTemplate="{Binding DocumentHeaderTemplate, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type ad:DockingManager}, Mode=FindAncestor}}"
-                                          ContentTemplateSelector="{Binding DocumentHeaderTemplateSelector, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type ad:DockingManager}, Mode=FindAncestor}}" />
+                                                  ContentTemplate="{Binding DocumentHeaderTemplate, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type ad:DockingManager}, Mode=FindAncestor}}"
+                                                  ContentTemplateSelector="{Binding DocumentHeaderTemplateSelector, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type ad:DockingManager}, Mode=FindAncestor}}" />
                                 <Button x:Name="DocumentCloseButton" Grid.Column="2" Margin="2,3,0,0"
-                                Command="{Binding Path=LayoutItem.CloseCommand, RelativeSource={RelativeSource TemplatedParent}}"
-                                Style="{StaticResource BaseStyle}" Visibility="Hidden" Padding="0" Background="Transparent" Width="14" Height="14" BorderThickness="0">
+                                        Command="{Binding Path=LayoutItem.CloseCommand, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Style="{StaticResource BaseStyle}" Visibility="Hidden" Padding="0" Background="Transparent" Width="14" Height="14" BorderThickness="0">
                                     <TextBlock Text="&#xE106;" FontWeight="Bold" FontFamily="{StaticResource FontIcon}" FontSize="8" Foreground="{DynamicResource SecondaryTextBrush}" />
                                 </Button>
                             </Grid>
@@ -147,14 +149,14 @@
                             </ad:DropDownButton>
                         </Grid>
                         <Border x:Name="ContentPanel" Grid.Row="1"
-                          Grid.Column="0"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          Background="{TemplateBinding Background}"
-                          BorderBrush="{TemplateBinding BorderBrush}"
-                          BorderThickness="{TemplateBinding BorderThickness}"
-                          KeyboardNavigation.DirectionalNavigation="Contained"
-                          KeyboardNavigation.TabNavigation="Cycle" CornerRadius="0,4,4,4">
+                                Grid.Column="0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                KeyboardNavigation.DirectionalNavigation="Contained"
+                                KeyboardNavigation.TabNavigation="Cycle" CornerRadius="0,4,4,4">
                             <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                     </Grid>
@@ -184,11 +186,11 @@
                                    BorderThickness="1,1,1,0"
                                    CornerRadius="4,4,0,0">
                                         <ContentPresenter x:Name="Content"
-                                                ContentSource="Header"
-                                                RecognizesAccessKey="True"
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center" />
+                                                          ContentSource="Header"
+                                                          RecognizesAccessKey="True"
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalAlignment="Center" />
                                     </Border>
                                 </Grid>
                                 <ControlTemplate.Triggers>
@@ -241,30 +243,30 @@
                 <ControlTemplate TargetType="{x:Type ad:OverlayWindow}">
                     <Canvas x:Name="PART_DropTargetsContainer" Opacity="0.5">
                         <Path x:Name="PART_PreviewBox"
-                        Fill="{DynamicResource BorderBrush}"
-                        Stroke="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
-                        StrokeThickness="2" />
+                              Fill="{DynamicResource BorderBrush}"
+                              Stroke="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
+                              StrokeThickness="2" />
                         <Grid x:Name="PART_DockingManagerDropTargets">
                             <Image x:Name="PART_DockingManagerDropTargetLeft"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Source="/AvalonDock;component/Themes/Generic/Images/DockLeft.PNG"
-                            Stretch="None" />
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Source="/AvalonDock;component/Themes/Generic/Images/DockLeft.PNG"
+                                   Stretch="None" />
                             <Image x:Name="PART_DockingManagerDropTargetRight"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Source="/AvalonDock;component/Themes/Generic/Images/DockRight.PNG"
-                            Stretch="None" />
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Source="/AvalonDock;component/Themes/Generic/Images/DockRight.PNG"
+                                   Stretch="None" />
                             <Image x:Name="PART_DockingManagerDropTargetBottom"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Bottom"
-                            Source="/AvalonDock;component/Themes/Generic/Images/DockBottom.PNG"
-                            Stretch="None" />
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Bottom"
+                                   Source="/AvalonDock;component/Themes/Generic/Images/DockBottom.PNG"
+                                   Stretch="None" />
                             <Image x:Name="PART_DockingManagerDropTargetTop"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            Source="/AvalonDock;component/Themes/Generic/Images/DockTop.PNG"
-                            Stretch="None" />
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Top"
+                                   Source="/AvalonDock;component/Themes/Generic/Images/DockTop.PNG"
+                                   Stretch="None" />
                         </Grid>
                         <Grid x:Name="PART_AnchorablePaneDropTargets">
                             <Grid Width="88" Height="88" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -347,13 +349,13 @@
                         </Grid.RowDefinitions>
                         <Border Grid.Row="0" Background="Transparent" />
                         <Border x:Name="ContentPanel"
-                          Grid.Row="1"
-                          Background="{TemplateBinding Background}"
-                          BorderBrush="{TemplateBinding BorderBrush}"
-                          BorderThickness="{TemplateBinding BorderThickness}"
-                          KeyboardNavigation.DirectionalNavigation="Contained"
-                          KeyboardNavigation.TabIndex="2"
-                          KeyboardNavigation.TabNavigation="Cycle">
+                                Grid.Row="1"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                KeyboardNavigation.DirectionalNavigation="Contained"
+                                KeyboardNavigation.TabIndex="2"
+                                KeyboardNavigation.TabNavigation="Cycle">
                             <ContentPresenter x:Name="PART_SelectedContentHost" Margin="{TemplateBinding Padding}" ContentSource="SelectedContent" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                         <ad:AnchorablePaneTabPanel x:Name="HeaderPanel" Grid.Row="2" Margin="2,0,2,2" Panel.ZIndex="1" IsItemsHost="True" KeyboardNavigation.TabIndex="1" />
@@ -393,8 +395,8 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <ContentPresenter Content="{Binding Model.SinglePane.SelectedContent, RelativeSource={RelativeSource TemplatedParent}}"
-                                       ContentTemplate="{Binding Model.Root.Manager.AnchorableTitleTemplate, RelativeSource={RelativeSource TemplatedParent}}"
-                                       TextElement.Foreground="{TemplateBinding Foreground}" Margin="2,0,2,2" />
+                                              ContentTemplate="{Binding Model.Root.Manager.AnchorableTitleTemplate, RelativeSource={RelativeSource TemplatedParent}}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}" Margin="2,0,2,2" />
                             <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" />
                         </Grid>
                     </Border>
@@ -465,9 +467,9 @@
                 <ControlTemplate>
                     <Border Background="{TemplateBinding Background}">
                         <ContentPresenter Content="{Binding Model, RelativeSource={RelativeSource TemplatedParent}}"
-                                    ContentTemplate="{Binding Model.Root.Manager.AnchorableTitleTemplate, RelativeSource={RelativeSource TemplatedParent}}"
-                                    ContentTemplateSelector="{Binding Model.Root.Manager.AnchorableTitleTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}"
-                                    TextElement.Foreground="{TemplateBinding Foreground}" Margin="2,0,2,2" />
+                                          ContentTemplate="{Binding Model.Root.Manager.AnchorableTitleTemplate, RelativeSource={RelativeSource TemplatedParent}}"
+                                          ContentTemplateSelector="{Binding Model.Root.Manager.AnchorableTitleTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}" Margin="2,0,2,2" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

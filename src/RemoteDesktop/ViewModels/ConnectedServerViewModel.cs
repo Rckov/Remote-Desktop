@@ -1,23 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-using RemoteDesktop.Extensions;
+﻿using RemoteDesktop.Common.Base;
 using RemoteDesktop.Models;
 
 using System;
 
 namespace RemoteDesktop.ViewModels;
 
-internal partial class ConnectedServerViewModel(Server server) : ObservableObject
+internal class ConnectedServerViewModel(Server server) : BaseViewModel
 {
-    [ObservableProperty]
-    private bool _isConnected;
-
-    [ObservableProperty]
-    private bool _isSelected;
-
-    [ObservableProperty]
-    private string _errorReason;
-
     public event EventHandler<string> OnDisconnected;
 
     public string Name
@@ -25,13 +14,29 @@ internal partial class ConnectedServerViewModel(Server server) : ObservableObjec
         get => server.Name;
     }
 
-    public Server Server
+    public bool IsSelected
     {
-        get => server.Clone();
+        get;
+        set => Set(ref field, value);
     }
 
-    partial void OnErrorReasonChanged(string value)
+    public bool IsConnected
     {
-        OnDisconnected?.Invoke(this, value);
+        get;
+        set => Set(ref field, value);
     }
+
+    public string ErrorReason
+    {
+        get;
+        set
+        {
+            if (Set(ref field, value))
+            {
+                OnDisconnected?.Invoke(this, value);
+            }
+        }
+    }
+
+    public Server Server => server;
 }

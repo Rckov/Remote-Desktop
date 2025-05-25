@@ -1,8 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using DryIoc;
 
-using Microsoft.Extensions.DependencyInjection;
-
-using RemoteDesktop.Services.Implementation;
+using RemoteDesktop.Services;
 using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels;
 using RemoteDesktop.Views;
@@ -14,27 +12,36 @@ using System.IO;
 
 namespace RemoteDesktop;
 
-internal static class DependencyInjection
+/// <summary>
+/// Configures dependency injection registrations for views and services.
+/// </summary>
+public static class DependencyInjection
 {
-    public static IServiceCollection AddViews(this IServiceCollection services)
+    /// <summary>
+    /// Registers all views and their view models in the container.
+    /// Also creates a mapping between view model types and dialog types.
+    /// </summary>
+    public static void RegisterViews(this IContainer container)
     {
         var views = new Dictionary<Type, Type>();
 
-        services.AddDialog<MainViewModel, MainWindow>(views);
-        services.AddDialog<ServerViewModel, ServerDialog>(views);
-        services.AddDialog<ServerGroupViewModel, ServerGroupDialog>(views);
+        container.RegisterDialog<MainViewModel, MainWindow>(views);
+        container.RegisterDialog<ServerViewModel, ServerDialog>(views);
+        container.RegisterDialog<ServerGroupViewModel, ServerGroupDialog>(views);
 
-        services.AddSingleton<IWindowFactory>(sp => new WindowFactory(sp, views));
-
-        return services;
+        container.RegisterInstance<IWindowFactory>(new WindowFactory(views, container));
     }
 
-    public static IServiceCollection AddServices(this IServiceCollection services)
+    /// <summary>
+    /// Registers core application.
+    /// </summary>
+    public static void RegisterServices(this IContainer container)
     {
-        services.AddSingleton<IWindowService, WindowService>();
-        services.AddSingleton<INotificationService, NotificationService>();
-        services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
-        services.AddSingleton<IDataService>(sp =>
+        container.Register<IWindowService, WindowService>();
+        container.Register<INotificationService, NotificationService>();
+        container.Register<IServerManagerService, ServerManagerService>();
+
+        container.RegisterDelegate<IDataService>(r =>
         {
             var path = Path.Combine(AppContext.BaseDirectory, "data");
 
@@ -43,20 +50,21 @@ internal static class DependencyInjection
                 Directory.CreateDirectory(path);
             }
 
-            return new JsonDataService(Path.Combine(path, "servers.json"));
-        });
-
-        return services;
+            return new JsonDataService(Path.Combine(path, "servers.dat"));
+        }, Reuse.Singleton);
     }
 
-    private static IServiceCollection AddDialog<TViewModel, TDialog>(this IServiceCollection services, IDictionary<Type, Type> viewMap)
+    /// <summary>
+    /// Registers the specified view model and dialog types in the container
+    /// and adds the mapping between them to the provided dictionary.
+    /// </summary>
+    private static void RegisterDialog<TViewModel, TDialog>(this IContainer container, IDictionary<Type, Type> viewMap)
         where TViewModel : class
         where TDialog : class
     {
-        services.AddTransient<TViewModel>();
-        services.AddTransient<TDialog>();
+        container.Register<TViewModel>(Reuse.Transient);
+        container.Register<TDialog>(Reuse.Transient);
 
         viewMap[typeof(TViewModel)] = typeof(TDialog);
-        return services;
     }
 }

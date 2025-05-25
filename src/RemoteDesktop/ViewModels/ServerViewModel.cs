@@ -1,57 +1,80 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-
+﻿using RemoteDesktop.Common;
+using RemoteDesktop.Common.Base;
+using RemoteDesktop.Common.Parameters;
 using RemoteDesktop.Models;
-using RemoteDesktop.Models.Messages;
 using RemoteDesktop.Services.Interfaces;
-using RemoteDesktop.ViewModels.Parameters;
 
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Windows.Input;
 
 namespace RemoteDesktop.ViewModels;
 
-internal partial class ServerViewModel(IMessenger messenger) : ObservableValidator, IParameterReceiver
+internal class ServerViewModel : ValidatableViewModel, IParameterReceiver
 {
-    [ObservableProperty]
     [Required(ErrorMessage = "Required field")]
-    private string _name;
+    public string Name
+    {
+        get;
+        set => Set(ref field, value);
+    }
 
-    [ObservableProperty]
-    private string _description;
+    public string Description
+    {
+        get;
+        set => Set(ref field, value);
+    }
 
-    [ObservableProperty]
     [Required(ErrorMessage = "Required field")]
-    private string _host;
+    public string Host
+    {
+        get;
+        set => Set(ref field, value);
+    }
 
-    [ObservableProperty]
     [Required(ErrorMessage = "Required field")]
     [Range(1, 65535, ErrorMessage = "Port must be between 1 and 65535")]
-    private int _port = 3389;
+    public int Port
+    {
+        get;
+        set => Set(ref field, value);
+    }
 
-    [ObservableProperty]
     [Required(ErrorMessage = "Required field")]
-    private string _username;
+    public string Username
+    {
+        get;
+        set => Set(ref field, value);
+    }
 
-    [ObservableProperty]
     [Required(ErrorMessage = "Required field")]
-    private string _password;
+    public string Password
+    {
+        get;
+        set => Set(ref field, value);
+    }
 
-    [ObservableProperty]
     [Required(ErrorMessage = "Required field")]
-    private string _groupName;
+    public string GroupName
+    {
+        get;
+        set => Set(ref field, value);
+    }
 
-    [ObservableProperty]
-    private ObservableCollection<string> _groupNames;
-
-    private Server _oldServer;
+    public Server Server { get; private set; }
+    public ObservableCollection<string> GroupNames { get; private set; }
 
     public event Action<bool> CloseRequest;
 
-    [RelayCommand]
-    public void Ok()
+    public ICommand SaveCommand { get; private set; }
+
+    public override void InitializeCommands()
+    {
+        SaveCommand = new RelayCommand(Save);
+    }
+
+    private void Save()
     {
         ValidateAllProperties();
 
@@ -60,20 +83,13 @@ internal partial class ServerViewModel(IMessenger messenger) : ObservableValidat
             return;
         }
 
-        var server = new Server
-        {
-            Name = Name,
-            Description = Description,
-            Host = Host,
-            Port = Port,
-            Username = Username,
-            Password = Password,
-            GroupName = GroupName
-        };
-
-        _ = _oldServer is null
-            ? messenger.Send(new ValueMessage<Server>(ChangeAction.Create, server))
-            : messenger.Send(new ValueMessage<Server>(ChangeAction.Update, server, _oldServer));
+        Server.Name = Name;
+        Server.Description = Description;
+        Server.Host = Host;
+        Server.Port = Port;
+        Server.Username = Username;
+        Server.Password = Password;
+        Server.GroupName = GroupName;
 
         CloseRequest?.Invoke(true);
     }
@@ -85,21 +101,15 @@ internal partial class ServerViewModel(IMessenger messenger) : ObservableValidat
             throw new ArgumentNullException(nameof(parameter));
         }
 
+        Server = data.Value;
         GroupNames = [.. data.Names];
 
-        if (data.Value == null)
-        {
-            return;
-        }
-
-        _oldServer = data.Value;
-
-        Name = _oldServer.Name;
-        Description = _oldServer.Description;
-        Host = _oldServer.Host;
-        Port = _oldServer.Port;
-        Username = _oldServer.Username;
-        Password = _oldServer.Password;
-        GroupName = _oldServer.GroupName;
+        Name = Server.Name;
+        Description = Server.Description;
+        Host = Server.Host;
+        Port = Server.Port;
+        Username = Server.Username;
+        Password = Server.Password;
+        GroupName = Server.GroupName;
     }
 }

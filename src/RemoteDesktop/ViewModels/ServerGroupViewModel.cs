@@ -1,36 +1,44 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-
+﻿using RemoteDesktop.Common;
+using RemoteDesktop.Common.Base;
+using RemoteDesktop.Common.Parameters;
 using RemoteDesktop.Models;
-using RemoteDesktop.Models.Messages;
 using RemoteDesktop.Services.Interfaces;
-using RemoteDesktop.ViewModels.Parameters;
 
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Windows.Input;
 
 namespace RemoteDesktop.ViewModels;
 
-public partial class ServerGroupViewModel(IMessenger messenger) : ObservableValidator, IParameterReceiver
+internal class ServerGroupViewModel : ValidatableViewModel, IParameterReceiver
 {
-    [ObservableProperty]
-    [CustomValidation(typeof(ServerGroupViewModel), nameof(ValidateName))]
-    private string _name;
+    [Required(ErrorMessage = "Required field")]
+    public string Name
+    {
+        get;
+        set => Set(ref field, value);
+    }
 
-    [ObservableProperty]
-    private string _description;
+    public string Description
+    {
+        get;
+        set => Set(ref field, value);
+    }
 
-    [ObservableProperty]
-    private ObservableCollection<string> _groupNames;
-
-    private ServerGroup _oldGroup;
+    public ServerGroup ServerGroup { get; private set; }
+    public ObservableCollection<string> GroupNames { get; private set; }
 
     public event Action<bool> CloseRequest;
 
-    [RelayCommand]
-    public void Ok()
+    public ICommand SaveCommand { get; private set; }
+
+    public override void InitializeCommands()
+    {
+        SaveCommand = new RelayCommand(Save);
+    }
+
+    private void Save()
     {
         ValidateAllProperties();
 
@@ -39,15 +47,8 @@ public partial class ServerGroupViewModel(IMessenger messenger) : ObservableVali
             return;
         }
 
-        var group = new ServerGroup
-        {
-            Name = Name,
-            Description = Description,
-        };
-
-        _ = _oldGroup is null
-            ? messenger.Send(new ValueMessage<ServerGroup>(ChangeAction.Create, group))
-            : messenger.Send(new ValueMessage<ServerGroup>(ChangeAction.Update, group, _oldGroup));
+        ServerGroup.Name = Name;
+        ServerGroup.Description = Description;
 
         CloseRequest?.Invoke(true);
     }
@@ -59,33 +60,10 @@ public partial class ServerGroupViewModel(IMessenger messenger) : ObservableVali
             throw new ArgumentNullException(nameof(parameter));
         }
 
+        ServerGroup = data.Value;
         GroupNames = [.. data.Names];
 
-        if (data.Value == null)
-        {
-            return;
-        }
-
-        _oldGroup = data.Value;
-
-        Name = _oldGroup.Name;
-        Description = _oldGroup.Description;
-    }
-
-    public static ValidationResult ValidateName(string name, ValidationContext context)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            return new("Required field");
-        }
-
-        var instance = (ServerGroupViewModel)context.ObjectInstance;
-
-        if (instance.GroupNames.Contains(name))
-        {
-            return new("This name already exists");
-        }
-
-        return ValidationResult.Success;
+        Name = ServerGroup.Name;
+        Description = ServerGroup.Description;
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DryIoc;
 
 using RemoteDesktop.Services.Interfaces;
 using RemoteDesktop.ViewModels;
@@ -8,28 +8,39 @@ using System.Windows;
 
 namespace RemoteDesktop;
 
-public partial class App : Application
+public partial class App
 {
-    private readonly IServiceProvider _provider;
+    private readonly IContainer _container;
 
     public App()
     {
-        _provider = ConfigureServices(new ServiceCollection());
+        _container = ConfigureContainer();
     }
 
+    /// <summary>
+    /// Base directory of the application.
+    /// </summary>
     public static string BaseDirectory => AppContext.BaseDirectory;
 
-    private ServiceProvider ConfigureServices(IServiceCollection services)
+    /// <summary>
+    /// Configures the DryIoc container by registering views and services.
+    /// </summary>
+    private IContainer ConfigureContainer()
     {
-        services.AddViews();
-        services.AddServices();
+        var container = new Container();
 
-        return services.BuildServiceProvider();
+        container.RegisterViews();
+        container.RegisterServices();
+
+        return container;
     }
 
+    /// <summary>
+    /// Handles application startup event.
+    /// </summary>
     protected override void OnStartup(StartupEventArgs e)
     {
-        var service = _provider.GetRequiredService<IWindowService>();
+        var service = _container.Resolve<IWindowService>();
         service.Show<MainViewModel>();
     }
 }

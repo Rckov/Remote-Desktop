@@ -3,28 +3,27 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:hc="https://handyorg.github.io/handycontrol"
 
-           Height="420"
+           Height="430"
            Width="300"
            Title="Server dialog"
 
            ResizeMode="CanMinimize"
-           WindowStartupLocation="CenterScreen"
-           Style="{StaticResource WindowWin10}">
+           WindowStartupLocation="CenterScreen">
 
-   <Border Style="{StaticResource ContentBorder}">
-      <hc:UniformSpacingPanel Orientation="Vertical" Spacing="20">
-         <hc:TextBox hc:InfoElement.Placeholder="Server name" hc:InfoElement.Title="Name" Text="{Binding Name}" />
-         <hc:TextBox hc:InfoElement.Placeholder="Server description" hc:InfoElement.Necessary="False" hc:InfoElement.Title="Description" Text="{Binding Description}" />
-         <hc:TextBox hc:InfoElement.Placeholder="192.168.0.0" hc:InfoElement.Title="Host" Text="{Binding Host}" />
-         <hc:TextBox hc:InfoElement.Placeholder="3389" hc:InfoElement.Title="Port" Text="{Binding Port}" />
-         <hc:TextBox hc:InfoElement.Placeholder="Administrator" hc:InfoElement.Title="Username" Text="{Binding Username}" />
-         <hc:PasswordBox hc:InfoElement.Placeholder="Password" hc:InfoElement.Title="Password" UnsafePassword="{Binding Password}" />
-         <hc:ComboBox hc:InfoElement.Placeholder="Local" hc:InfoElement.Title="Group" SelectedItem="{Binding GroupName}" ItemsSource="{Binding GroupNames}" />
+    <Border Background="{DynamicResource RegionBrush}" Margin="5" Padding="5" CornerRadius="4" Effect="{DynamicResource EffectShadow1}">
+        <hc:UniformSpacingPanel Orientation="Vertical" Spacing="22">
+            <hc:TextBox hc:InfoElement.Placeholder="Server name" hc:InfoElement.Title="Name" Text="{Binding Name}" />
+            <hc:TextBox hc:InfoElement.Placeholder="Server description" hc:InfoElement.Necessary="False" hc:InfoElement.Title="Description" Text="{Binding Description}" />
+            <hc:TextBox hc:InfoElement.Placeholder="192.168.0.0" hc:InfoElement.Title="Host" Text="{Binding Host}" />
+            <hc:TextBox hc:InfoElement.Placeholder="3389" hc:InfoElement.Title="Port" Text="{Binding Port}" />
+            <hc:TextBox hc:InfoElement.Placeholder="Administrator" hc:InfoElement.Title="Username" Text="{Binding Username}" />
+            <hc:PasswordBox hc:InfoElement.Placeholder="Password" hc:InfoElement.Title="Password" UnsafePassword="{Binding Password}" />
+            <hc:ComboBox hc:InfoElement.Placeholder="Local" hc:InfoElement.Title="Group" SelectedItem="{Binding GroupName}" ItemsSource="{Binding GroupNames}" />
 
-         <hc:UniformSpacingPanel Margin="0,2,0,0" Spacing="2">
-            <Button Content="Save" Width="138" Style="{DynamicResource ButtonSuccess}" Command="{Binding OkCommand}" />
-            <Button Content="Cancel" IsCancel="True" Width="138" Style="{DynamicResource ButtonDefault}" />
-         </hc:UniformSpacingPanel>
-      </hc:UniformSpacingPanel>
-   </Border>
+            <hc:ElementGroup Orientation="Horizontal">
+                <Button Content="Save" HorizontalAlignment="Stretch" Style="{DynamicResource ButtonSuccess}" Command="{Binding SaveCommand}" />
+                <Button Content="Cancel" HorizontalAlignment="Stretch" Style="{DynamicResource ButtonDefault}" IsCancel="True" />
+            </hc:ElementGroup>
+        </hc:UniformSpacingPanel>
+    </Border>
 </hc:Window>

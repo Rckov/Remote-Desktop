@@ -14,11 +14,6 @@ public partial class ServerGroupDialog
 
     private void OnWindowLoaded(object sender, RoutedEventArgs e)
     {
-        SubscribeViewModelEvents();
-    }
-
-    private void SubscribeViewModelEvents()
-    {
         if (DataContext is ServerGroupViewModel viewModel)
         {
             viewModel.CloseRequest += OnCloseRequest;

@@ -5,11 +5,19 @@ using RemoteDesktop.Services.Interfaces;
 
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
-namespace RemoteDesktop.Services.Implementation;
+namespace RemoteDesktop.Services;
 
+/// <summary>
+/// Saves and loads ServerGroup collections encrypted in JSON format.
+/// </summary>
 internal class JsonDataService(string filePath) : IDataService
 {
+    /// <summary>
+    /// <inheritdoc />
+    /// </summary>
     public IEnumerable<ServerGroup> Load()
     {
         if (!File.Exists(filePath))
@@ -19,7 +27,10 @@ internal class JsonDataService(string filePath) : IDataService
 
         try
         {
-            var data = File.ReadAllText(filePath);
+            var encryptedBytes = File.ReadAllBytes(filePath);
+            var bytes = ProtectedData.Unprotect(encryptedBytes, null, DataProtectionScope.CurrentUser);
+            var data = Encoding.UTF8.GetString(bytes);
+
             return JsonConvert.DeserializeObject<IEnumerable<ServerGroup>>(data);
         }
         catch
@@ -28,6 +39,9 @@ internal class JsonDataService(string filePath) : IDataService
         }
     }
 
+    /// <summary>
+    /// <inheritdoc />
+    /// </summary>
     public void Save(IEnumerable<ServerGroup> groups)
     {
         var settings = new JsonSerializerSettings
@@ -37,6 +51,9 @@ internal class JsonDataService(string filePath) : IDataService
         };
 
         var data = JsonConvert.SerializeObject(groups, settings);
-        File.WriteAllText(filePath, data);
+        var bytes = Encoding.UTF8.GetBytes(data);
+        var encryptedBytes = ProtectedData.Protect(bytes, null, DataProtectionScope.CurrentUser);
+
+        File.WriteAllBytes(filePath, encryptedBytes);
     }
 }

@@ -8,9 +8,11 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Threading;
 
+using UserControl = System.Windows.Controls.UserControl;
+
 namespace RemoteDesktop.Views.UserControls;
 
-public partial class RdpViewerControl : System.Windows.Controls.UserControl
+public partial class RdpViewerControl : UserControl
 {
     private AxMsRdpClient11NotSafeForScripting _client;
 
@@ -79,7 +81,7 @@ public partial class RdpViewerControl : System.Windows.Controls.UserControl
         _client = new AxMsRdpClient11NotSafeForScripting();
         _client.OnDisconnected += Client_OnDisconnected;
 
-        rdpHost.Child ??= _client;
+        RdpHost.Child ??= _client;
     }
 
     private void Client_OnDisconnected(object sender, IMsTscAxEvents_OnDisconnectedEvent e)
