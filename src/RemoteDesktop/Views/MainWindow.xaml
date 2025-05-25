@@ -3,6 +3,7 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:vm="clr-namespace:RemoteDesktop.ViewModels"
            xmlns:hc="https://handyorg.github.io/handycontrol"
+           xmlns:ad="https://github.com/Dirkster99/AvalonDock"
            Height="675"
            Width="1200"
            Title="Remote Desktop"
@@ -11,7 +12,6 @@
            WindowStartupLocation="CenterScreen">
 
     <hc:Window.Resources>
-        <FontFamily x:Key="FontIcon">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
 
         <TextBlock x:Key="IconConnect"   Text="&#xE8AF;" FontFamily="{StaticResource FontIcon}" />
         <TextBlock x:Key="IconManage"    Text="&#xED25;" FontFamily="{StaticResource FontIcon}" />
@@ -89,5 +89,23 @@
                 <hc:TabItem Header="Favorites" IsEnabled="False" />
             </hc:TabControl>
         </Border>
+
+        <ad:DockingManager Margin="1,4,4,4" Grid.Column="2"
+                           DocumentsSource="{Binding ConnectedServers}"
+                           DocumentClosing="Server_Diconnect"
+                           Visibility="{Binding HasConnectedServers, Converter={StaticResource Boolean2VisibilityConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+            <ad:DockingManager.Resources>
+                <DataTemplate DataType="{x:Type vm:ConnectedServerViewModel}">
+                    <TextBlock Text="123" />
+                </DataTemplate>
+            </ad:DockingManager.Resources>
+
+            <ad:LayoutRoot>
+                <ad:LayoutPanel Orientation="Horizontal">
+                    <ad:LayoutDocumentPane />
+                </ad:LayoutPanel>
+            </ad:LayoutRoot>
+        </ad:DockingManager>
     </Grid>
 </hc:Window>

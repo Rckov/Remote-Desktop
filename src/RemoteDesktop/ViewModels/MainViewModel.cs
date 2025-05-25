@@ -7,6 +7,7 @@ using RemoteDesktop.Extensions;
 using RemoteDesktop.Models;
 using RemoteDesktop.Services.Interfaces;
 
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -41,6 +42,12 @@ internal class MainViewModel : BaseViewModel
         }
     }
 
+    public bool HasConnectedServers
+    {
+        get;
+        set => Set(ref field, value);
+    }
+
     public TreeItemViewModel SelectedItem
     {
         get;
@@ -48,6 +55,8 @@ internal class MainViewModel : BaseViewModel
     }
 
     public ObservableCollection<TreeItemViewModel> ServersGroups { get; }
+
+    public ObservableCollection<ConnectedServerViewModel> ConnectedServers { get; } = [];
 
     public ICommand ConnectCommand { get; private set; }
     public ICommand CreateServerCommand { get; private set; }
@@ -66,6 +75,29 @@ internal class MainViewModel : BaseViewModel
 
     private void Connect()
     {
+        if (SelectedItem?.ItemModel is not Server server)
+        {
+            return;
+        }
+
+        if (ConnectedServers.Any(x => x.Server.Host == server.Host))
+        {
+            return;
+        }
+
+        var newConnection = new ConnectedServerViewModel(server)
+        {
+            IsSelected = true,
+            IsConnected = true
+        };
+        newConnection.OnDisconnected += Connection_OnDisconnected;
+
+        ConnectedServers.Add(newConnection);
+    }
+
+    public void Disconnect(ConnectedServerViewModel connection)
+    {
+        throw new NotImplementedException();
     }
 
     private void CreateServer()
@@ -200,5 +232,18 @@ internal class MainViewModel : BaseViewModel
         var inputData = new InputData<T>(model, names);
 
         return _windowService.ShowDialog<TViewModel>(inputData) == true;
+    }
+
+    private void Connection_OnDisconnected(object sender, string message)
+    {
+        if (sender is not ConnectedServerViewModel model)
+        {
+            return;
+        }
+
+        _notificationService.MessageShow(model.ErrorReason);
+
+        model.OnDisconnected -= Connection_OnDisconnected;
+        ConnectedServers.Remove(model);
     }
 }

@@ -10,6 +10,7 @@
                 <hc:Theme />
 
                 <ResourceDictionary Source="/Resources/Styles/Generic.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/AvalonDock.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

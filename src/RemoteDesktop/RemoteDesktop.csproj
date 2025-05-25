@@ -21,4 +21,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\UserControls\" />
+  </ItemGroup>
 </Project>
