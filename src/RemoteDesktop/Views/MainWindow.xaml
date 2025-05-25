@@ -4,6 +4,8 @@
            xmlns:vm="clr-namespace:RemoteDesktop.ViewModels"
            xmlns:hc="https://handyorg.github.io/handycontrol"
            xmlns:ad="https://github.com/Dirkster99/AvalonDock"
+           xmlns:control="clr-namespace:RemoteDesktop.Views.UserControls"
+           
            Height="675"
            Width="1200"
            Title="Remote Desktop"
@@ -97,7 +99,12 @@
 
             <ad:DockingManager.Resources>
                 <DataTemplate DataType="{x:Type vm:ConnectedServerViewModel}">
-                    <TextBlock Text="123" />
+                    <control:RdpViewerControl IsConnected="{Binding IsConnected}"
+                                              Host="{Binding Server.Host}"
+                                              Port="{Binding Server.Port}"
+                                              Username="{Binding Server.Username}"
+                                              Password="{Binding Server.Password}"
+                                              ErrorReason="{Binding ErrorReason, Mode=TwoWay}" />
                 </DataTemplate>
             </ad:DockingManager.Resources>
 

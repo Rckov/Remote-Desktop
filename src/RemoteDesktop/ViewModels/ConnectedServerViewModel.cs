@@ -29,7 +29,13 @@ internal class ConnectedServerViewModel(Server server) : BaseViewModel
     public string ErrorReason
     {
         get;
-        set => Set(ref field, value);
+        set
+        {
+            if (Set(ref field, value))
+            {
+                OnDisconnected?.Invoke(this, value);
+            }
+        }
     }
 
     public Server Server => server;

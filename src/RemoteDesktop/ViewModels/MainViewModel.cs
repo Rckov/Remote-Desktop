@@ -93,11 +93,18 @@ internal class MainViewModel : BaseViewModel
         newConnection.OnDisconnected += Connection_OnDisconnected;
 
         ConnectedServers.Add(newConnection);
+        RaiseHasConnectedServers();
     }
 
     public void Disconnect(ConnectedServerViewModel connection)
     {
-        throw new NotImplementedException();
+        if (connection.IsConnected)
+        {
+            connection.IsConnected = false;
+            ConnectedServers.Remove(connection);
+        }
+
+        RaiseHasConnectedServers();
     }
 
     private void CreateServer()
@@ -245,5 +252,11 @@ internal class MainViewModel : BaseViewModel
 
         model.OnDisconnected -= Connection_OnDisconnected;
         ConnectedServers.Remove(model);
+        RaiseHasConnectedServers();
+    }
+
+    private void RaiseHasConnectedServers()
+    {
+        HasConnectedServers = ConnectedServers.Any();
     }
 }
