@@ -1,5 +1,7 @@
 ﻿using RemoteDesktop.Common;
 using RemoteDesktop.Common.Base;
+using RemoteDesktop.Common.Parameters;
+using RemoteDesktop.Models;
 using RemoteDesktop.Services.Interfaces;
 
 using System;
@@ -9,7 +11,7 @@ using System.Windows.Input;
 
 namespace RemoteDesktop.ViewModels;
 
-internal class ServerViewModel(IMessengerService messengerService) : ValidatableViewModel, IParameterReceiver
+internal class ServerViewModel : ValidatableViewModel, IParameterReceiver
 {
     [Required(ErrorMessage = "Required field")]
     public string Name
@@ -60,7 +62,8 @@ internal class ServerViewModel(IMessengerService messengerService) : Validatable
         set => Set(ref field, value);
     }
 
-    public ObservableCollection<string> GroupNames { get; } = [];
+    public Server Server { get; private set; }
+    public ObservableCollection<string> GroupNames { get; private set; }
 
     public event Action<bool> CloseRequest;
 
@@ -80,11 +83,33 @@ internal class ServerViewModel(IMessengerService messengerService) : Validatable
             return;
         }
 
+        Server.Name = Name;
+        Server.Description = Description;
+        Server.Host = Host;
+        Server.Port = Port;
+        Server.Username = Username;
+        Server.Password = Password;
+        Server.GroupName = GroupName;
+
         CloseRequest?.Invoke(true);
     }
 
     public void SetParameter(object parameter = null)
     {
-        throw new NotImplementedException();
+        if (parameter is not InputData<Server> data)
+        {
+            throw new ArgumentNullException(nameof(parameter));
+        }
+
+        Server = data.Value;
+        GroupNames = [.. data.Names];
+
+        Name = Server.Name;
+        Description = Server.Description;
+        Host = Server.Host;
+        Port = Server.Port;
+        Username = Server.Username;
+        Password = Server.Password;
+        GroupName = Server.GroupName;
     }
 }

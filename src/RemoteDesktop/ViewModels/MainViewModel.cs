@@ -1,12 +1,14 @@
-﻿using DryIoc.ImTools;
+﻿using HandyControl.Data;
 
 using RemoteDesktop.Common;
 using RemoteDesktop.Common.Base;
+using RemoteDesktop.Common.Parameters;
+using RemoteDesktop.Extensions;
 using RemoteDesktop.Models;
 using RemoteDesktop.Services.Interfaces;
 
-using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace RemoteDesktop.ViewModels;
@@ -14,29 +16,38 @@ namespace RemoteDesktop.ViewModels;
 internal class MainViewModel : BaseViewModel
 {
     private readonly IWindowService _windowService;
-    private readonly IMessengerService _messengerService;
     private readonly INotificationService _notificationService;
-    private readonly IDataService _dataService;
+    private readonly IServerManagerService _managementService;
 
-    public MainViewModel(
-        IWindowService windowService,
-        IMessengerService messengerService,
-        INotificationService notificationService,
-        IDataService dataService)
+    public MainViewModel(IWindowService windowService, INotificationService notificationService, IServerManagerService managementService)
     {
         _windowService = windowService;
-        _messengerService = messengerService;
         _notificationService = notificationService;
-        _dataService = dataService;
+        _managementService = managementService;
+
+        var serverGroups = managementService.LoadData();
+        ServersGroups = new ObservableCollection<TreeItemViewModel>(serverGroups.ToTreeItems());
     }
 
     public string SearchText
     {
         get;
-        set => OnSearchTextChanged(field, value);
+        set
+        {
+            if (Set(ref field, value))
+            {
+                OnSearchTextChanged(value);
+            }
+        }
     }
 
-    public ObservableCollection<TreeItemViewModel> ServersGroups { get; set; }
+    public TreeItemViewModel SelectedItem
+    {
+        get;
+        set => Set(ref field, value);
+    }
+
+    public ObservableCollection<TreeItemViewModel> ServersGroups { get; }
 
     public ICommand ConnectCommand { get; private set; }
     public ICommand CreateServerCommand { get; private set; }
@@ -55,44 +66,139 @@ internal class MainViewModel : BaseViewModel
 
     private void Connect()
     {
-        throw new NotImplementedException();
     }
 
     private void CreateServer()
-        => CreateOrUpdateModel<Server, ServerViewModel>();
+    {
+        var newServer = new Server();
+        if (OpenWindow<Server, ServerViewModel>(newServer))
+        {
+            _managementService.AddServer(newServer, newServer.GroupName);
+            _managementService.SaveData();
+
+            _notificationService.Show($"Server '{newServer.Name}' added to group '{newServer.GroupName}'.", InfoType.Success);
+        }
+    }
 
     private void CreateGroup()
-        => CreateOrUpdateModel<ServerGroup, ServerGroupViewModel>();
+    {
+        var newGroup = new ServerGroup();
+        if (OpenWindow<ServerGroup, ServerGroupViewModel>(newGroup))
+        {
+            _managementService.AddGroup(newGroup);
+            _managementService.SaveData();
+
+            ServersGroups.Add(new TreeItemViewModel(newGroup));
+
+            _notificationService.Show($"Group '{newGroup.Name}' created.", InfoType.Success);
+        }
+    }
 
     private void Edit()
     {
-        throw new NotImplementedException();
-    }
-
-    private void Delete()
-    {
-        throw new NotImplementedException();
-    }
-
-    private void OnSearchTextChanged(string fieldValue, string value)
-    {
-        if (!Set(ref fieldValue, value))
+        if (SelectedItem == null)
         {
             return;
         }
 
+        switch (SelectedItem.ItemModel)
+        {
+            case Server server:
+                EditServer(server);
+                break;
+
+            case ServerGroup group:
+                EditGroup(group);
+                break;
+        }
+    }
+
+    private void Delete()
+    {
+        if (SelectedItem == null)
+        {
+            return;
+        }
+
+        switch (SelectedItem.ItemModel)
+        {
+            case Server server:
+                if (_notificationService.Ask($"Delete server '{server.Name}'?"))
+                {
+                    DeleteServer(server);
+                }
+                break;
+
+            case ServerGroup group:
+                if (_notificationService.Ask($"Delete group '{group.Name}' and all its servers?"))
+                {
+                    DeleteGroup(group);
+                }
+                break;
+        }
+    }
+
+    private void EditServer(Server server)
+    {
+        var oldGroupName = server.GroupName;
+
+        if (OpenWindow<Server, ServerViewModel>(server))
+        {
+            _managementService.UpdateServer(server, oldGroupName);
+            _managementService.SaveData();
+
+            SelectedItem.Name = server.Name;
+
+            _notificationService.Show($"Server '{server.Name}' updated.", InfoType.Info);
+        }
+    }
+
+    private void EditGroup(ServerGroup group)
+    {
+        var oldName = group.Name;
+
+        if (OpenWindow<ServerGroup, ServerGroupViewModel>(group))
+        {
+            _managementService.UpdateGroup(group, oldName);
+            _managementService.SaveData();
+
+            SelectedItem.Name = group.Name;
+
+            _notificationService.Show($"Group renamed to '{group.Name}'.", InfoType.Info);
+        }
+    }
+
+    private void DeleteServer(Server server)
+    {
+        _managementService.DeleteServer(server);
+        _managementService.SaveData();
+
+        _notificationService.Show($"Server '{server.Name}' deleted.", InfoType.Info);
+    }
+
+    private void DeleteGroup(ServerGroup group)
+    {
+        _managementService.DeleteGroup(group);
+        _managementService.SaveData();
+
+        ServersGroups.Remove(SelectedItem);
+
+        _notificationService.Show($"Group '{group.Name}' deleted.", InfoType.Info);
+    }
+
+    private void OnSearchTextChanged(string value)
+    {
         foreach (var item in ServersGroups)
         {
             item.ApplyFilter(value);
         }
     }
 
-
-    private bool CreateOrUpdateModel<T, TViewModel>(T model = default) where TViewModel : class
+    private bool OpenWindow<T, TViewModel>(T model = default) where TViewModel : class
     {
-        //var list = ServersGroups.GetNames();
-        //var data = new InputData<T>(model, list);
+        var names = ServersGroups.Select(x => x.Name);
+        var inputData = new InputData<T>(model, names);
 
-        return _windowService.ShowDialog<TViewModel>() == true;
+        return _windowService.ShowDialog<TViewModel>(inputData) == true;
     }
 }

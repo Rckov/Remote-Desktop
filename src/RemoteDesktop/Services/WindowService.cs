@@ -10,7 +10,7 @@ using System.Windows;
 namespace RemoteDesktop.Services;
 
 /// <summary>
-/// Service for displaying windows using view models and a factory.
+/// Shows windows or dialogs for specific ViewModels using a factory and DI container.
 /// </summary>
 internal class WindowService(IWindowFactory factory, IContainer container) : IWindowService
 {

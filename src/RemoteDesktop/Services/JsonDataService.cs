@@ -11,7 +11,7 @@ using System.Text;
 namespace RemoteDesktop.Services;
 
 /// <summary>
-/// Implementation of IDataService using JSON file with encryption.
+/// Saves and loads ServerGroup collections encrypted in JSON format.
 /// </summary>
 internal class JsonDataService(string filePath) : IDataService
 {

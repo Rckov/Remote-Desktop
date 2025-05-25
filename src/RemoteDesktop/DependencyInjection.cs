@@ -33,13 +33,13 @@ public static class DependencyInjection
     }
 
     /// <summary>
-    /// Registers core application services as singletons.
+    /// Registers core application.
     /// </summary>
     public static void RegisterServices(this IContainer container)
     {
         container.Register<IWindowService, WindowService>();
         container.Register<INotificationService, NotificationService>();
-        container.Register<IMessengerService, MessengerService>();
+        container.Register<IServerManagerService, ServerManagerService>();
 
         container.RegisterDelegate<IDataService>(r =>
         {
