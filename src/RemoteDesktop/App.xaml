@@ -6,7 +6,15 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <hc:ThemeResources />
+                <hc:ThemeResources RequestedTheme="Dark">
+                    <hc:ThemeResources.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Dark" hc:ThemeDictionary.Key="Dark">
+                            <SolidColorBrush x:Key="RegionBrush" Color="#242526" />
+                            <SolidColorBrush x:Key="SecondaryRegionBrush" Color="#18191a" />
+                            <SolidColorBrush x:Key="PrimaryTextBrush" Color="#e4e6eb" />
+                        </ResourceDictionary>
+                    </hc:ThemeResources.ThemeDictionaries>
+                </hc:ThemeResources>
                 <hc:Theme />
 
                 <ResourceDictionary Source="/Resources/Styles/Generic.xaml" />
