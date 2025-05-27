@@ -19,12 +19,14 @@ internal class MainViewModel : BaseViewModel
     private readonly IWindowService _windowService;
     private readonly INotificationService _notificationService;
     private readonly IServerManagerService _managementService;
+    private readonly IThemeService _themeService;
 
-    public MainViewModel(IWindowService windowService, INotificationService notificationService, IServerManagerService managementService)
+    public MainViewModel(IWindowService windowService, INotificationService notificationService, IServerManagerService managementService, IThemeService themeService)
     {
         _windowService = windowService;
         _notificationService = notificationService;
         _managementService = managementService;
+        _themeService = themeService;
 
         var serverGroups = managementService.LoadData();
         ServersGroups = new ObservableCollection<TreeItemViewModel>(serverGroups.ToTreeItems());
@@ -63,6 +65,7 @@ internal class MainViewModel : BaseViewModel
     public ICommand CreateServerGroupCommand { get; private set; }
     public ICommand EditCommand { get; private set; }
     public ICommand DeleteCommand { get; private set; }
+    public ICommand ChangeThemeCommand { get; private set; }
 
     public override void InitializeCommands()
     {
@@ -71,6 +74,7 @@ internal class MainViewModel : BaseViewModel
         CreateServerGroupCommand = new RelayCommand(CreateGroup);
         EditCommand = new RelayCommand(Edit);
         DeleteCommand = new RelayCommand(Delete);
+        ChangeThemeCommand = new RelayCommand(ChangeTheme);
     }
 
     private void Connect()
@@ -253,6 +257,14 @@ internal class MainViewModel : BaseViewModel
         model.OnDisconnected -= Connection_OnDisconnected;
         ConnectedServers.Remove(model);
         RaiseHasConnectedServers();
+    }
+
+    private void ChangeTheme()
+    {
+        var curTheme = _themeService.Current;
+        var newTheme = curTheme == ThemeType.Light ? ThemeType.Dark : ThemeType.Light;
+
+        _themeService.ChangeTheme(newTheme);
     }
 
     private void RaiseHasConnectedServers()

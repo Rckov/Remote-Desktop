@@ -14,7 +14,7 @@
            WindowStartupLocation="CenterScreen">
 
     <hc:Window.Resources>
-
+        
         <TextBlock x:Key="IconConnect"   Text="&#xE8AF;" FontFamily="{StaticResource FontIcon}" />
         <TextBlock x:Key="IconManage"    Text="&#xED25;" FontFamily="{StaticResource FontIcon}" />
         <TextBlock x:Key="IconCreate"    Text="&#xE710;" FontFamily="{StaticResource FontIcon}" />
@@ -22,22 +22,39 @@
         <TextBlock x:Key="IconNewServer" Text="&#xE836;" FontFamily="{StaticResource FontIcon}" />
         <TextBlock x:Key="IconEdit"      Text="&#xE70F;" FontFamily="{StaticResource FontIcon}" />
         <TextBlock x:Key="IconDelete"    Text="&#xE74D;" FontFamily="{StaticResource FontIcon}" />
+        <TextBlock x:Key="IconSettings"  Text="&#xE713;" FontFamily="{StaticResource FontIcon}" />
+        <TextBlock x:Key="IconTheme"     Text="&#xE706;" FontFamily="{StaticResource FontIcon}" /> 
+        <TextBlock x:Key="IconAbout"     Text="&#xE897;" FontFamily="{StaticResource FontIcon}" />
+        <TextBlock x:Key="IconParams"    Text="&#xE90F;" FontFamily="{StaticResource FontIcon}" />
     </hc:Window.Resources>
 
     <hc:Window.NonClientAreaContent>
-        <Menu Margin="5,0,0,0" HorizontalAlignment="Left" Background="Transparent">
-            <MenuItem Header="Connect" Icon="{StaticResource IconConnect}" Command="{Binding ConnectCommand}" />
+        <DockPanel HorizontalAlignment="Stretch">
+            <Menu DockPanel.Dock="Left" Margin="5,0,0,0" Background="Transparent">
+                <MenuItem Header="Connect" Icon="{StaticResource IconConnect}" Command="{Binding ConnectCommand}" />
 
-            <MenuItem Header="Manage" Icon="{StaticResource IconManage}">
-                <MenuItem Header="Create" Icon="{StaticResource IconCreate}">
-                    <MenuItem Header="New Group" Icon="{StaticResource IconNewGroup}" Command="{Binding CreateServerGroupCommand}" />
-                    <MenuItem Header="New Server" Icon="{StaticResource IconNewServer}" Command="{Binding CreateServerCommand}" />
+                <MenuItem Header="Manage" Icon="{StaticResource IconManage}">
+                    <MenuItem Header="Create" Icon="{StaticResource IconCreate}">
+                        <MenuItem Header="New Group" Icon="{StaticResource IconNewGroup}" Command="{Binding CreateServerGroupCommand}" />
+                        <MenuItem Header="New Server" Icon="{StaticResource IconNewServer}" Command="{Binding CreateServerCommand}" />
+                    </MenuItem>
+
+                    <MenuItem Header="Edit" Icon="{StaticResource IconEdit}" Command="{Binding EditCommand}" />
+                    <MenuItem Header="Delete" Icon="{StaticResource IconDelete}" Command="{Binding DeleteCommand}" />
                 </MenuItem>
+            </Menu>
 
-                <MenuItem Header="Edit" Icon="{StaticResource IconEdit}" Command="{Binding EditCommand}" />
-                <MenuItem Header="Delete" Icon="{StaticResource IconDelete}" Command="{Binding DeleteCommand}" />
-            </MenuItem>
-        </Menu>
+            <Menu DockPanel.Dock="Right" HorizontalAlignment="Right">
+                <MenuItem Icon="{StaticResource IconSettings}">
+                    <MenuItem Header="Theme" Icon="{StaticResource IconTheme}" Command="{Binding ChangeThemeCommand}" />
+                    <MenuItem Header="Settings" Icon="{StaticResource IconParams}" />
+
+                    <Separator Style="{StaticResource SeparatorStyle}" />
+
+                    <MenuItem Header="About" Icon="{StaticResource IconAbout}" />
+                </MenuItem>
+            </Menu>
+        </DockPanel>
     </hc:Window.NonClientAreaContent>
 
     <Grid>

@@ -40,6 +40,7 @@ public static class DependencyInjection
         container.Register<IWindowService, WindowService>();
         container.Register<INotificationService, NotificationService>();
         container.Register<IServerManagerService, ServerManagerService>();
+        container.Register<IThemeService, ThemeService>();
 
         container.RegisterDelegate<IDataService>(r =>
         {
