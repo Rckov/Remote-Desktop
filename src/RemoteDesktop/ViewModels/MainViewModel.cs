@@ -5,6 +5,7 @@ using RemoteDesktop.Common.Base;
 using RemoteDesktop.Common.Parameters;
 using RemoteDesktop.Extensions;
 using RemoteDesktop.Models;
+using RemoteDesktop.Services;
 using RemoteDesktop.Services.Interfaces;
 
 using System;
@@ -20,13 +21,22 @@ internal class MainViewModel : BaseViewModel
     private readonly INotificationService _notificationService;
     private readonly IServerManagerService _managementService;
     private readonly IThemeService _themeService;
+    private readonly ISettingsService _settingsService;
 
-    public MainViewModel(IWindowService windowService, INotificationService notificationService, IServerManagerService managementService, IThemeService themeService)
+    public MainViewModel(
+        IWindowService windowService, 
+        INotificationService notificationService, 
+        IServerManagerService managementService, 
+        IThemeService themeService, 
+        ISettingsService settingsService)
     {
         _windowService = windowService;
         _notificationService = notificationService;
         _managementService = managementService;
         _themeService = themeService;
+        _settingsService = settingsService;
+
+        _themeService.ChangeTheme(_settingsService.Settings.ThemeType);
 
         var serverGroups = managementService.LoadData();
         ServersGroups = new ObservableCollection<TreeItemViewModel>(serverGroups.ToTreeItems());
@@ -265,6 +275,9 @@ internal class MainViewModel : BaseViewModel
         var newTheme = curTheme == ThemeType.Light ? ThemeType.Dark : ThemeType.Light;
 
         _themeService.ChangeTheme(newTheme);
+
+        _settingsService.Settings.ThemeType = newTheme;
+        _settingsService.SaveSettings();
     }
 
     private void RaiseHasConnectedServers()

@@ -40,6 +40,8 @@ public partial class App
     /// </summary>
     protected override void OnStartup(StartupEventArgs e)
     {
+        _container.Resolve<ISettingsService>().LoadSettings();
+
         var service = _container.Resolve<IWindowService>();
         service.Show<MainViewModel>();
     }
