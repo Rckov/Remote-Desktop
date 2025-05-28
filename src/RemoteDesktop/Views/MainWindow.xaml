@@ -47,11 +47,13 @@
             <Menu DockPanel.Dock="Right" HorizontalAlignment="Right">
                 <MenuItem Icon="{StaticResource IconSettings}">
                     <MenuItem Header="Theme" Icon="{StaticResource IconTheme}" Command="{Binding ChangeThemeCommand}" />
+                    <!--
                     <MenuItem Header="Settings" Icon="{StaticResource IconParams}" />
 
                     <Separator Style="{StaticResource SeparatorStyle}" />
 
                     <MenuItem Header="About" Icon="{StaticResource IconAbout}" />
+                    -->
                 </MenuItem>
             </Menu>
         </DockPanel>
