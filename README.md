@@ -15,9 +15,9 @@ A desktop application for managing and connecting to multiple remote desktop (RD
 > Built with `AxInterop.MSTSCLib.dll` and `Interop.MSTSCLib.dll` — COM-based ActiveX libraries for Microsoft RDP client integration.
 
 ### Preview
-| Light Theme |
-|-------------|
-| ![Dark Theme](images/preview-light.png) |
+| Light Theme | Dark Theme |
+|------------|-------------|
+| ![Dark Theme](images/preview-light.png) | ![Light Theme](images/preview-dark.png) |
 
 ### Installation
 1. Download the latest release from [Releases](https://github.com/Rckov/Remote-Desktop/releases/latest).
