@@ -5,6 +5,7 @@ using RemoteDesktop.Common.Base;
 using RemoteDesktop.Common.Parameters;
 using RemoteDesktop.Extensions;
 using RemoteDesktop.Models;
+using RemoteDesktop.Services;
 using RemoteDesktop.Services.Interfaces;
 
 using System;
@@ -19,12 +20,23 @@ internal class MainViewModel : BaseViewModel
     private readonly IWindowService _windowService;
     private readonly INotificationService _notificationService;
     private readonly IServerManagerService _managementService;
+    private readonly IThemeService _themeService;
+    private readonly ISettingsService _settingsService;
 
-    public MainViewModel(IWindowService windowService, INotificationService notificationService, IServerManagerService managementService)
+    public MainViewModel(
+        IWindowService windowService, 
+        INotificationService notificationService, 
+        IServerManagerService managementService, 
+        IThemeService themeService, 
+        ISettingsService settingsService)
     {
         _windowService = windowService;
         _notificationService = notificationService;
         _managementService = managementService;
+        _themeService = themeService;
+        _settingsService = settingsService;
+
+        _themeService.ChangeTheme(_settingsService.Settings.ThemeType);
 
         var serverGroups = managementService.LoadData();
         ServersGroups = new ObservableCollection<TreeItemViewModel>(serverGroups.ToTreeItems());
@@ -63,6 +75,7 @@ internal class MainViewModel : BaseViewModel
     public ICommand CreateServerGroupCommand { get; private set; }
     public ICommand EditCommand { get; private set; }
     public ICommand DeleteCommand { get; private set; }
+    public ICommand ChangeThemeCommand { get; private set; }
 
     public override void InitializeCommands()
     {
@@ -71,6 +84,7 @@ internal class MainViewModel : BaseViewModel
         CreateServerGroupCommand = new RelayCommand(CreateGroup);
         EditCommand = new RelayCommand(Edit);
         DeleteCommand = new RelayCommand(Delete);
+        ChangeThemeCommand = new RelayCommand(ChangeTheme);
     }
 
     private void Connect()
@@ -253,6 +267,17 @@ internal class MainViewModel : BaseViewModel
         model.OnDisconnected -= Connection_OnDisconnected;
         ConnectedServers.Remove(model);
         RaiseHasConnectedServers();
+    }
+
+    private void ChangeTheme()
+    {
+        var curTheme = _themeService.Current;
+        var newTheme = curTheme == ThemeType.Light ? ThemeType.Dark : ThemeType.Light;
+
+        _themeService.ChangeTheme(newTheme);
+
+        _settingsService.Settings.ThemeType = newTheme;
+        _settingsService.SaveSettings();
     }
 
     private void RaiseHasConnectedServers()

@@ -40,6 +40,7 @@ public static class DependencyInjection
         container.Register<IWindowService, WindowService>();
         container.Register<INotificationService, NotificationService>();
         container.Register<IServerManagerService, ServerManagerService>();
+        container.Register<IThemeService, ThemeService>();
 
         container.RegisterDelegate<IDataService>(r =>
         {
@@ -52,6 +53,8 @@ public static class DependencyInjection
 
             return new JsonDataService(Path.Combine(path, "servers.dat"));
         }, Reuse.Singleton);
+
+        container.RegisterDelegate<ISettingsService>(r => new SettingsService("settings.json"), Reuse.Singleton);
     }
 
     /// <summary>

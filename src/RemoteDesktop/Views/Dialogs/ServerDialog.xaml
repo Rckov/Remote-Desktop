@@ -10,7 +10,7 @@
            ResizeMode="CanMinimize"
            WindowStartupLocation="CenterScreen">
 
-    <Border Background="{DynamicResource RegionBrush}" Margin="5" Padding="5" CornerRadius="4" Effect="{DynamicResource EffectShadow1}">
+    <Border Margin="5" Padding="5">
         <hc:UniformSpacingPanel Orientation="Vertical" Spacing="22">
             <hc:TextBox hc:InfoElement.Placeholder="Server name" hc:InfoElement.Title="Name" Text="{Binding Name}" />
             <hc:TextBox hc:InfoElement.Placeholder="Server description" hc:InfoElement.Necessary="False" hc:InfoElement.Title="Description" Text="{Binding Description}" />
