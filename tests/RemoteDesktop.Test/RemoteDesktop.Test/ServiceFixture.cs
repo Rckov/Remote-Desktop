@@ -20,6 +20,8 @@ public class ServiceFixture : IDisposable
             _dataPath = Path.GetTempFileName();
             return new JsonDataService(_dataPath);
         }, Reuse.Transient);
+
+        Container.Register<IServerManagerService, ServerManagerService>(Reuse.Transient);
     }
 
     public IContainer Container { get; }

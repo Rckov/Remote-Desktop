@@ -5,7 +5,7 @@
            xmlns:hc="https://handyorg.github.io/handycontrol"
            xmlns:ad="https://github.com/Dirkster99/AvalonDock"
            xmlns:control="clr-namespace:RemoteDesktop.Views.UserControls"
-           
+
            Height="675"
            Width="1200"
            Title="Remote Desktop"
@@ -14,7 +14,7 @@
            WindowStartupLocation="CenterScreen">
 
     <hc:Window.Resources>
-        
+
         <TextBlock x:Key="IconConnect"   Text="&#xE8AF;" FontFamily="{StaticResource FontIcon}" />
         <TextBlock x:Key="IconManage"    Text="&#xED25;" FontFamily="{StaticResource FontIcon}" />
         <TextBlock x:Key="IconCreate"    Text="&#xE710;" FontFamily="{StaticResource FontIcon}" />
@@ -23,7 +23,7 @@
         <TextBlock x:Key="IconEdit"      Text="&#xE70F;" FontFamily="{StaticResource FontIcon}" />
         <TextBlock x:Key="IconDelete"    Text="&#xE74D;" FontFamily="{StaticResource FontIcon}" />
         <TextBlock x:Key="IconSettings"  Text="&#xE713;" FontFamily="{StaticResource FontIcon}" />
-        <TextBlock x:Key="IconTheme"     Text="&#xE706;" FontFamily="{StaticResource FontIcon}" /> 
+        <TextBlock x:Key="IconTheme"     Text="&#xE706;" FontFamily="{StaticResource FontIcon}" />
         <TextBlock x:Key="IconAbout"     Text="&#xE897;" FontFamily="{StaticResource FontIcon}" />
         <TextBlock x:Key="IconParams"    Text="&#xE90F;" FontFamily="{StaticResource FontIcon}" />
     </hc:Window.Resources>
