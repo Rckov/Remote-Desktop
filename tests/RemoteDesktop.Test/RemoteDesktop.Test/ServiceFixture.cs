@@ -10,17 +10,18 @@ namespace RemoteDesktop.Test;
 
 public class ServiceFixture : IDisposable
 {
-    private string _dataPath;
+    public string DataPath { get; }
+    public string SettingsPath { get; }
 
     public ServiceFixture()
     {
         Container = new Container();
-        Container.RegisterDelegate<IDataService>(x =>
-        {
-            _dataPath = Path.GetTempFileName();
-            return new JsonDataService(_dataPath);
-        }, Reuse.Transient);
 
+        DataPath = Path.GetTempFileName();
+        SettingsPath = Path.GetTempFileName();
+
+        Container.RegisterDelegate<IDataService>(_ => new JsonDataService(DataPath), Reuse.Transient);
+        Container.RegisterDelegate<ISettingsService>(_ => new SettingsService(SettingsPath), Reuse.Transient);
         Container.Register<IServerManagerService, ServerManagerService>(Reuse.Transient);
     }
 
@@ -28,9 +29,14 @@ public class ServiceFixture : IDisposable
 
     public void Dispose()
     {
-        if (File.Exists(_dataPath))
+        if (File.Exists(DataPath))
         {
-            File.Delete(_dataPath);
+            File.Delete(DataPath);
+        }
+
+        if (File.Exists(SettingsPath))
+        {
+            File.Delete(SettingsPath);
         }
     }
 }

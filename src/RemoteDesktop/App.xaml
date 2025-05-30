@@ -6,7 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <hc:ThemeResources RequestedTheme="Dark">
+                <hc:ThemeResources RequestedTheme="Light">
                     <hc:ThemeResources.ThemeDictionaries>
                         <ResourceDictionary x:Key="Dark" hc:ThemeDictionary.Key="Dark">
                             <SolidColorBrush x:Key="RegionBrush" Color="#242526" />
