@@ -5,10 +5,8 @@ using RemoteDesktop.Common.Base;
 using RemoteDesktop.Common.Parameters;
 using RemoteDesktop.Extensions;
 using RemoteDesktop.Models;
-using RemoteDesktop.Services;
 using RemoteDesktop.Services.Interfaces;
 
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -24,10 +22,10 @@ internal class MainViewModel : BaseViewModel
     private readonly ISettingsService _settingsService;
 
     public MainViewModel(
-        IWindowService windowService, 
-        INotificationService notificationService, 
-        IServerManagerService managementService, 
-        IThemeService themeService, 
+        IWindowService windowService,
+        INotificationService notificationService,
+        IServerManagerService managementService,
+        IThemeService themeService,
         ISettingsService settingsService)
     {
         _windowService = windowService;
