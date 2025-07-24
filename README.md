@@ -27,5 +27,6 @@ A desktop application for managing and connecting to multiple remote desktop (RD
 ### Suggestions
 Feel free to create an issue if you have any suggestions or ideas to improve the application.
 
-### License
-Licensed under [MIT](LICENSE). [Report an Issue](https://github.com/Rckov/Xslt-Editor/issues)
+## License
+Licensed under [MIT](LICENSE). [Report an Issue](https://github.com/Rckov/Remote-Desktop/issues)
+
