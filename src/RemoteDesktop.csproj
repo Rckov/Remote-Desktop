@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<Nullable>Enable</Nullable>
+		<TargetFramework>net4.8</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<AssemblyName>Remote Desktop</AssemblyName>
+		<LangVersion>Latest</LangVersion>
+		<ApplicationIcon>Resources\appicon.ico</ApplicationIcon>
+	</PropertyGroup>
+	<ItemGroup>
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\appicon.ico" />
+	</ItemGroup>
+</Project>
