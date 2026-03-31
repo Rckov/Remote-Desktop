@@ -6,6 +6,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Styles/WindowStyle.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ButtonStyle.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/TextBoxStyle.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/TabControl.xaml" />
                 <ResourceDictionary Source="/Views/DataTemplates/HomeContentTemplate.xaml" />
                 <ResourceDictionary Source="/Views/DataTemplates/ServerContentTemplate.xaml" />
