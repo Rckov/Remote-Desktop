@@ -3,7 +3,7 @@
                     xmlns:ct="clr-namespace:RemoteDesktop.Views.UserControls">
 
     <DataTemplate x:Key="HomeContentTemplate">
-        <Grid>
+        <Grid DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -12,7 +12,7 @@
             <Border Grid.Row="0"
                     Padding="16"
                     BorderThickness="0,0,0,1"
-                    BorderBrush="{DynamicResource BorderBrush}">
+                    BorderBrush="{DynamicResource NeutralStroke1}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -25,17 +25,17 @@
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right">
 
-                        <Button Style="{StaticResource BaseButtonStyle}">
+                        <Button Style="{StaticResource AccentButtonStyle}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#xE8F4;" FontFamily="{DynamicResource FontIcon}" FontSize="14" Margin="0,0,8,0" />
-                                <TextBlock Text="New Group" VerticalAlignment="Center" />
+                                <TextBlock Text="&#xE710;" FontFamily="{DynamicResource FontIcon}" FontSize="14" Margin="0,0,8,0" />
+                                <TextBlock Text="New Server" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
 
                         <Button Style="{StaticResource BaseButtonStyle}" Margin="8,0">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#xE710;" FontFamily="{DynamicResource FontIcon}" FontSize="14" Margin="0,0,8,0" />
-                                <TextBlock Text="New Server" VerticalAlignment="Center" />
+                                <TextBlock Text="&#xE8F4;" FontFamily="{DynamicResource FontIcon}" FontSize="14" Margin="0,0,8,0" />
+                                <TextBlock Text="New Group" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
                         <Button Content="&#xE713;" FontFamily="{DynamicResource FontIcon}" Style="{StaticResource BaseButtonStyle}" />
@@ -45,7 +45,8 @@
 
             <Border Grid.Row="1"
                     Padding="16"
-                    Background="{DynamicResource RegionBrush}">
+                    Background="{DynamicResource NeutralBackground2}">
+                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource HomeListTemplate}" />
             </Border>
         </Grid>
     </DataTemplate>

@@ -1,12 +1,71 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <SolidColorBrush x:Key="TextBrush" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="TextSecondaryBrush" Color="#C5C5C5" />
-    <SolidColorBrush x:Key="TextOtherBrush" Color="#8A8A8A" />
-    <SolidColorBrush x:Key="BackgroundBrush" Color="#202020" />
-    <SolidColorBrush x:Key="ButtonHoverBrush" Color="#18191a" />
-    <SolidColorBrush x:Key="ButtonPressedBrush" Color="#3f3f46" />
-    <SolidColorBrush x:Key="BorderBrush" Color="#3F3F3F" />
-    <SolidColorBrush x:Key="RegionBrush" Color="#2B2B2B" />
+    <SolidColorBrush x:Key="NeutralBackground1" Color="#292929" />
+    <SolidColorBrush x:Key="NeutralBackground1Hover" Color="#3D3D3D" />
+    <SolidColorBrush x:Key="NeutralBackground1Pressed" Color="#1F1F1F" />
+    <SolidColorBrush x:Key="NeutralBackground1Selected" Color="#383838" />
+
+    <SolidColorBrush x:Key="NeutralBackground2" Color="#1F1F1F" />
+    <SolidColorBrush x:Key="NeutralBackground2Hover" Color="#333333" />
+    <SolidColorBrush x:Key="NeutralBackground2Pressed" Color="#141414" />
+    <SolidColorBrush x:Key="NeutralBackground2Selected" Color="#2E2E2E" />
+
+    <SolidColorBrush x:Key="NeutralBackground3" Color="#141414" />
+    <SolidColorBrush x:Key="NeutralBackground3Hover" Color="#292929" />
+    <SolidColorBrush x:Key="NeutralBackground3Pressed" Color="#0A0A0A" />
+    <SolidColorBrush x:Key="NeutralBackground3Selected" Color="#242424" />
+
+    <SolidColorBrush x:Key="NeutralBackgroundInverted" Color="#FFFFFF" />
+
+    <SolidColorBrush x:Key="NeutralForeground1" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="NeutralForeground2" Color="#D6D6D6" />
+    <SolidColorBrush x:Key="NeutralForeground2Hover" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="NeutralForeground2Pressed" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="NeutralForeground3" Color="#ADADAD" />
+    <SolidColorBrush x:Key="NeutralForeground3Hover" Color="#D6D6D6" />
+    <SolidColorBrush x:Key="NeutralForeground3Pressed" Color="#D6D6D6" />
+
+    <SolidColorBrush x:Key="NeutralForegroundInverted" Color="#242424" />
+
+    <SolidColorBrush x:Key="NeutralStroke1" Color="#666666" />
+    <SolidColorBrush x:Key="NeutralStroke1Hover" Color="#757575" />
+    <SolidColorBrush x:Key="NeutralStroke1Pressed" Color="#6B6B6B" />
+    <SolidColorBrush x:Key="NeutralStroke2" Color="#525252" />
+    <SolidColorBrush x:Key="NeutralStrokeSubtle" Color="#0A0A0A" />
+
+    <SolidColorBrush x:Key="NeutralShadowAmbient" Color="#3D000000" />
+    <SolidColorBrush x:Key="NeutralShadowKey" Color="#47000000" />
+
+    <SolidColorBrush x:Key="BrandBackground" Color="#115EA3" />
+    <SolidColorBrush x:Key="BrandBackgroundHover" Color="#0F6CBD" />
+    <SolidColorBrush x:Key="BrandBackgroundPressed" Color="#0F548C" />
+    <SolidColorBrush x:Key="BrandBackgroundSelected" Color="#0F548C" />
+
+    <SolidColorBrush x:Key="BrandForeground" Color="#6CB8F6" />
+    <SolidColorBrush x:Key="BrandForegroundHover" Color="#8CCBF8" />
+    <SolidColorBrush x:Key="BrandForegroundPressed" Color="#479EF5" />
+
+    <SolidColorBrush x:Key="BrandStroke" Color="#6CB8F6" />
+
+    <SolidColorBrush x:Key="StatusDangerBackground" Color="#6E0811" />
+    <SolidColorBrush x:Key="StatusDangerBackgroundHover" Color="#C50F1F" />
+    <SolidColorBrush x:Key="StatusDangerBackgroundPressed" Color="#A80000" />
+
+    <SolidColorBrush x:Key="StatusDangerForeground" Color="#F48B96" />
+    <SolidColorBrush x:Key="StatusDangerStroke" Color="#F48B96" />
+
+    <SolidColorBrush x:Key="StatusSuccessBackground" Color="#094509" />
+    <SolidColorBrush x:Key="StatusSuccessBackgroundHover" Color="#0E700E" />
+    <SolidColorBrush x:Key="StatusSuccessBackgroundPressed" Color="#0B5A08" />
+
+    <SolidColorBrush x:Key="StatusSuccessForeground" Color="#9FD89F" />
+    <SolidColorBrush x:Key="StatusSuccessStroke" Color="#9FD89F" />
+
+    <SolidColorBrush x:Key="StatusWarningBackground" Color="#6E3A07" />
+    <SolidColorBrush x:Key="StatusWarningBackgroundHover" Color="#BC4B09" />
+    <SolidColorBrush x:Key="StatusWarningBackgroundPressed" Color="#8A3707" />
+
+    <SolidColorBrush x:Key="StatusWarningForeground" Color="#F9A87C" />
+    <SolidColorBrush x:Key="StatusWarningStroke" Color="#F9A87C" />
 </ResourceDictionary>

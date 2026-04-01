@@ -24,7 +24,7 @@ public partial class App : Application
 	{
 		Services
 			.GetRequiredService<IThemeService>()
-			.SetTheme(ThemeType.Dark);
+			.SetTheme(ThemeType.Default);
 
 		Services
 			.GetRequiredService<IWindowService>()

@@ -3,9 +3,9 @@
 
     <Style x:Key="BaseTextBoxStyle" TargetType="TextBox">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="CaretBrush" Value="{DynamicResource TextSecondaryBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource NeutralForeground2}" />
+        <Setter Property="Foreground" Value="{DynamicResource NeutralForeground2}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NeutralStroke1}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="5" />
         <Setter Property="Template">
@@ -24,10 +24,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ButtonHoverBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource NeutralBackground3Hover}" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ButtonPressedBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource NeutralBackground3Pressed}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -22,7 +22,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <ct:WindowBar Grid.Row="0" Background="{DynamicResource RegionBrush}">
+            <ct:WindowBar Grid.Row="0" Background="{DynamicResource NeutralBackground2}">
                 <ct:WindowBar.LeftContent>
                     <TabControl ItemsSource="{Binding Tabs}"
                                 SelectedItem="{Binding SelectedTab}"
