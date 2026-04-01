@@ -40,6 +40,9 @@ internal partial class MainViewModel : ObservableObject
 					new Server("Web Server 01", "192.168.1.100", "administrator", "Main production web server"),
 					new Server("Database Server", "192.168.1.101", "dbadmin", "Primary database instance"),
 					new Server("API Gateway", "192.168.1.102", "root", "API gateway server"),
+					new Server("API Gateway", "192.168.1.102", "root", "API gateway server"),
+					new Server("API Gateway", "192.168.1.102", "root", "API gateway server"),
+					new Server("API Gateway", "192.168.1.102", "root", "API gateway server"),
 				}
 			},
 			new ServerGroup("Development Servers")
