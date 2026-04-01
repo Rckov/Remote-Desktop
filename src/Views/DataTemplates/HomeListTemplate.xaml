@@ -14,14 +14,14 @@
                 <Style TargetType="Border">
                     <Setter Property="Effect">
                         <Setter.Value>
-                            <DropShadowEffect Color="Black" Opacity="0.04" BlurRadius="8" ShadowDepth="0" />
+                            <DropShadowEffect Color="{DynamicResource NeutralShadowKeyColor}" BlurRadius="8" Opacity="0.07" ShadowDepth="0" />
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Effect">
                                 <Setter.Value>
-                                    <DropShadowEffect Color="Black" Opacity="0.14" BlurRadius="8" ShadowDepth="0" />
+                                    <DropShadowEffect Color="{DynamicResource NeutralShadowKeyColor}" BlurRadius="8" Opacity="0.15" ShadowDepth="0" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -60,10 +60,10 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Style="{StaticResource DataTextBlockStyle}" 
-                               Text="• Offline" 
+                    <TextBlock Style="{StaticResource DataTextBlockStyle}"
+                               Text="• Offline"
                                Foreground="DarkRed"
-                               VerticalAlignment="Center"/>
+                               VerticalAlignment="Center" />
 
                     <StackPanel x:Name="ActionButtons"
                                 Grid.Column="1"
@@ -72,7 +72,7 @@
                         <Button Content="&#xE70F;"
                                 Style="{StaticResource IconButtonStyle}" />
                         <Button Content="&#xE74D;"
-                                Style="{StaticResource IconButtonStyle}"/>
+                                Style="{StaticResource IconButtonStyle}" />
                     </StackPanel>
                 </Grid>
             </Grid>

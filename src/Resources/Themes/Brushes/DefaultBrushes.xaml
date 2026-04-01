@@ -37,6 +37,8 @@
     <SolidColorBrush x:Key="NeutralShadowAmbient" Color="#1F000000" />
     <SolidColorBrush x:Key="NeutralShadowKey" Color="#24000000" />
 
+    <Color x:Key="NeutralShadowKeyColor">#24000000</Color>
+
     <SolidColorBrush x:Key="BrandBackground" Color="#0F6CBD" />
     <SolidColorBrush x:Key="BrandBackgroundHover" Color="#115EA3" />
     <SolidColorBrush x:Key="BrandBackgroundPressed" Color="#0F548C" />
