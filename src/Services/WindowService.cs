@@ -16,11 +16,14 @@ internal class WindowService(IServiceProvider service) : IWindowService
 
 		if (dialog)
 		{
+			window.Owner = Application.Current.MainWindow;
 			window.ShowDialog();
-			return context;
+		}
+		else
+		{
+			window.Show();
 		}
 
-		window.Show();
 		return context;
 	}
 

@@ -3,7 +3,7 @@ using RemoteDesktop.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace RemoteDesktop.Views.Selectors;
+namespace RemoteDesktop.Views.DataTemplates.Selectors;
 
 public class ContentTemplateSelector : DataTemplateSelector
 {

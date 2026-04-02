@@ -79,10 +79,17 @@
                                 Grid.Column="1"
                                 Orientation="Horizontal"
                                 Opacity="0">
+                        <StackPanel.RenderTransform>
+                            <TranslateTransform X="0" />
+                        </StackPanel.RenderTransform>
                         <Button Content="&#xE70F;"
-                                Style="{StaticResource IconButtonStyle}" />
+                                Style="{StaticResource IconButtonStyle}"
+                                Command="{Binding DataContext.EditItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                CommandParameter="{Binding}" />
                         <Button Content="&#xE74D;"
-                                Style="{StaticResource IconButtonStyle}" />
+                                Style="{StaticResource IconButtonStyle}"
+                                Command="{Binding DataContext.DeleteItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                CommandParameter="{Binding}" />
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -96,22 +103,63 @@
                 <Setter TargetName="StatusLabel" Property="Foreground" Value="{DynamicResource SuccessForeground}" />
             </DataTrigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="ActionButtons" Property="Opacity" Value="1" />
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="ActionButtons"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="0:0:0.15" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="ActionButtons"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0"
+                                             Duration="0:0:0.15" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
             </Trigger>
         </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="HomeListTemplate">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding ServerGroups}">
+            <ItemsControl ItemsSource="{Binding Groups}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Expander Style="{StaticResource ServerGroupExpanderStyle}">
                             <Expander.Header>
-                                <TextBlock Text="{Binding Name}"
-                                           FontSize="20"
-                                           FontWeight="SemiBold"
-                                           Foreground="{DynamicResource TextPrimary}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding Name}"
+                                               FontSize="20"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextPrimary}" />
+
+                                    <StackPanel x:Name="GroupActionButtons"
+                                                Grid.Column="1"
+                                                Orientation="Horizontal"
+                                                Opacity="0"
+                                                Margin="10,0,0,0">
+                                        <Button Content="&#xE70F;"
+                                                Style="{StaticResource IconButtonStyle}"
+                                                Command="{Binding DataContext.EditItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding}" />
+                                        <Button Content="&#xE74D;"
+                                                Style="{StaticResource IconButtonStyle}"
+                                                Command="{Binding DataContext.DeleteItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding}" />
+                                    </StackPanel>
+                                </Grid>
                             </Expander.Header>
 
                             <ItemsControl ItemsSource="{Binding Servers}" ItemTemplate="{StaticResource CardTemplate}">
@@ -122,6 +170,31 @@
                                 </ItemsControl.ItemsPanel>
                             </ItemsControl>
                         </Expander>
+
+                        <DataTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="GroupActionButtons"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="1"
+                                                             Duration="0:0:0.15" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="GroupActionButtons"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="0"
+                                                             Duration="0:0:0.15" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

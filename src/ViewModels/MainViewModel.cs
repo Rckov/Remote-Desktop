@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using RemoteDesktop.Common.Attributes;
 using RemoteDesktop.Models;
 using RemoteDesktop.Models.Constans;
+using RemoteDesktop.Services.Abstractions;
 using RemoteDesktop.Views;
 
 using System.Collections.ObjectModel;
@@ -13,26 +14,30 @@ namespace RemoteDesktop.ViewModels;
 [Window(typeof(MainWindow))]
 internal partial class MainViewModel : ObservableObject
 {
+	private readonly INotificationService _notificationService;
+
 	[ObservableProperty]
-	private ObservableCollection<TabItemViewModel> _tabs;
+	private ObservableCollection<ServerGroup> _groups;
+
+	[ObservableProperty]
+	private ObservableCollection<TabItemViewModel> _connected;
 
 	[ObservableProperty]
 	private TabItemViewModel _selectedTab;
 
-	[ObservableProperty]
-	private ObservableCollection<ServerGroup> _serverGroups;
-
-	public MainViewModel()
+	public MainViewModel(INotificationService notification)
 	{
-		_tabs = new ObservableCollection<TabItemViewModel>
+		_notificationService = notification;
+
+		_connected = new ObservableCollection<TabItemViewModel>
 		{
-			new TabItemViewModel("Home", IconConstants.Home, false),
+			new TabItemViewModel("Home", Icons.Home, false),
 			new TabItemViewModel("Server 1"),
 		};
 
-		_selectedTab = _tabs[0];
+		_selectedTab = _connected[0];
 
-		_serverGroups = new ObservableCollection<ServerGroup>
+		_groups = new ObservableCollection<ServerGroup>
 		{
 			new ServerGroup("Production Servers")
 			{
@@ -56,16 +61,40 @@ internal partial class MainViewModel : ObservableObject
 			}
 		};
 
-
-		_serverGroups[0].Servers[0].IsOnline = true;
+		_groups[0].Servers[0].IsOnline = true;
 	}
 
 	[RelayCommand]
 	private void CloseTab(TabItemViewModel tab)
 	{
-		if (tab?.IsCloseable == true && Tabs.Contains(tab))
+		if (tab?.IsCloseable == true && _connected.Contains(tab))
 		{
+		}
+	}
 
+	[RelayCommand]
+	private void EditItem(object item)
+	{
+		_notificationService.Show("Тестовое всооо", "sdfasfd");
+	}
+
+	[RelayCommand]
+	private void DeleteItem(object item)
+	{
+		if (item is Server server)
+		{
+			foreach (var group in _groups)
+			{
+				if (group.Servers.Contains(server))
+				{
+					group.Servers.Remove(server);
+					break;
+				}
+			}
+		}
+		else if (item is ServerGroup group)
+		{
+			_groups.Remove(group);
 		}
 	}
 }

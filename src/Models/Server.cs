@@ -2,29 +2,20 @@
 
 namespace RemoteDesktop.Models;
 
-internal partial class Server : ObservableObject
+internal partial class Server(string name, string host, string username, string? description = null) : ObservableObject
 {
 	[ObservableProperty]
-	private string _name;
+	private string _name = name;
 
 	[ObservableProperty]
-	private string _host;
+	private string _host = host;
 
 	[ObservableProperty]
-	private string _username;
+	private string _username = username;
 
 	[ObservableProperty]
-	private string? _description;
+	private string? _description = description;
 
 	[ObservableProperty]
-	private bool _isOnline;
-
-	public Server(string name, string host, string username, string? description = null)
-	{
-		_name = name;
-		_host = host;
-		_username = username;
-		_description = description;
-		_isOnline = false;
-	}
+	private bool _isOnline = false;
 }

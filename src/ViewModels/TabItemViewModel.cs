@@ -4,7 +4,7 @@ using RemoteDesktop.Models.Constans;
 
 namespace RemoteDesktop.ViewModels;
 
-internal partial class TabItemViewModel(string name, string icon = IconConstants.Server, bool isCloseable = true) : ObservableObject
+internal partial class TabItemViewModel(string name, string icon = Icons.Server, bool isCloseable = true) : ObservableObject
 {
 	[ObservableProperty]
 	private string _name = name;
