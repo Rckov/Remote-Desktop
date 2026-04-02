@@ -60,10 +60,20 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Style="{StaticResource DataTextBlockStyle}"
-                               Text="• Offline"
-                               Foreground="{DynamicResource ErrorForeground}"
-                               VerticalAlignment="Center" />
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="StatusIcon"
+                                   Text="&#xF136;"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   FontSize="6"
+                                   Foreground="{DynamicResource ErrorForeground}"
+                                   Margin="0,0,4,0"
+                                   VerticalAlignment="Center" />
+                        <TextBlock x:Name="StatusLabel"
+                                   Text="Offline"
+                                   FontSize="12"
+                                   Foreground="{DynamicResource ErrorForeground}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
 
                     <StackPanel x:Name="ActionButtons"
                                 Grid.Column="1"
@@ -79,6 +89,12 @@
         </Border>
 
         <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsOnline}" Value="True">
+                <Setter TargetName="StatusIcon" Property="Text" Value="&#xEC61;" />
+                <Setter TargetName="StatusIcon" Property="Foreground" Value="{DynamicResource SuccessForeground}" />
+                <Setter TargetName="StatusLabel" Property="Text" Value="Online" />
+                <Setter TargetName="StatusLabel" Property="Foreground" Value="{DynamicResource SuccessForeground}" />
+            </DataTrigger>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter TargetName="ActionButtons" Property="Opacity" Value="1" />
             </Trigger>

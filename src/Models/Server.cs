@@ -16,11 +16,15 @@ internal partial class Server : ObservableObject
 	[ObservableProperty]
 	private string? _description;
 
+	[ObservableProperty]
+	private bool _isOnline;
+
 	public Server(string name, string host, string username, string? description = null)
 	{
 		_name = name;
 		_host = host;
 		_username = username;
 		_description = description;
+		_isOnline = false;
 	}
 }

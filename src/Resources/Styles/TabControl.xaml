@@ -41,7 +41,9 @@
                                 Opacity="0"
                                 Padding="4"
                                 Foreground="{DynamicResource TextSecondary}"
-                                Style="{StaticResource BaseButtonStyle}">
+                                Style="{StaticResource BaseButtonStyle}"
+                                Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=TabControl}}"
+                                CommandParameter="{Binding}">
                             <TextBlock Text="&#xE711;" FontSize="10" FontFamily="{DynamicResource FontIcon}" />
                         </Button>
                     </Grid>

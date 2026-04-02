@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 using RemoteDesktop.Common.Attributes;
 using RemoteDesktop.Models;
@@ -54,5 +55,17 @@ internal partial class MainViewModel : ObservableObject
 				}
 			}
 		};
+
+
+		_serverGroups[0].Servers[0].IsOnline = true;
+	}
+
+	[RelayCommand]
+	private void CloseTab(TabItemViewModel tab)
+	{
+		if (tab?.IsCloseable == true && Tabs.Contains(tab))
+		{
+
+		}
 	}
 }

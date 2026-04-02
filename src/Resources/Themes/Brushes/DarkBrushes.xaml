@@ -25,4 +25,5 @@
     <SolidColorBrush x:Key="AccentForeground" Color="#FFFFFF" />
 
     <SolidColorBrush x:Key="ErrorForeground" Color="#F48B96" />
+    <SolidColorBrush x:Key="SuccessForeground" Color="#9FD89F" />
 </ResourceDictionary>
