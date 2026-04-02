@@ -7,21 +7,21 @@
                 Padding="10,10,10,5"
                 Margin="0,0,15,15"
                 CornerRadius="8"
-                Background="{DynamicResource NeutralBackground1}"
-                BorderBrush="{DynamicResource NeutralStroke1}"
+                Background="{DynamicResource CardBackground}"
+                BorderBrush="{DynamicResource BorderDefault}"
                 BorderThickness="1">
             <Border.Style>
                 <Style TargetType="Border">
                     <Setter Property="Effect">
                         <Setter.Value>
-                            <DropShadowEffect Color="{DynamicResource NeutralShadowKeyColor}" BlurRadius="8" Opacity="0.07" ShadowDepth="0" />
+                            <DropShadowEffect Color="{DynamicResource ShadowColor}" BlurRadius="8" Opacity="0.07" ShadowDepth="0" />
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Effect">
                                 <Setter.Value>
-                                    <DropShadowEffect Color="{DynamicResource NeutralShadowKeyColor}" BlurRadius="8" Opacity="0.15" ShadowDepth="0" />
+                                    <DropShadowEffect Color="{DynamicResource ShadowColor}" BlurRadius="8" Opacity="0.15" ShadowDepth="0" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -39,7 +39,7 @@
                 <TextBlock Text="{Binding Name}"
                            FontSize="15"
                            FontWeight="SemiBold"
-                           Foreground="{DynamicResource NeutralForeground1}"
+                           Foreground="{DynamicResource TextPrimary}"
                            TextTrimming="CharacterEllipsis" />
 
                 <StackPanel Grid.Row="1" Margin="0,10,0,0" VerticalAlignment="Top">
@@ -62,7 +62,7 @@
 
                     <TextBlock Style="{StaticResource DataTextBlockStyle}"
                                Text="• Offline"
-                               Foreground="DarkRed"
+                               Foreground="{DynamicResource ErrorForeground}"
                                VerticalAlignment="Center" />
 
                     <StackPanel x:Name="ActionButtons"
@@ -95,7 +95,7 @@
                                 <TextBlock Text="{Binding Name}"
                                            FontSize="20"
                                            FontWeight="SemiBold"
-                                           Foreground="{DynamicResource NeutralForeground1}" />
+                                           Foreground="{DynamicResource TextPrimary}" />
                             </Expander.Header>
 
                             <ItemsControl ItemsSource="{Binding Servers}" ItemTemplate="{StaticResource CardTemplate}">

@@ -9,7 +9,7 @@
             <Setter Property="Padding" Value="15,10" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource NeutralForeground2}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondary}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -23,11 +23,11 @@
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Border" Property="Background"
-                                        Value="{DynamicResource NeutralBackground3Hover}" />
+                                        Value="{DynamicResource ControlBackgroundHover}" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="Border" Property="Background"
-                                        Value="{DynamicResource NeutralBackground3Pressed}" />
+                                        Value="{DynamicResource ControlBackgroundPressed}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -46,7 +46,7 @@
 
         <Border Grid.Column="0" Grid.ColumnSpan="4"
                 BorderThickness="0,0,0,1"
-                BorderBrush="{DynamicResource NeutralStroke1}"
+                BorderBrush="{DynamicResource BorderDefault}"
                 VerticalAlignment="Bottom" />
 
         <Image Grid.Column="0"
@@ -62,7 +62,7 @@
                    Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}"
                    Visibility="{Binding ShowTitle, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BooleanToVisibilityConverter}}"
                    Margin="5,0"
-                   Foreground="{DynamicResource NeutralForeground1}" />
+                   Foreground="{DynamicResource TextPrimary}" />
 
         <ContentPresenter Grid.Column="2"
                           Content="{Binding LeftContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />

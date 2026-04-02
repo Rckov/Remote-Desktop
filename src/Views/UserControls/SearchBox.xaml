@@ -4,17 +4,17 @@
 
     <UserControl.Resources>
         <Style x:Key="SearchBoxStyle" TargetType="Border">
-            <Setter Property="Background" Value="{DynamicResource NeutralBackground2}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource NeutralStroke1}" />
+            <Setter Property="Background" Value="{DynamicResource PageBackground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Padding" Value="10,6" />
             <Setter Property="CornerRadius" Value="4" />
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{DynamicResource NeutralBackground3Hover}" />
+                    <Setter Property="Background" Value="{DynamicResource ControlBackgroundHover}" />
                 </Trigger>
                 <Trigger Property="IsFocused" Value="True">
-                    <Setter Property="Background" Value="{DynamicResource NeutralBackground3Pressed}" />
+                    <Setter Property="Background" Value="{DynamicResource ControlBackgroundPressed}" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -37,8 +37,8 @@
                      Background="Transparent"
                      BorderThickness="0"
                      Margin="8,0,0,0"
-                     Foreground="{DynamicResource NeutralForeground2}"
-                     CaretBrush="{DynamicResource NeutralForeground2}" />
+                     Foreground="{DynamicResource TextSecondary}"
+                     CaretBrush="{DynamicResource TextSecondary}" />
         </Grid>
     </Border>
 </UserControl>

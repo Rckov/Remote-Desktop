@@ -4,14 +4,14 @@
     <Style x:Key="IconTextBlockStyle" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{DynamicResource FontIcon}" />
         <Setter Property="FontSize" Value="11" />
-        <Setter Property="Foreground" Value="{DynamicResource NeutralForeground3}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextTertiary}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Margin" Value="0,0,6,0" />
     </Style>
 
     <Style x:Key="DataTextBlockStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="Foreground" Value="{DynamicResource NeutralForeground2}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondary}" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
     </Style>
 </ResourceDictionary>

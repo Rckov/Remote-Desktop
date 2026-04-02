@@ -3,7 +3,7 @@
 
     <Style x:Key="WindowBorder" TargetType="Border">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource NeutralStroke1}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}"
                          Value="Normal">
@@ -21,8 +21,8 @@
         <Setter Property="Icon" Value="pack://application:,,,/Resources/appicon.ico" />
         <Setter Property="WindowStyle" Value="SingleBorderWindow" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Foreground" Value="{DynamicResource NeutralForeground1}" />
-        <Setter Property="Background" Value="{DynamicResource NeutralBackground1}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
+        <Setter Property="Background" Value="{DynamicResource CardBackground}" />
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome GlassFrameThickness="1" CaptionHeight="35" CornerRadius="0" ResizeBorderThickness="4" />

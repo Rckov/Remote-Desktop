@@ -12,7 +12,7 @@
             <Border Grid.Row="0"
                     Padding="16"
                     BorderThickness="0,0,0,1"
-                    BorderBrush="{DynamicResource NeutralStroke1}">
+                    BorderBrush="{DynamicResource BorderDefault}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -45,7 +45,7 @@
 
             <Border Grid.Row="1"
                     Padding="16"
-                    Background="{DynamicResource NeutralBackground2}">
+                    Background="{DynamicResource PageBackground}">
                 <ContentControl Content="{Binding}" ContentTemplate="{StaticResource HomeListTemplate}" />
             </Border>
         </Grid>
