@@ -5,7 +5,9 @@ using RemoteDesktop.Models;
 using RemoteDesktop.Models.Constans;
 using RemoteDesktop.Views;
 
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace RemoteDesktop.ViewModels;
 
@@ -20,6 +22,9 @@ internal partial class MainViewModel : ObservableObject
 
 	[ObservableProperty]
 	private TabItemViewModel? _selectedTab;
+
+	[ObservableProperty]
+	private string _searchText = string.Empty;
 
 	public MainViewModel()
 	{
@@ -51,5 +56,23 @@ internal partial class MainViewModel : ObservableObject
 		];
 
 		_groups[0].Servers[0].IsOnline = true;
+	}
+
+	partial void OnSearchTextChanged(string value)
+	{
+		var isEmpty = string.IsNullOrWhiteSpace(value);
+
+		foreach (var group in Groups)
+		{
+			var groupMatches = !isEmpty && group.Name.Contains(value, StringComparison.OrdinalIgnoreCase);
+
+			for (int i = 0; i < group.Servers.Count; i++)
+			{
+				var server = group.Servers[i];
+				server.IsVisible = isEmpty || groupMatches || server.Name.Contains(value, StringComparison.OrdinalIgnoreCase);
+			}
+
+			group.IsVisible = isEmpty || groupMatches || group.Servers.Any(s => s.IsVisible);
+		}
 	}
 }

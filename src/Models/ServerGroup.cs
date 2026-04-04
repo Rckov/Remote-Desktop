@@ -14,4 +14,7 @@ internal partial class ServerGroup(string name) : ObservableObject
 
 	[ObservableProperty]
 	private bool _isExpanded = true;
+
+	[ObservableProperty]
+	private bool _isVisible = true;
 }

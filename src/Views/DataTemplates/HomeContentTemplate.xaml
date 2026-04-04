@@ -19,7 +19,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <ct:SearchBox Grid.Column="0" Width="300" HorizontalAlignment="Left" />
+                    <ct:SearchBox Grid.Column="0" Width="300" HorizontalAlignment="Left" SearchText="{Binding SearchText}" />
 
                     <StackPanel Grid.Column="1"
                                 Orientation="Horizontal"

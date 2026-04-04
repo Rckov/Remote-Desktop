@@ -18,4 +18,7 @@ internal partial class Server(string name, string host, string username, string?
 
 	[ObservableProperty]
 	private bool _isOnline = false;
+
+	[ObservableProperty]
+	private bool _isVisible = true;
 }
