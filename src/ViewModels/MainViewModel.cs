@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 using RemoteDesktop.Common.Attributes;
 using RemoteDesktop.Models;
@@ -56,6 +57,34 @@ internal partial class MainViewModel : ObservableObject
 		];
 
 		_groups[0].Servers[0].IsOnline = true;
+	}
+
+	[RelayCommand]
+	private void CloseTab(TabItemViewModel? tab)
+	{
+		if (tab is not { IsCloseable: true })
+		{
+			return;
+		}
+
+		TabItems.Remove(tab);
+
+		if (SelectedTab == tab)
+		{
+			SelectedTab = TabItems.FirstOrDefault();
+		}
+	}
+
+	[RelayCommand]
+	private void EditItem(object? item)
+	{
+
+	}
+
+	[RelayCommand]
+	private void DeleteItem(object? item)
+	{
+
 	}
 
 	partial void OnSearchTextChanged(string value)
