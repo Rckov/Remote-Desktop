@@ -2,11 +2,5 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <DataTemplate x:Key="ServerContentTemplate">
-        <Grid>
-            <TextBlock Text="{Binding Content}"
-                       FontSize="14"
-                       Foreground="{DynamicResource TextPrimary}"
-                       Margin="16" />
-        </Grid>
     </DataTemplate>
 </ResourceDictionary>

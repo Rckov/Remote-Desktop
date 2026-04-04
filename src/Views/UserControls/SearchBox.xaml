@@ -5,10 +5,10 @@
     <UserControl.Resources>
         <Style x:Key="SearchBoxStyle" TargetType="Border">
             <Setter Property="Background" Value="{DynamicResource PageBackground}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Padding" Value="10,6" />
-            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
+            <Setter Property="Padding" Value="{StaticResource Spacing.S.Horizontal}" />
+            <Setter Property="CornerRadius" Value="{StaticResource Radius.S}" />
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="{DynamicResource ControlBackgroundHover}" />
@@ -27,16 +27,14 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0"
-                       Text="&#xE721;"
-                       FontFamily="{DynamicResource FontIcon}"
-                       VerticalAlignment="Center" />
+            <TextBlock Text="&#xE721;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" VerticalAlignment="Center" Margin="{StaticResource Spacing.S.Horizontal}" />
 
             <TextBox x:Name="SearchTextBox"
                      Grid.Column="1"
                      Background="Transparent"
                      BorderThickness="0"
-                     Margin="8,0,0,0"
+                     Margin="{StaticResource Spacing.S.Horizontal}"
+                     Padding="{StaticResource Spacing.M.Vertical}"
                      Foreground="{DynamicResource TextSecondary}"
                      CaretBrush="{DynamicResource TextSecondary}" />
         </Grid>

@@ -3,36 +3,31 @@
 
     <Style x:Key="BaseButtonStyle" TargetType="Button">
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="Padding" Value="12, 8" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="border"
+                    <Border x:Name="Border"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="4"
-                            Padding="{TemplateBinding Padding}">
+                            Padding="{TemplateBinding Padding}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="{StaticResource Radius.S}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ControlBackgroundHover}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ControlBackgroundHover}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ControlBackgroundPressed}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ControlBackgroundPressed}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <Style x:Key="IconButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
-        <Setter Property="FontFamily" Value="{DynamicResource FontIcon}" />
-        <Setter Property="Padding" Value="8" />
     </Style>
 
     <Style x:Key="AccentButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
@@ -42,22 +37,28 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="border"
+                    <Border x:Name="Border"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="4"
+                            CornerRadius="{StaticResource Radius.S}"
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentBackgroundHover}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentBackgroundHover}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentBackgroundPressed}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentBackgroundPressed}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="IconButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+        <Setter Property="Padding" Value="{StaticResource Spacing.S}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondary}" />
+        <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets" />
     </Style>
 </ResourceDictionary>

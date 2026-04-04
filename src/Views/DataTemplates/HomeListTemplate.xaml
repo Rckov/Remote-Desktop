@@ -2,32 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <DataTemplate x:Key="CardTemplate">
-        <Border Width="240"
-                Height="120"
-                Padding="10,10,10,5"
+        <Border Width="220"
+                Height="110"
                 Margin="0,0,15,15"
-                CornerRadius="8"
+                CornerRadius="{StaticResource Radius.M}"
+                Padding="{StaticResource Spacing.M}"
                 Background="{DynamicResource CardBackground}"
                 BorderBrush="{DynamicResource BorderDefault}"
-                BorderThickness="1">
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect Color="{DynamicResource ShadowColor}" BlurRadius="8" Opacity="0.07" ShadowDepth="0" />
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect Color="{DynamicResource ShadowColor}" BlurRadius="8" Opacity="0.15" ShadowDepth="0" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
+                BorderThickness="1"
+                Effect="{StaticResource Shadow.S}">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -42,15 +25,23 @@
                            Foreground="{DynamicResource TextPrimary}"
                            TextTrimming="CharacterEllipsis" />
 
-                <StackPanel Grid.Row="1" Margin="0,10,0,0" VerticalAlignment="Top">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                        <TextBlock Text="&#xE968;" Style="{StaticResource IconTextBlockStyle}" />
-                        <TextBlock Text="{Binding Host}" Style="{StaticResource DataTextBlockStyle}" />
+                <StackPanel Grid.Row="1" Margin="{StaticResource Spacing.M.Top}" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" Margin="{StaticResource Spacing.S.Bottom}">
+                        <TextBlock Text="&#xE77B;" 
+                                   Foreground="{DynamicResource TextTertiary}"
+                                   FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" 
+                                   Margin="{StaticResource Spacing.M.Right}"
+                                   VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Username}" Foreground="{DynamicResource TextTertiary}" />
                     </StackPanel>
-
+                    
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="&#xE77B;" Style="{StaticResource IconTextBlockStyle}" />
-                        <TextBlock Text="{Binding Username}" Style="{StaticResource DataTextBlockStyle}" />
+                        <TextBlock Text="&#xE7F4;"
+                                   Foreground="{DynamicResource TextTertiary}"
+                                   FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" 
+                                   Margin="{StaticResource Spacing.M.Right}"
+                                   VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Host}" FontFamily="Consolas" Foreground="{DynamicResource TextTertiary}" />
                     </StackPanel>
                 </StackPanel>
 
@@ -60,20 +51,14 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="StatusIcon"
-                                   Text="&#xF136;"
-                                   FontFamily="Segoe MDL2 Assets"
-                                   FontSize="6"
-                                   Foreground="{DynamicResource ErrorForeground}"
-                                   Margin="0,0,4,0"
-                                   VerticalAlignment="Center" />
-                        <TextBlock x:Name="StatusLabel"
-                                   Text="Offline"
-                                   FontSize="12"
-                                   Foreground="{DynamicResource ErrorForeground}"
-                                   VerticalAlignment="Center" />
-                    </StackPanel>
+
+                    <TextBlock x:Name="StatusLabel"
+                               Text="● Offline"
+                               FontSize="12"
+                               Margin="2,0,0,0"
+                               FontFamily="Consolas"
+                               Foreground="{DynamicResource ErrorForeground}"
+                               VerticalAlignment="Bottom" />
 
                     <StackPanel x:Name="ActionButtons"
                                 Grid.Column="1"
@@ -84,12 +69,15 @@
                         </StackPanel.RenderTransform>
                         <Button Content="&#xE70F;"
                                 Style="{StaticResource IconButtonStyle}"
+                                BorderThickness="0" 
                                 Command="{Binding DataContext.EditItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                 CommandParameter="{Binding}" />
                         <Button Content="&#xE74D;"
                                 Style="{StaticResource IconButtonStyle}"
+                                BorderThickness="0" 
                                 Command="{Binding DataContext.DeleteItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                CommandParameter="{Binding}" />
+                                CommandParameter="{Binding}"
+                                Margin="{StaticResource Spacing.S.Left}" />
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -97,9 +85,7 @@
 
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsOnline}" Value="True">
-                <Setter TargetName="StatusIcon" Property="Text" Value="&#xEC61;" />
-                <Setter TargetName="StatusIcon" Property="Foreground" Value="{DynamicResource SuccessForeground}" />
-                <Setter TargetName="StatusLabel" Property="Text" Value="Online" />
+                <Setter TargetName="StatusLabel" Property="Text" Value="● Online" />
                 <Setter TargetName="StatusLabel" Property="Foreground" Value="{DynamicResource SuccessForeground}" />
             </DataTrigger>
             <Trigger Property="IsMouseOver" Value="True">
@@ -132,7 +118,7 @@
             <ItemsControl ItemsSource="{Binding Groups}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Expander Style="{StaticResource ServerGroupExpanderStyle}">
+                        <Expander Style="{StaticResource ExpanderStyle}">
                             <Expander.Header>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -148,16 +134,18 @@
                                     <StackPanel x:Name="GroupActionButtons"
                                                 Grid.Column="1"
                                                 Orientation="Horizontal"
-                                                Opacity="0"
-                                                Margin="10,0,0,0">
+                                                Opacity="0">
                                         <Button Content="&#xE70F;"
                                                 Style="{StaticResource IconButtonStyle}"
+                                                BorderThickness="0" 
                                                 Command="{Binding DataContext.EditItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                 CommandParameter="{Binding}" />
                                         <Button Content="&#xE74D;"
                                                 Style="{StaticResource IconButtonStyle}"
+                                                BorderThickness="0" 
                                                 Command="{Binding DataContext.DeleteItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                CommandParameter="{Binding}" />
+                                                CommandParameter="{Binding}"
+                                                Margin="{StaticResource Spacing.S.Left}" />
                                     </StackPanel>
                                 </Grid>
                             </Expander.Header>

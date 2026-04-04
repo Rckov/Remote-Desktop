@@ -1,8 +1,8 @@
 ﻿<Window x:Class="RemoteDesktop.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:st="clr-namespace:RemoteDesktop.Views.DataTemplates.Selectors"
         xmlns:ct="clr-namespace:RemoteDesktop.Views.UserControls"
-        xmlns:selectors="clr-namespace:RemoteDesktop.Views.DataTemplates.Selectors"
         Height="675"
         Width="1200"
         Title="Remote Desktop"
@@ -10,9 +10,9 @@
         Style="{StaticResource WindowStyle}">
 
     <Window.Resources>
-        <selectors:ContentTemplateSelector x:Key="ContentTemplateSelector"
-                                           HomeContentTemplate="{StaticResource HomeContentTemplate}"
-                                           ServerContentTemplate="{StaticResource ServerContentTemplate}" />
+        <st:ContentTemplateSelector x:Key="ContentTemplateSelector"
+                                    HomeContentTemplate="{StaticResource HomeContentTemplate}"
+                                    ServerContentTemplate="{StaticResource ServerContentTemplate}" />
     </Window.Resources>
 
     <Border Style="{StaticResource WindowBorder}">
@@ -24,7 +24,7 @@
 
             <ct:WindowBar Grid.Row="0" Background="{DynamicResource PageBackground}">
                 <ct:WindowBar.LeftContent>
-                    <TabControl ItemsSource="{Binding Connected}"
+                    <TabControl ItemsSource="{Binding TabItems}"
                                 SelectedItem="{Binding SelectedTab}"
                                 Style="{StaticResource TabControlStyle}"
                                 ItemContainerStyle="{StaticResource TabItemStyle}" />

@@ -6,13 +6,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TabControl">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                        <TabPanel IsItemsHost="True" Panel.ZIndex="1"/>
 
-                        <TabPanel Grid.Row="0" IsItemsHost="True" />
-                        <ContentPresenter Grid.Row="1" ContentSource="SelectedContent" />
+                        <Border Height="1" 
+                                VerticalAlignment="Bottom" 
+                                Background="{DynamicResource BorderDefault}" 
+                                Panel.ZIndex="0" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -20,7 +19,8 @@
     </Style>
 
     <Style x:Key="TabItemStyle" TargetType="TabItem">
-        <Setter Property="Padding" Value="16,10" />
+        <Setter Property="Height" Value="35" />
+        <Setter Property="Padding" Value="{StaticResource Spacing.M}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
         <Setter Property="HeaderTemplate">
@@ -33,20 +33,21 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="{Binding Icon}" FontSize="14" FontFamily="{DynamicResource FontIcon}" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="8,0" />
+                        <TextBlock Grid.Column="0"
+                                   Text="{Binding Icon}"
+                                   FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                   FontSize="14"
+                                   VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="{StaticResource Spacing.M.Horizontal}" VerticalAlignment="Center" />
 
                         <Button x:Name="CloseButton"
                                 Grid.Column="2"
                                 Content="&#xE711;"
                                 Opacity="0"
-                                Padding="4"
-                                Foreground="{DynamicResource TextSecondary}"
-                                Style="{StaticResource BaseButtonStyle}"
+                                BorderThickness="0" 
+                                Style="{StaticResource IconButtonStyle}"
                                 Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=TabControl}}"
-                                CommandParameter="{Binding}">
-                            <TextBlock Text="&#xE711;" FontSize="10" FontFamily="{DynamicResource FontIcon}" />
-                        </Button>
+                                CommandParameter="{Binding}" />
                     </Grid>
                     <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding IsCloseable}" Value="False">
@@ -82,8 +83,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
                     <Border x:Name="Border"
-                            Background="{TemplateBinding Background}"
                             BorderBrush="Transparent"
+                            Background="{TemplateBinding Background}"
                             BorderThickness="1"
                             Padding="{TemplateBinding Padding}"
                             TextBlock.Foreground="{DynamicResource TextSecondary}">
@@ -91,11 +92,12 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1" />
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource ControlBackgroundHover}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ControlBackgroundHover}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Border" Property="BorderThickness" Value="1,0,1,1" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1,0" />
                             <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource CardBackground}" />
                             <Setter TargetName="Border" Property="TextBlock.Foreground" Value="{DynamicResource TextPrimary}" />
