@@ -4,18 +4,18 @@
     <DropShadowEffect x:Key="Shadow.S"
                       BlurRadius="4"
                       ShadowDepth="2"
-                      Opacity="0.12"
-                      Color="Black" />
+                      Opacity="0.10"
+                      Color="#000000" />
 
     <DropShadowEffect x:Key="Shadow.M"
                       BlurRadius="8"
                       ShadowDepth="4"
                       Opacity="0.15"
-                      Color="Black" />
+                      Color="#000000" />
 
     <DropShadowEffect x:Key="Shadow.L"
                       BlurRadius="16"
                       ShadowDepth="8"
-                      Opacity="0.2"
-                      Color="Black" />
+                      Opacity="0.25"
+                      Color="#000000" />
 </ResourceDictionary>
