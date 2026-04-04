@@ -38,6 +38,7 @@
 
                         <Button x:Name="CloseButton"
                                 Grid.Column="2"
+                                Content="&#xE711;"
                                 Opacity="0"
                                 Padding="4"
                                 Foreground="{DynamicResource TextSecondary}"
