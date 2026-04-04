@@ -4,6 +4,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Themes/IconFont.xaml" />
                 <ResourceDictionary Source="/Resources/Themes/Elevation.xaml" />
                 <ResourceDictionary Source="/Resources/Themes/Radius.xaml" />
                 <ResourceDictionary Source="/Resources/Themes/Spacing.xaml" />

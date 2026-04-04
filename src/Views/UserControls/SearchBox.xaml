@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="&#xE721;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" VerticalAlignment="Center" Margin="{StaticResource Spacing.S.Horizontal}" />
+            <TextBlock Text="&#xE721;" FontFamily="{StaticResource IconFontFamily}" VerticalAlignment="Center" Margin="{StaticResource Spacing.S.Horizontal}" />
 
             <TextBox x:Name="SearchTextBox"
                      Grid.Column="1"

@@ -35,7 +35,7 @@
 
                         <TextBlock Grid.Column="0"
                                    Text="{Binding Icon}"
-                                   FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                   FontFamily="{StaticResource IconFontFamily}"
                                    FontSize="14"
                                    VerticalAlignment="Center" />
                         <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="{StaticResource Spacing.M.Horizontal}" VerticalAlignment="Center" />

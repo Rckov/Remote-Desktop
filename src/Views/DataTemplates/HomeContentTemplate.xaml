@@ -28,7 +28,7 @@
                         <Button Style="{StaticResource AccentButtonStyle}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE710;"
-                                           FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                           FontFamily="{StaticResource IconFontFamily}"
                                            Margin="{StaticResource Spacing.M.Right}"
                                            VerticalAlignment="Center" />
                                 <TextBlock Text="New Server" VerticalAlignment="Center" />
@@ -42,7 +42,7 @@
                                 Margin="{StaticResource Spacing.M.Horizontal}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE8F4;"
-                                           FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                           FontFamily="{StaticResource IconFontFamily}"
                                            Margin="{StaticResource Spacing.M.Right}"
                                            VerticalAlignment="Center" />
                                 <TextBlock Text="New Group" VerticalAlignment="Center" />

@@ -29,7 +29,7 @@
                     <StackPanel Orientation="Horizontal" Margin="{StaticResource Spacing.S.Bottom}">
                         <TextBlock Text="&#xE77B;" 
                                    Foreground="{DynamicResource TextTertiary}"
-                                   FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" 
+                                   FontFamily="{StaticResource IconFontFamily}" 
                                    Margin="{StaticResource Spacing.M.Right}"
                                    VerticalAlignment="Center"/>
                         <TextBlock Text="{Binding Username}" Foreground="{DynamicResource TextTertiary}" />
@@ -38,7 +38,7 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE7F4;"
                                    Foreground="{DynamicResource TextTertiary}"
-                                   FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" 
+                                   FontFamily="{StaticResource IconFontFamily}" 
                                    Margin="{StaticResource Spacing.M.Right}"
                                    VerticalAlignment="Center"/>
                         <TextBlock Text="{Binding Host}" FontFamily="Consolas" Foreground="{DynamicResource TextTertiary}" />

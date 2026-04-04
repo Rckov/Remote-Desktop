@@ -9,7 +9,7 @@
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Padding" Value="{StaticResource Spacing.L.Horizontal}" />
             <Setter Property="FontSize" Value="10" />
-            <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets" />
+            <Setter Property="FontFamily" Value="{StaticResource IconFontFamily}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
             <Setter Property="Template">
