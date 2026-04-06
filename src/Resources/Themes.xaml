@@ -7,5 +7,4 @@
         <ResourceDictionary Source="/Resources/Themes/Radius.xaml" />
         <ResourceDictionary Source="/Resources/Themes/Spacing.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
 </ResourceDictionary>

@@ -2,9 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <DataTemplate x:Key="ServerContentTemplate">
-        <TextBlock Text="Server Content - To Be Implemented" 
-                   HorizontalAlignment="Center" 
+        <TextBlock Text="Server Content - To Be Implemented"
+                   HorizontalAlignment="Center"
                    VerticalAlignment="Center" />
     </DataTemplate>
-
 </ResourceDictionary>

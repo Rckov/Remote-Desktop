@@ -73,7 +73,6 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-
                     <TextBlock x:Name="StatusLabel"
                                Text="● Offline"
                                FontSize="12"

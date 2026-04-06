@@ -8,5 +8,4 @@
         <ResourceDictionary Source="/Resources/Styles/ScrollBarStyle.xaml" />
         <ResourceDictionary Source="/Resources/Styles/ExpanderStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
 </ResourceDictionary>

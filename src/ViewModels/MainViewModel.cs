@@ -1,12 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-using Microsoft.Extensions.DependencyInjection;
-
 using RemoteDesktop.Common.Attributes;
 using RemoteDesktop.Models;
 using RemoteDesktop.Models.Constants;
-using RemoteDesktop.Services.Abstractions;
 using RemoteDesktop.Views;
 
 using System;
@@ -89,11 +86,12 @@ internal partial class MainViewModel : ObservableObject
 		switch (item)
 		{
 			case ServerGroup group:
-				Groups.Remove(group);
-				break;
+			Groups.Remove(group);
+			break;
+
 			case Server server:
-				Groups.FirstOrDefault(g => g.Servers.Remove(server));
-				break;
+			Groups.FirstOrDefault(g => g.Servers.Remove(server));
+			break;
 		}
 	}
 

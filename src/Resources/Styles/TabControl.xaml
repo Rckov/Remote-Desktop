@@ -6,11 +6,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TabControl">
                     <Grid>
-                        <TabPanel IsItemsHost="True" Panel.ZIndex="1"/>
+                        <TabPanel IsItemsHost="True" Panel.ZIndex="1" />
 
-                        <Border Height="1" 
-                                VerticalAlignment="Bottom" 
-                                Background="{DynamicResource BorderDefault}" 
+                        <Border Height="1"
+                                VerticalAlignment="Bottom"
+                                Background="{DynamicResource BorderDefault}"
                                 Panel.ZIndex="0" />
                     </Grid>
                 </ControlTemplate>
@@ -44,7 +44,7 @@
                                 Grid.Column="2"
                                 Content="&#xE711;"
                                 Opacity="0"
-                                BorderThickness="0" 
+                                BorderThickness="0"
                                 Style="{StaticResource IconButtonStyle}"
                                 Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=TabControl}}"
                                 CommandParameter="{Binding}" />

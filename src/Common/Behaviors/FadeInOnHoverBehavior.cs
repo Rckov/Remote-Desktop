@@ -2,63 +2,72 @@ using System;
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace RemoteDesktop.Common.Behaviors
+namespace RemoteDesktop.Common.Behaviors;
+
+public static class FadeInOnHoverBehavior
 {
-    public static class FadeInOnHoverBehavior
-    {
-        public static readonly DependencyProperty IsEnabledProperty =
-            DependencyProperty.RegisterAttached(
-                "IsEnabled",
-                typeof(bool),
-                typeof(FadeInOnHoverBehavior),
-                new PropertyMetadata(false, OnIsEnabledChanged));
+	public static readonly DependencyProperty IsEnabledProperty =
+		DependencyProperty.RegisterAttached(
+			"IsEnabled",
+			typeof(bool),
+			typeof(FadeInOnHoverBehavior),
+			new PropertyMetadata(false, OnIsEnabledChanged));
 
-        public static bool GetIsEnabled(DependencyObject obj) => (bool)obj.GetValue(IsEnabledProperty);
-        public static void SetIsEnabled(DependencyObject obj, bool value) => obj.SetValue(IsEnabledProperty, value);
+	public static bool GetIsEnabled(DependencyObject obj) => (bool)obj.GetValue(IsEnabledProperty);
 
-        private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is not FrameworkElement element) return;
+	public static void SetIsEnabled(DependencyObject obj, bool value) => obj.SetValue(IsEnabledProperty, value);
 
-            if ((bool)e.NewValue)
-            {
-                element.Loaded += OnLoaded;
-            }
-            else
-            {
-                element.Loaded -= OnLoaded;
-                DetachParentEvents(element);
-            }
-        }
+	private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+	{
+		if (d is not FrameworkElement element)
+		{
+			return;
+		}
 
-        private static void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            if (sender is not FrameworkElement element) return;
-            
-            var parent = element.Parent as FrameworkElement;
-            if (parent == null) return;
+		if ((bool)e.NewValue)
+		{
+			element.Loaded += OnLoaded;
+		}
+		else
+		{
+			element.Loaded -= OnLoaded;
+			DetachParentEvents(element);
+		}
+	}
 
-            parent.MouseEnter += (s, args) => AnimateOpacity(element, 1.0);
-            parent.MouseLeave += (s, args) => AnimateOpacity(element, 0.0);
-        }
+	private static void OnLoaded(object sender, RoutedEventArgs e)
+	{
+		if (sender is not FrameworkElement element)
+		{
+			return;
+		}
 
-        private static void DetachParentEvents(FrameworkElement element)
-        {
-            if (element.Parent is FrameworkElement parent)
-            {
-                parent.MouseEnter -= (s, args) => AnimateOpacity(element, 1.0);
-                parent.MouseLeave -= (s, args) => AnimateOpacity(element, 0.0);
-            }
-        }
+		var parent = element.Parent as FrameworkElement;
+		if (parent == null)
+		{
+			return;
+		}
 
-        private static void AnimateOpacity(FrameworkElement element, double toValue)
-        {
-            var animation = new DoubleAnimation
-            {
-                To = toValue,
-                Duration = TimeSpan.FromMilliseconds(150)
-            };
-            element.BeginAnimation(UIElement.OpacityProperty, animation);
-        }
-    }
+		parent.MouseEnter += (s, args) => AnimateOpacity(element, 1.0);
+		parent.MouseLeave += (s, args) => AnimateOpacity(element, 0.0);
+	}
+
+	private static void DetachParentEvents(FrameworkElement element)
+	{
+		if (element.Parent is FrameworkElement parent)
+		{
+			parent.MouseEnter -= (s, args) => AnimateOpacity(element, 1.0);
+			parent.MouseLeave -= (s, args) => AnimateOpacity(element, 0.0);
+		}
+	}
+
+	private static void AnimateOpacity(FrameworkElement element, double toValue)
+	{
+		var animation = new DoubleAnimation
+		{
+			To = toValue,
+			Duration = TimeSpan.FromMilliseconds(150)
+		};
+		element.BeginAnimation(UIElement.OpacityProperty, animation);
+	}
 }

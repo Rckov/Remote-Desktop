@@ -6,5 +6,4 @@
         <ResourceDictionary Source="/Resources/DataTemplates/ServerContentTemplate.xaml" />
         <ResourceDictionary Source="/Resources/DataTemplates/HomeContentTemplate.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
 </ResourceDictionary>
