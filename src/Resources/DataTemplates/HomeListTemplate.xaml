@@ -12,7 +12,7 @@
         <Border x:Name="CardBorder"
                 Width="220"
                 Height="110"
-                Margin="{StaticResource Spacing.L}"
+                Margin="{StaticResource Spacing.M}"
                 CornerRadius="{StaticResource Radius.M}"
                 Padding="{StaticResource Spacing.M}"
                 Background="{DynamicResource CardBackground}"
@@ -103,6 +103,9 @@
         </Border>
 
         <DataTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="CardBorder" Property="Effect" Value="{StaticResource Shadow.M}" />
+            </Trigger>
             <DataTrigger Binding="{Binding IsOnline}" Value="True">
                 <Setter TargetName="StatusLabel" Property="Text" Value="● Online" />
                 <Setter TargetName="StatusLabel" Property="Foreground" Value="{DynamicResource SuccessForeground}" />
