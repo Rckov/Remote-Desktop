@@ -16,7 +16,6 @@
 		<Resource Include="Resources\appicon.ico" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Views\DataTemplates\" />
 	  <Folder Include="Views\UserControls\" />
 	</ItemGroup>
 </Project>

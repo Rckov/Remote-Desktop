@@ -25,7 +25,7 @@
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right">
 
-                        <Button Style="{StaticResource AccentButtonStyle}">
+                        <Button Style="{StaticResource AccentButtonStyle}" Command="{Binding AddServerCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE710;"
                                            FontFamily="{StaticResource IconFontFamily}"
@@ -39,7 +39,8 @@
                                 Background="{DynamicResource PageBackground}" 
                                 BorderBrush="{DynamicResource BorderDefault}" 
                                 BorderThickness="1" 
-                                Margin="{StaticResource Spacing.M.Horizontal}">
+                                Margin="{StaticResource Spacing.M.Horizontal}"
+                                Command="{Binding AddGroupCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE8F4;"
                                            FontFamily="{StaticResource IconFontFamily}"

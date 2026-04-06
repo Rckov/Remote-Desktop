@@ -1,9 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
+using Microsoft.Extensions.DependencyInjection;
+
 using RemoteDesktop.Common.Attributes;
 using RemoteDesktop.Models;
 using RemoteDesktop.Models.Constans;
+using RemoteDesktop.Services.Abstractions;
 using RemoteDesktop.Views;
 
 using System;
@@ -78,13 +81,20 @@ internal partial class MainViewModel : ObservableObject
 	[RelayCommand]
 	private void EditItem(object? item)
 	{
-
 	}
 
 	[RelayCommand]
 	private void DeleteItem(object? item)
 	{
-
+		switch (item)
+		{
+			case ServerGroup group:
+				Groups.Remove(group);
+				break;
+			case Server server:
+				Groups.FirstOrDefault(g => g.Servers.Remove(server));
+				break;
+		}
 	}
 
 	partial void OnSearchTextChanged(string value)

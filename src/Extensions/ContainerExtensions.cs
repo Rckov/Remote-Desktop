@@ -5,7 +5,9 @@ using RemoteDesktop.Services.Abstractions;
 using RemoteDesktop.Services.Abstractions.Themes;
 using RemoteDesktop.Services.Themes;
 using RemoteDesktop.ViewModels;
+using RemoteDesktop.ViewModels.Dialogs;
 using RemoteDesktop.Views;
+using RemoteDesktop.Views.Dialogs;
 
 namespace RemoteDesktop.Extensions;
 
@@ -16,6 +18,7 @@ internal static class ContainerExtensions
 		public void AddUI()
 		{
 			services.AddView<MainViewModel, MainWindow>();
+			services.AddView<MessageBoxViewModel, MessageBoxDialog>();
 		}
 
 		public void AddServices()

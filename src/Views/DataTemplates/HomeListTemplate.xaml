@@ -74,12 +74,12 @@
                         <Button Content="&#xE70F;"
                                 Style="{StaticResource IconButtonStyle}"
                                 BorderThickness="0" 
-                                Command="{Binding DataContext.EditItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                Command="{Binding DataContext.EditItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                 CommandParameter="{Binding}" />
                         <Button Content="&#xE74D;"
                                 Style="{StaticResource IconButtonStyle}"
                                 BorderThickness="0" 
-                                Command="{Binding DataContext.DeleteItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                Command="{Binding DataContext.DeleteItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                 CommandParameter="{Binding}"
                                 Margin="{StaticResource Spacing.S.Left}" />
                     </StackPanel>
@@ -143,12 +143,12 @@
                                         <Button Content="&#xE70F;"
                                                 Style="{StaticResource IconButtonStyle}"
                                                 BorderThickness="0" 
-                                                Command="{Binding DataContext.EditItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                Command="{Binding DataContext.EditItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                 CommandParameter="{Binding}" />
                                         <Button Content="&#xE74D;"
                                                 Style="{StaticResource IconButtonStyle}"
                                                 BorderThickness="0" 
-                                                Command="{Binding DataContext.DeleteItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                Command="{Binding DataContext.DeleteItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                 CommandParameter="{Binding}"
                                                 Margin="{StaticResource Spacing.S.Left}" />
                                     </StackPanel>
