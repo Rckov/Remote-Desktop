@@ -46,7 +46,7 @@
                             </ToggleButton.Template>
                         </ToggleButton>
 
-                        <ContentPresenter x:Name="ContentPresenter" Margin="0,12,0,0" Visibility="Collapsed" />
+                        <ContentPresenter x:Name="ContentPresenter" Margin="{StaticResource Spacing.M.Top}" Visibility="Collapsed" />
                     </StackPanel>
 
                     <ControlTemplate.Triggers>

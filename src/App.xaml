@@ -4,20 +4,9 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/Themes/IconFont.xaml" />
-                <ResourceDictionary Source="/Resources/Themes/Elevation.xaml" />
-                <ResourceDictionary Source="/Resources/Themes/Radius.xaml" />
-                <ResourceDictionary Source="/Resources/Themes/Spacing.xaml" />
-
-                <ResourceDictionary Source="/Resources/Styles/WindowStyle.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/ButtonStyle.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/TabControl.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/ScrollBarStyle.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/ExpanderStyle.xaml" />
-
-                <ResourceDictionary Source="/Views/DataTemplates/HomeListTemplate.xaml" />
-                <ResourceDictionary Source="/Views/DataTemplates/HomeContentTemplate.xaml" />
-                <ResourceDictionary Source="/Views/DataTemplates/ServerContentTemplate.xaml" />
+                <ResourceDictionary Source="/Resources/Themes.xaml" />
+                <ResourceDictionary Source="/Resources/Styles.xaml" />
+                <ResourceDictionary Source="/Resources/DataTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

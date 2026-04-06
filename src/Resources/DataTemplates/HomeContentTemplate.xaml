@@ -2,6 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ct="clr-namespace:RemoteDesktop.Views.UserControls">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Resources/DataTemplates/HomeListTemplate.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <DataTemplate x:Key="HomeContentTemplate">
         <Grid DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
             <Grid.RowDefinitions>
@@ -35,10 +39,10 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Style="{StaticResource BaseButtonStyle}" 
-                                Background="{DynamicResource PageBackground}" 
-                                BorderBrush="{DynamicResource BorderDefault}" 
-                                BorderThickness="1" 
+                        <Button Style="{StaticResource BaseButtonStyle}"
+                                Background="{DynamicResource PageBackground}"
+                                BorderBrush="{DynamicResource BorderDefault}"
+                                BorderThickness="1"
                                 Margin="{StaticResource Spacing.M.Horizontal}"
                                 Command="{Binding AddGroupCommand}">
                             <StackPanel Orientation="Horizontal">
@@ -49,7 +53,11 @@
                                 <TextBlock Text="New Group" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
-                        <Button Content="&#xE713;" Style="{StaticResource IconButtonStyle}" Padding="12, 8" BorderThickness="0" />
+
+                        <Button Content="&#xE713;"
+                                Style="{StaticResource IconButtonStyle}"
+                                Padding="{StaticResource Spacing.M}"
+                                BorderThickness="0" />
                     </StackPanel>
                 </Grid>
             </Border>

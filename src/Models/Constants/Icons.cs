@@ -1,4 +1,4 @@
-﻿namespace RemoteDesktop.Models.Constans;
+﻿namespace RemoteDesktop.Models.Constants;
 
 internal static class Icons
 {

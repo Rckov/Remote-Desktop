@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using RemoteDesktop.Common.Attributes;
 using RemoteDesktop.Models;
-using RemoteDesktop.Models.Constans;
+using RemoteDesktop.Models.Constants;
 using RemoteDesktop.Services.Abstractions;
 using RemoteDesktop.Views;
 

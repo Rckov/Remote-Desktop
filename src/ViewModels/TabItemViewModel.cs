@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
-using RemoteDesktop.Models.Constans;
+using RemoteDesktop.Models.Constants;
 
 namespace RemoteDesktop.ViewModels;
 
