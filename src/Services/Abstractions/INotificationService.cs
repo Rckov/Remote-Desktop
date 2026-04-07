@@ -1,6 +1,8 @@
+using System.Windows;
+
 namespace RemoteDesktop.Services.Abstractions;
 
 internal interface INotificationService
 {
-	bool Show(string message, string title);
+	MessageBoxResult Show(string message, string title, MessageBoxButton button = MessageBoxButton.OK);
 }

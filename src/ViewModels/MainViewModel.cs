@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using RemoteDesktop.Common.Attributes;
 using RemoteDesktop.Models;
 using RemoteDesktop.Models.Constants;
+using RemoteDesktop.Services.Abstractions;
 using RemoteDesktop.Views;
 
 using System;
@@ -26,9 +27,14 @@ internal partial class MainViewModel : ObservableObject
 
 	[ObservableProperty]
 	private string _searchText = string.Empty;
+	private readonly IWindowService windowService;
+	private readonly INotificationService notificationService;
 
-	public MainViewModel()
+	public MainViewModel(IWindowService windowService, INotificationService notificationService)
 	{
+		this.windowService = windowService;
+		this.notificationService = notificationService;
+
 		TabItems =
 		[
 			new TabItemViewModel("Home", Icons.Home, false),
@@ -57,6 +63,7 @@ internal partial class MainViewModel : ObservableObject
 		];
 
 		_groups[0].Servers[0].IsOnline = true;
+		this.windowService = windowService;
 	}
 
 	[RelayCommand]
@@ -78,6 +85,7 @@ internal partial class MainViewModel : ObservableObject
 	[RelayCommand]
 	private void EditItem(object? item)
 	{
+		var result = notificationService.Show("Test message", "Test Title", System.Windows.MessageBoxButton.OK);
 	}
 
 	[RelayCommand]

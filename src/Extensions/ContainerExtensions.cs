@@ -26,6 +26,7 @@ internal static class ContainerExtensions
 			services.AddTransient<IWindowService, WindowService>();
 			services.AddSingleton<IThemeProvider, ThemeProvider>();
 			services.AddSingleton<IThemeService, ThemeService>();
+			services.AddSingleton<INotificationService, NotificationService>();
 		}
 
 		private void AddView<TViewModel, TView>()
