@@ -1,17 +1,18 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <SolidColorBrush x:Key="PageBackground" Color="#F5F5F5" />
+    <SolidColorBrush x:Key="PageBackground" Color="#F3F3F3" />
 
-    <SolidColorBrush x:Key="ControlBackground" Color="#F0F0F0" />
-    <SolidColorBrush x:Key="ControlBackgroundHover" Color="#EBEBEB" />
-    <SolidColorBrush x:Key="ControlBackgroundPressed" Color="#E6E6E6" />
+    <SolidColorBrush x:Key="ControlBackground" Color="#FBFBFB" />
+    <SolidColorBrush x:Key="ControlBackgroundHover" Color="#F5F5F5" />
+    <SolidColorBrush x:Key="ControlBackgroundPressed" Color="#F0F0F0" />
 
     <SolidColorBrush x:Key="TextPrimary" Color="#242424" />
     <SolidColorBrush x:Key="TextSecondary" Color="#424242" />
     <SolidColorBrush x:Key="TextTertiary" Color="#616161" />
 
     <SolidColorBrush x:Key="BorderDefault" Color="#D1D1D1" />
+    <SolidColorBrush x:Key="BorderSubtle" Color="#EBEBEB" />
 
     <SolidColorBrush x:Key="AccentBackground" Color="#0F6CBD" />
     <SolidColorBrush x:Key="AccentBackgroundHover" Color="#115EA3" />

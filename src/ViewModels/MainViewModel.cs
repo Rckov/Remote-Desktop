@@ -24,8 +24,6 @@ internal partial class MainViewModel : ObservableObject
 		[
 			new TabItemViewModel("Home", false),
 			new TabItemViewModel("Server1"),
-			new TabItemViewModel("Server1"),
-			new TabItemViewModel("Server1"),
 		];
 		
 		SelectedTab = TabItems[0];

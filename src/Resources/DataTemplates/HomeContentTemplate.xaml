@@ -1,0 +1,68 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ct="clr-namespace:RemoteDesktop.Views.UserControls">
+
+    <DataTemplate x:Key="HomeContentTemplate">
+        <Grid DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0"
+                    Padding="{StaticResource Spacing.L}"
+                    BorderThickness="0,0,0,1"
+                    BorderBrush="{DynamicResource BorderDefault}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <ct:SearchBox Grid.Column="0" Width="300" HorizontalAlignment="Left" SearchText="{Binding SearchText}" />
+
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+
+                        <Button Style="{StaticResource AccentButtonStyle}" Command="{Binding AddServerCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE710;"
+                                           FontFamily="{StaticResource FontIcon}"
+                                           Margin="{StaticResource Spacing.M.Right}"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Text="New Server" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource BaseButtonStyle}"
+                                Background="{DynamicResource ControlBackground}"
+                                BorderBrush="{DynamicResource BorderSubtle}"
+                                BorderThickness="1"
+                                Margin="{StaticResource Spacing.M.Horizontal}"
+                                Command="{Binding AddGroupCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE8F4;"
+                                           FontFamily="{StaticResource FontIcon}"
+                                           Margin="{StaticResource Spacing.M.Right}"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Text="New Group" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Content="&#xE713;"
+                                Style="{StaticResource IconButtonStyle}"
+                                Padding="{StaticResource Spacing.M}"
+                                BorderThickness="0" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1"
+                    Padding="{StaticResource Spacing.L}"
+                    Background="{DynamicResource ControlBackground}">
+            </Border>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

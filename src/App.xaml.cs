@@ -22,7 +22,7 @@ public partial class App : Application
 
 	protected override async void OnStartup(StartupEventArgs e)
 	{
-		Services.GetRequiredService<IThemeService>().SetTheme(ThemeType.Dark);
+		Services.GetRequiredService<IThemeService>().SetTheme(ThemeType.Default);
 		Services.GetRequiredService<IWindowService>().ShowWindow<MainViewModel>();
 	}
 

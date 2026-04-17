@@ -3,18 +3,19 @@
 
     <SolidColorBrush x:Key="PageBackground" Color="#202020" />
 
-    <SolidColorBrush x:Key="ControlBackground" Color="#1A1A1A" />
-    <SolidColorBrush x:Key="ControlBackgroundHover" Color="#252525" />
-    <SolidColorBrush x:Key="ControlBackgroundPressed" Color="#141414" />
+    <SolidColorBrush x:Key="ControlBackground" Color="#2B2B2B" />
+    <SolidColorBrush x:Key="ControlBackgroundHover" Color="#323232" />
+    <SolidColorBrush x:Key="ControlBackgroundPressed" Color="#1A1A1A" />
 
     <SolidColorBrush x:Key="TextPrimary" Color="#FFFFFF" />
     <SolidColorBrush x:Key="TextSecondary" Color="#C8C8C8" />
     <SolidColorBrush x:Key="TextTertiary" Color="#A0A0A0" />
 
     <SolidColorBrush x:Key="BorderDefault" Color="#454545" />
+    <SolidColorBrush x:Key="BorderSubtle" Color="#333333" />
 
-    <SolidColorBrush x:Key="AccentBackground" Color="#115EA3" />
-    <SolidColorBrush x:Key="AccentBackgroundHover" Color="#0F6CBD" />
+    <SolidColorBrush x:Key="AccentBackground" Color="#0F6CBD" />
+    <SolidColorBrush x:Key="AccentBackgroundHover" Color="#115EA3" />
     <SolidColorBrush x:Key="AccentBackgroundPressed" Color="#0F548C" />
     <SolidColorBrush x:Key="AccentForeground" Color="#FFFFFF" />
 

@@ -1,0 +1,14 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:selectors="clr-namespace:RemoteDesktop.Resources.DataTemplates.Selectors">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Resources/DataTemplates/HomeContentTemplate.xaml" />
+        <ResourceDictionary Source="/Resources/DataTemplates/ServerContentTemplate.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <selectors:ContentTemplateSelector x:Key="ContentTemplateSelector"
+                                       HomeTemplate="{StaticResource HomeContentTemplate}"
+                                       ServerTemplate="{StaticResource ServerContentTemplate}" />
+
+</ResourceDictionary>
