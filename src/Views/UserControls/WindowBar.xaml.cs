@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 
+using RemoteDesktop.Common;
+
 using System.Windows;
 using System.Windows.Controls;
 
@@ -67,7 +69,7 @@ public partial class WindowBar : UserControl
 	}
 
 	[RelayCommand]
-	private void MinimizeWindow(Window? parameter)
+	private void MinimizeWindow(IClosable? parameter)
 	{
 		if (parameter is null)
 		{
@@ -78,7 +80,7 @@ public partial class WindowBar : UserControl
 	}
 
 	[RelayCommand]
-	private void MaximizeWindow(Window? parameter)
+	private void MaximizeWindow(IClosable? parameter)
 	{
 		if (parameter is null)
 		{
@@ -91,7 +93,7 @@ public partial class WindowBar : UserControl
 	}
 
 	[RelayCommand]
-	private void CloseWindow(Window? parameter)
+	private void CloseWindow(IClosable? parameter)
 	{
 		parameter?.Close();
 	}

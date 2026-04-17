@@ -1,24 +1,32 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
+using System;
+
 namespace RemoteDesktop.Models;
 
-internal partial class Server(string name, string host, string username, string? description = null) : ObservableObject
+internal partial class Server : ObservableObject
 {
 	[ObservableProperty]
-	private string _name = name;
+	private Guid _id = Guid.NewGuid();
 
 	[ObservableProperty]
-	private string _host = host;
+	private string _name = string.Empty;
 
 	[ObservableProperty]
-	private string _username = username;
+	private string _host = string.Empty;
 
 	[ObservableProperty]
-	private string? _description = description;
+	private string _username = string.Empty;
 
 	[ObservableProperty]
-	private bool _isOnline = false;
+	private string _password = string.Empty;
 
 	[ObservableProperty]
-	private bool _isVisible = true;
+	private int _port = 3389;
+
+	[ObservableProperty]
+	private Guid? _groupId;
+
+	[ObservableProperty]
+	private bool _isOnline;
 }

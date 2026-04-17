@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using RemoteDesktop.Common.Attributes;
 using RemoteDesktop.Services.Abstractions;
@@ -10,9 +12,9 @@ namespace RemoteDesktop.Services;
 
 internal class WindowService(IServiceProvider service) : IWindowService
 {
-	public T? ShowWindow<T>(T? context = null, bool dialog = false) where T : class
+	public T? ShowWindow<T>(T? context = null, bool dialog = false) where T : ObservableObject
 	{
-		Window window = GetWindow(context);
+		var window = GetWindow(context);
 
 		if (dialog)
 		{
@@ -27,7 +29,7 @@ internal class WindowService(IServiceProvider service) : IWindowService
 		return context;
 	}
 
-	private Window GetWindow<T>(T? context) where T : class
+	private Window GetWindow<T>(T? context) where T : ObservableObject
 	{
 		context ??= service.GetRequiredService<T>();
 

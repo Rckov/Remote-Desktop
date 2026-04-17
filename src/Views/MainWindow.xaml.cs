@@ -1,6 +1,8 @@
-﻿namespace RemoteDesktop.Views;
+﻿using RemoteDesktop.Common;
 
-public partial class MainWindow
+namespace RemoteDesktop.Views;
+
+public partial class MainWindow : IClosable
 {
 	public MainWindow()
 	{

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
 using RemoteDesktop.Extensions;
-using RemoteDesktop.Models;
+using RemoteDesktop.Models.Themes;
 using RemoteDesktop.Services.Abstractions;
 using RemoteDesktop.Services.Abstractions.Themes;
 using RemoteDesktop.ViewModels;

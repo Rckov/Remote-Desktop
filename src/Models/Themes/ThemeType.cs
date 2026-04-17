@@ -1,4 +1,4 @@
-﻿namespace RemoteDesktop.Models;
+﻿namespace RemoteDesktop.Models.Themes;
 
 public enum ThemeType
 {

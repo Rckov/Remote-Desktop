@@ -1,16 +1,17 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:syst="clr-namespace:System;assembly=mscorlib">
 
+    <syst:Double x:Key="BarHeight">35</syst:Double>
+    
     <Style x:Key="WindowBorder" TargetType="Border">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderDefault}" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}"
-                         Value="Normal">
+            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Normal">
                 <Setter Property="BorderThickness" Value="1" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}"
-                         Value="Maximized">
+            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
                 <Setter Property="Padding" Value="8" />
                 <Setter Property="BorderThickness" Value="0" />
             </DataTrigger>
@@ -22,10 +23,10 @@
         <Setter Property="WindowStyle" Value="SingleBorderWindow" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
-        <Setter Property="Background" Value="{DynamicResource CardBackground}" />
+        <Setter Property="Background" Value="{DynamicResource PageBackground}" />
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
-                <WindowChrome GlassFrameThickness="1" CaptionHeight="35" CornerRadius="0" ResizeBorderThickness="4" />
+                <WindowChrome GlassFrameThickness="1" CaptionHeight="{StaticResource BarHeight}" CornerRadius="0" ResizeBorderThickness="4" />
             </Setter.Value>
         </Setter>
     </Style>

@@ -7,7 +7,7 @@
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Padding" Value="{StaticResource Spacing.L.Horizontal}" />
             <Setter Property="FontSize" Value="10" />
-            <Setter Property="FontFamily" Value="{StaticResource IconFontFamily}" />
+            <Setter Property="FontFamily" Value="{StaticResource FontIcon}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
             <Setter Property="Template">
@@ -35,7 +35,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Border Height="35" WindowChrome.IsHitTestVisibleInChrome="True">
+    <Border Height="{StaticResource BarHeight}" WindowChrome.IsHitTestVisibleInChrome="True">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -61,7 +61,7 @@
 
             <ContentPresenter Grid.Column="2" Content="{Binding LeftContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
 
-            <Border Grid.Column="3" BorderThickness="0,0,0,0" BorderBrush="{DynamicResource BorderDefault}">
+            <Border Grid.Column="3" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BorderDefault}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <ContentPresenter Content="{Binding RightContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
 

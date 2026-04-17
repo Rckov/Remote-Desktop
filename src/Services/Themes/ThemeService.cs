@@ -1,4 +1,4 @@
-﻿using RemoteDesktop.Models;
+﻿using RemoteDesktop.Models.Themes;
 using RemoteDesktop.Services.Abstractions.Themes;
 
 using System;

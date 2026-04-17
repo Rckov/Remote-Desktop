@@ -1,20 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-using System.Collections.ObjectModel;
+using System;
 
 namespace RemoteDesktop.Models;
 
-internal partial class ServerGroup(string name) : ObservableObject
+internal partial class ServerGroup : ObservableObject
 {
 	[ObservableProperty]
-	private string _name = name;
+	private Guid _id = Guid.NewGuid();
 
 	[ObservableProperty]
-	private ObservableCollection<Server> _servers = [];
-
-	[ObservableProperty]
-	private bool _isExpanded = true;
-
-	[ObservableProperty]
-	private bool _isVisible = true;
+	private string _name = string.Empty;
 }

@@ -1,4 +1,4 @@
-﻿namespace RemoteDesktop.Models;
+﻿namespace RemoteDesktop.Models.Themes;
 
 public class ThemeDescriptor(ThemeType type, string url)
 {

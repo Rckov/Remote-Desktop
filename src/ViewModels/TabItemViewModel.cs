@@ -1,17 +1,15 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
-using RemoteDesktop.Models.Constants;
-
 namespace RemoteDesktop.ViewModels;
 
-internal partial class TabItemViewModel(string name, string icon = Icons.Server, bool isCloseable = true) : ObservableObject
+internal partial class TabItemViewModel(string name, bool isCloseable = true) : ObservableObject
 {
 	[ObservableProperty]
 	private string _name = name;
 
 	[ObservableProperty]
-	private string _icon = icon;
+	private bool _isCloseable = isCloseable;
 
 	[ObservableProperty]
-	private bool _isCloseable = isCloseable;
+	private object? _content;
 }
