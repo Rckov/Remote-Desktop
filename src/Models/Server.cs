@@ -30,3 +30,12 @@ internal partial class Server : ObservableObject
 	[ObservableProperty]
 	private bool _isOnline;
 }
+
+internal partial class ServerGroup : ObservableObject
+{
+	[ObservableProperty]
+	private Guid _id = Guid.NewGuid();
+
+	[ObservableProperty]
+	private string _name = string.Empty;
+}

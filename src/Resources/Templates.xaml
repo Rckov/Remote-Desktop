@@ -3,6 +3,7 @@
                     xmlns:selectors="clr-namespace:RemoteDesktop.Resources.DataTemplates.Selectors">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Resources/DataTemplates/HomeListTemplate.xaml" />
         <ResourceDictionary Source="/Resources/DataTemplates/HomeContentTemplate.xaml" />
         <ResourceDictionary Source="/Resources/DataTemplates/ServerContentTemplate.xaml" />
     </ResourceDictionary.MergedDictionaries>

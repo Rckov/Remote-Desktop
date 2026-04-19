@@ -3,7 +3,7 @@
                     xmlns:ct="clr-namespace:RemoteDesktop.Views.UserControls">
 
     <DataTemplate x:Key="HomeContentTemplate">
-        <Grid DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
+        <Grid DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}" Background="{DynamicResource ControlBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -12,6 +12,7 @@
             <Border Grid.Row="0"
                     Padding="{StaticResource Spacing.L}"
                     BorderThickness="0,0,0,1"
+                    Background="{DynamicResource PageBackground}"
                     BorderBrush="{DynamicResource BorderDefault}">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -58,10 +59,10 @@
                 </Grid>
             </Border>
 
-            <Border Grid.Row="1"
-                    Padding="{StaticResource Spacing.L}"
-                    Background="{DynamicResource ControlBackground}">
-            </Border>
+            <ContentControl Grid.Row="1"
+                            Margin="10"
+                            Content="{Binding}"
+                            ContentTemplate="{DynamicResource HomeListTemplate}" />
         </Grid>
     </DataTemplate>
 

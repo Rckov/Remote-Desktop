@@ -22,6 +22,7 @@ internal static class ContainerExtensions
 		{
 			services.AddSingleton<IThemeService, ThemeService>();
 			services.AddSingleton<IThemeProvider, ThemeProvider>();
+			services.AddSingleton<IDataService, DataService>();
 			services.AddTransient<IWindowService, WindowService>();
 		}
 

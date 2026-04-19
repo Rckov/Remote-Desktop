@@ -4,5 +4,6 @@
         <ResourceDictionary Source="/Resources/Styles/WindowStyle.xaml" />
         <ResourceDictionary Source="/Resources/Styles/ButtonStyle.xaml" />
         <ResourceDictionary Source="/Resources/Styles/TabControl.xaml" />
+        <ResourceDictionary Source="/Resources/Styles/ExpanderStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
